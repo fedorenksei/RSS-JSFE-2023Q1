@@ -204,6 +204,33 @@ a {
     justify-content: space-between;
 }
 
+.donation-section {
+    @include section($color-light)
+}
+
+.donation-section__container {
+    display: flex;
+    column-gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.donation-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: flex-start;
+}
+
+.bank-account {
+    padding: 10px 15px;
+    display: flex;
+    column-gap: 15px;
+    background-color: $special-color;
+    border-radius: 9px;
+}
+
+
 // Text styles
 
 .main-header {
@@ -219,6 +246,22 @@ a {
     font: 20px/23px Georgia;
     letter-spacing: 0.06em;
     text-align: center;
+}
+
+.bank-name {
+    font: 15px/17px Georgia;
+    letter-spacing: 0.06em;
+}
+
+.bank-account__numbers {
+    font: 20px/23px Georgia;
+    letter-spacing: 0.06em;
+}
+
+.legal-info {
+    max-width: 380px;
+    font: italic 12px/18px Arial;
+    color: #B2B2B2;
 }
 
 %paragraph-l {
