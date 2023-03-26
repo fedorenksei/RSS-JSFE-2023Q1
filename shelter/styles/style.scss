@@ -1,5 +1,7 @@
 $special-color: #F1CDB3;
 $special-color_light: #FDDCC4;
+$color-light: #F6F6F6;
+$color-light-x: #FFFFFF;
 $transition-time: 0.3s;
 
 * {
@@ -9,20 +11,28 @@ $transition-time: 0.3s;
     scroll-behavior: smooth;
 }
 
-%section {
+a {
+    text-decoration: none;
+}
+
+
+@mixin section($bg-color) {
     display: grid;
     grid-template-columns: minmax(min-content, 1200px);
     justify-content: center;
+    background-color: $bg-color;
+    padding: 80px 0 100px 0;
 }
 
 
 .header {
-    @extend %section;
+    @include section(transparent);
+    padding: 0;
     height: 90px;
     position: absolute;
     top: 0;
     width: 100%;
-    color: #FFFFFF;
+    color: $color-light-x;
 }
 
 .header__container {
@@ -60,7 +70,6 @@ $transition-time: 0.3s;
 .nav__item {
     @extend %paragraph-l;
     color: #CDCDCD;
-    text-decoration: none;
     border-bottom: 3px solid transparent;
     transition: color $transition-time;
     &:hover {
@@ -74,15 +83,15 @@ $transition-time: 0.3s;
 }
 
 .start-section {
-    @extend %section;
-
+    @include section($color-light);
+    padding: 0;
     height: 908px;
     padding-top: 90px;
     background: 
         url("/shelter/assets/images/noise_transparent.png") repeat,
         radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
         #211F20;
-    color: #FFFFFF;
+    color: $color-light-x;
 }
 
 .intro {
@@ -106,10 +115,7 @@ $transition-time: 0.3s;
 
 
 .about-section {
-    @extend %section;
-    height: 588px;
-    padding-bottom: 20px;
-    background-color: #FFFFFF;
+    @include section($color-light-x);
 }
 
 .about-section__container {
@@ -126,6 +132,78 @@ $transition-time: 0.3s;
     max-width: 430px;
 }
 
+.friends-section {
+    @include section($color-light);
+    .section-header {
+        text-align: center;
+    }
+}
+
+.friends-section__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 60px;
+}
+
+.slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 53px;
+}
+
+.slider__row {
+    display: flex;
+    justify-content: center;
+    column-gap: 90px;
+}
+
+.pet-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 30px;
+    padding-bottom: 30px;
+    background-color: #FAFAFA;
+    border-radius: 9px;
+}
+
+.pet-card__name {
+    font: 20px/23px Georgia;
+    letter-spacing: 0.06em;
+    text-align: center;
+}
+
+.help-section {
+    @include section($color-light-x);
+}
+
+.help-section__container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+    align-items: center;
+    .section-header {
+        text-align: center;
+    }
+}
+
+.help-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 55px 120px;
+}
+
+.help-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 113px;
+    justify-content: space-between;
+}
+
 // Text styles
 
 .main-header {
@@ -135,6 +213,12 @@ $transition-time: 0.3s;
 .section-header {
     font: 35px/45px Georgia;
     letter-spacing: 0.06em;
+}
+
+.third-header {
+    font: 20px/23px Georgia;
+    letter-spacing: 0.06em;
+    text-align: center;
 }
 
 %paragraph-l {
@@ -184,14 +268,19 @@ $transition-time: 0.3s;
 
 .button_hollow {
     @extend %button;
-    background-color: #FFFFFF;
-    &:active {
-        background-color: #FFFFFF;
-    }
-
-    box-shadow: inset 0px 0px 0px 2px $special-color;
-    &:hover, 
-    &:active {
+    &:hover {
         box-shadow: none;
     }
+    background-color: transparent;
+    box-shadow: inset 0px 0px 0px 2px $special-color;
+    &:active {
+        background-color: transparent;
+        box-shadow: inset 0px 0px 0px 2px $special-color;
+    }
+}
+
+.arrow-button {
+    padding: 0;
+    height: 52px;
+    width: 52px;
 }
