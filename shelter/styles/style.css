@@ -5,6 +5,10 @@
   scroll-behavior: smooth;
 }
 
+body {
+  color: #545454;
+}
+
 a {
   text-decoration: none;
 }
@@ -13,7 +17,7 @@ a {
   display: grid;
   grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
-  background-color: transparent;
+  background: transparent;
   padding: 80px 0 100px 0;
   padding: 0;
   height: 90px;
@@ -72,12 +76,11 @@ a {
   display: grid;
   grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
-  background-color: #F6F6F6;
+  background: url("/shelter/assets/images/noise_transparent.png") repeat, radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
   padding: 80px 0 100px 0;
   padding: 0;
   height: 908px;
   padding-top: 90px;
-  background: url("/shelter/assets/images/noise_transparent.png") repeat, radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
   color: #FFFFFF;
 }
 
@@ -102,7 +105,7 @@ a {
   display: grid;
   grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
-  background-color: #FFFFFF;
+  background: #FFFFFF;
   padding: 80px 0 100px 0;
 }
 
@@ -125,7 +128,7 @@ a {
   display: grid;
   grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
-  background-color: #F6F6F6;
+  background: #F6F6F6;
   padding: 80px 0 100px 0;
 }
 .friends-section .section-header {
@@ -174,7 +177,7 @@ a {
   display: grid;
   grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
-  background-color: #FFFFFF;
+  background: #FFFFFF;
   padding: 80px 0 100px 0;
 }
 
@@ -207,7 +210,7 @@ a {
   display: grid;
   grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
-  background-color: #F6F6F6;
+  background: #F6F6F6;
   padding: 80px 0 100px 0;
 }
 
@@ -235,6 +238,50 @@ a {
   border-radius: 9px;
 }
 
+.footer {
+  display: grid;
+  grid-template-columns: minmax(min-content, 1200px);
+  justify-content: center;
+  background: url("/shelter/assets/images/noise_transparent.png"), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
+  padding: 80px 0 100px 0;
+  padding: 0;
+  color: #F1CDB3;
+  min-height: 350px;
+}
+.footer .section-header {
+  color: #FFFFFF;
+}
+
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-img {
+  align-self: flex-end;
+}
+
+.footer-content {
+  display: flex;
+  align-items: center;
+  -moz-column-gap: 160px;
+       column-gap: 160px;
+}
+
+.footer-subsection {
+  height: 234px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.footer-item {
+  display: flex;
+  align-items: center;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+}
+
 .main-header {
   font: 44px/57px Georgia;
 }
@@ -255,7 +302,7 @@ a {
   letter-spacing: 0.06em;
 }
 
-.bank-account__numbers {
+.info-font {
   font: 20px/23px Georgia;
   letter-spacing: 0.06em;
 }
