@@ -1,0 +1,469 @@
+$special-color: #F1CDB3;
+$special-color_light: #FDDCC4;
+$color-light: #F6F6F6;
+$color-light-x: #FFFFFF;
+$color-dark: #545454;
+$transition-time: 0.3s;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    color: $color-dark;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+@mixin section($bg-color...) {
+    display: grid;
+    grid-template-columns: minmax(min-content, 1200px);
+    justify-content: center;
+    background: $bg-color;
+    padding: 80px 0 100px 0;
+}
+
+
+.header {
+    @include section(transparent);
+    padding: 0;
+    height: 90px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    color: $color-light-x;
+}
+
+.header__container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.logo {
+    align-self: flex-end;
+
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    align-items: end;
+}
+
+.logo__title {
+    font: 32px/35px Georgia;
+    letter-spacing: 0.06em;
+    color: $special-color;
+}
+
+.logo__subtitle {
+    font: 13px/15px Arial;
+    letter-spacing: 0.1em;
+}
+
+.nav {
+    display: flex;
+    gap: 35px;
+    align-items: end;
+    padding-bottom: 17px;
+}
+
+.nav__item {
+    @extend %paragraph-l;
+    color: #CDCDCD;
+    border-bottom: 3px solid transparent;
+    transition: 
+        color $transition-time,
+        border-bottom-color $transition-time;
+    &:hover {
+        color: #FAFAFA;
+    }
+    &:active {
+        border-bottom-color: $special-color;
+    }
+}
+
+.nav__item_active {
+    color: #FAFAFA;
+    transition: none;
+    border-bottom-color: $special-color;
+}
+
+.pets {
+    .header {
+        height: 120px;
+        padding-bottom: 30px;
+        position: static;
+    }
+    
+    .logo__title, 
+    .nav__item {
+        color: $color-dark;
+    }
+
+    .logo__subtitle, 
+    .nav__item:hover,
+    .nav__item_active {
+        color: #292929;
+    }
+
+    .logo:hover .logo__title,
+    .logo:hover .logo__subtitle {
+        transition: $transition-time;
+        color: $special-color;
+    }
+
+    .logo:active .logo__title,
+    .logo:active .logo__subtitle {
+        transition: $transition-time;
+        color: #1A1A1C;
+    }
+}
+
+.start-section {
+    @include section(
+        url("/shelter/assets/images/noise_transparent.png") repeat, 
+        radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
+        #211F20)
+    ;
+    padding: 0;
+    height: 908px;
+    padding-top: 90px;
+    color: $color-light-x;
+}
+
+.intro {
+    display: flex;
+    justify-content: space-between;
+}
+
+.intro__content {
+    align-self: center;
+
+    max-width: 460px;
+    
+    display: flex;
+    flex-direction: column;
+    row-gap: 42px;
+}
+
+.intro__img {
+    align-self: flex-end;
+}
+
+
+.about-section {
+    @include section($color-light-x);
+}
+
+.about-section__container {
+    display: flex;
+    justify-content: center;
+    column-gap: 120px;
+    align-items: center;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 25px;
+    max-width: 430px;
+}
+
+.friends-section {
+    @include section($color-light);
+    .section-header {
+        text-align: center;
+    }
+}
+
+.friends-section__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 60px;
+}
+
+
+// Our Pets page
+.all-pets-section {
+    @include section($color-light)
+}
+
+.all-pets-section__container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+    align-items: center;
+    .section-header {
+        text-align: center;
+    }
+}
+
+.page {
+    display: flex;
+    gap: 30px 40px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.page-controls {
+    display: flex;
+    column-gap: 20px;
+    justify-content: center;
+}
+// ---------
+
+.slider {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 53px;
+}
+
+.slider__row {
+    display: flex;
+    justify-content: center;
+    column-gap: 90px;
+}
+
+.pet-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 30px;
+    padding-bottom: 30px;
+    background-color: #FAFAFA;
+    border-radius: 9px;
+
+    &:hover .button_hollow {
+        background-color: $special-color_light;
+        box-shadow: none;
+    }
+    &:active .button_hollow {
+        background-color: transparent;
+        box-shadow: inset 0px 0px 0px 2px $special-color;
+    }
+}
+
+.pet-card__name {
+    font: 20px/23px Georgia;
+    letter-spacing: 0.06em;
+    text-align: center;
+}
+
+.help-section {
+    @include section($color-light-x);
+}
+
+.help-section__container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+    align-items: center;
+    .section-header {
+        text-align: center;
+    }
+}
+
+.help-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 55px 120px;
+}
+
+.help-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 113px;
+    justify-content: space-between;
+}
+
+.donation-section {
+    @include section($color-light)
+}
+
+.donation-section__container {
+    display: flex;
+    column-gap: 30px;
+    align-items: center;
+    justify-content: center;
+}
+
+.donation-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    align-items: flex-start;
+}
+
+.bank-account {
+    padding: 10px 15px;
+    display: flex;
+    column-gap: 15px;
+    background-color: $special-color;
+    border-radius: 9px;
+
+    &:hover {
+        background-color: $special-color_light;
+    }
+    &:active {
+        background-color: #FFFFFF;
+    }
+}
+
+.footer {
+    @include section(
+        url("/shelter/assets/images/noise_transparent.png"), 
+        radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), 
+        #211F20)
+    ;
+    padding: 0;
+    color: $special-color;
+    .section-header {
+        color: $color-light-x;
+    }
+    min-height: 350px;
+}
+
+.footer__container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-img {
+    align-self: flex-end;
+}
+
+.footer-content {
+    display: flex;
+    align-items: center;
+    column-gap: 160px;
+}
+
+.footer-subsection {
+    height: 234px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.footer-item {
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+
+    &:hover {
+        color: $special-color_light;
+    }
+    &:active {
+        color: #FFFFFF;
+    }
+}
+
+// Text styles
+
+.main-header {
+    font: 44px/57px Georgia;
+}
+
+.section-header {
+    font: 35px/45px Georgia;
+    letter-spacing: 0.06em;
+}
+
+.third-header {
+    font: 20px/23px Georgia;
+    letter-spacing: 0.06em;
+    text-align: center;
+}
+
+.bank-name {
+    font: 15px/17px Georgia;
+    letter-spacing: 0.06em;
+}
+
+.info-font {
+    font: 20px/23px Georgia;
+    letter-spacing: 0.06em;
+}
+
+.legal-info {
+    max-width: 380px;
+    font: italic 12px/18px Arial;
+    color: #B2B2B2;
+}
+
+%paragraph-l {
+    font: 15px/24px Arial;
+}
+
+.paragraph-l {
+    @extend %paragraph-l;
+}
+
+
+// Buttons
+
+%button {
+    padding: 15px 45px;
+    width: fit-content;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #292929;
+    border-radius: 100px;
+
+    font: 17px/22px Georgia;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+
+    transition: 
+        background-color $transition-time,
+        transform 0.1s;
+    &:hover {
+        background-color: $special-color_light;
+    }
+}
+
+.button_filled {
+    @extend %button;
+    background-color: $special-color;
+    &:active {
+        background-color: #FFFFFF;
+    }
+}
+
+.button_hollow {
+    @extend %button;
+    &:hover {
+        box-shadow: none;
+    }
+    background-color: transparent;
+    box-shadow: inset 0px 0px 0px 2px $special-color;
+    &:active {
+        background-color: transparent;
+        box-shadow: inset 0px 0px 0px 2px $special-color;
+    }
+    &.button_hollow_inactive {
+        color: #CDCDCD;
+        background-color: transparent;
+        box-shadow: inset 0px 0px 0px 2px #CDCDCD;
+    }
+}
+
+.circle-button {
+    padding: 0;
+    height: 52px;
+    width: 52px;
+}
