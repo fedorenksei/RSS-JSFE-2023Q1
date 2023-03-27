@@ -40,6 +40,13 @@ a {
   row-gap: 10px;
   align-items: end;
 }
+.logo:hover .logo__title, .logo:hover .logo__subtitle {
+  transition: 0.3s;
+  color: #FDDCC4;
+}
+.logo:active .logo__title, .logo:active .logo__subtitle {
+  color: #FFFFFF;
+}
 
 .logo__title {
   font: 32px/35px Georgia;
@@ -98,7 +105,6 @@ a {
 }
 .pets .logo:active .logo__title,
 .pets .logo:active .logo__subtitle {
-  transition: 0.3s;
   color: #1A1A1C;
 }
 
