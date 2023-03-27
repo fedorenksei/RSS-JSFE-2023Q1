@@ -27,6 +27,21 @@ a {
   color: #FFFFFF;
 }
 
+.pets .header {
+  height: 120px;
+  padding-bottom: 30px;
+  position: static;
+}
+.pets .logo__title,
+.pets .nav__item {
+  color: #545454;
+}
+.pets .logo__subtitle,
+.pets .nav__item:hover,
+.pets .nav__item_active {
+  color: #292929;
+}
+
 .header__container {
   display: flex;
   justify-content: space-between;
@@ -140,6 +155,39 @@ a {
   flex-direction: column;
   align-items: center;
   row-gap: 60px;
+}
+
+.all-pets-section {
+  display: grid;
+  grid-template-columns: minmax(min-content, 1200px);
+  justify-content: center;
+  background: #F6F6F6;
+  padding: 80px 0 100px 0;
+}
+
+.all-pets-section__container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 60px;
+  align-items: center;
+}
+.all-pets-section__container .section-header {
+  text-align: center;
+}
+
+.page {
+  display: flex;
+  gap: 30px 40px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.page-controls {
+  display: flex;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+  justify-content: center;
 }
 
 .slider {
@@ -331,10 +379,10 @@ a {
   text-decoration: none;
   transition: background-color 0.3s, transform 0.1s;
 }
-.button_hollow:hover, .button_filled:hover {
+.button_hollow:hover:not(.button_hollow_inactive), .button_filled:hover:not(.button_hollow_inactive) {
   background-color: #FDDCC4;
 }
-.button_hollow:active, .button_filled:active {
+.button_hollow:active:not(.button_hollow_inactive), .button_filled:active:not(.button_hollow_inactive) {
   transform: translateY(2px);
 }
 
@@ -356,8 +404,12 @@ a {
   background-color: transparent;
   box-shadow: inset 0px 0px 0px 2px #F1CDB3;
 }
+.button_hollow.button_hollow_inactive {
+  color: #CDCDCD;
+  box-shadow: inset 0px 0px 0px 2px #CDCDCD;
+}
 
-.arrow-button {
+.circle-button {
   padding: 0;
   height: 52px;
   width: 52px;

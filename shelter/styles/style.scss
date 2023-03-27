@@ -40,6 +40,25 @@ a {
     color: $color-light-x;
 }
 
+.pets {
+    .header {
+        height: 120px;
+        padding-bottom: 30px;
+        position: static;
+    }
+    
+    .logo__title, 
+    .nav__item {
+        color: $color-dark;
+    }
+
+    .logo__subtitle, 
+    .nav__item:hover,
+    .nav__item_active {
+        color: #292929;
+    }
+}
+
 .header__container {
     display: flex;
     justify-content: space-between;
@@ -150,6 +169,37 @@ a {
     align-items: center;
     row-gap: 60px;
 }
+
+
+// Our Pets page
+.all-pets-section {
+    @include section($color-light)
+}
+
+.all-pets-section__container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+    align-items: center;
+    .section-header {
+        text-align: center;
+    }
+}
+
+.page {
+    display: flex;
+    gap: 30px 40px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.page-controls {
+    display: flex;
+    column-gap: 20px;
+    justify-content: center;
+}
+// ---------
 
 .slider {
     display: flex;
@@ -339,10 +389,10 @@ a {
     transition: 
         background-color $transition-time,
         transform 0.1s;
-    &:hover {
+    &:hover:not(.button_hollow_inactive) {
         background-color: $special-color_light;
     }
-    &:active {
+    &:active:not(.button_hollow_inactive) {
         transform: translateY(2px);
     }
 }
@@ -366,9 +416,13 @@ a {
         background-color: transparent;
         box-shadow: inset 0px 0px 0px 2px $special-color;
     }
+    &.button_hollow_inactive {
+        color: #CDCDCD;
+        box-shadow: inset 0px 0px 0px 2px #CDCDCD;
+    }
 }
 
-.arrow-button {
+.circle-button {
     padding: 0;
     height: 52px;
     width: 52px;
