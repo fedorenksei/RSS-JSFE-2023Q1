@@ -18,6 +18,7 @@ body {
 
 a {
     text-decoration: none;
+    color: inherit;
 }
 
 
@@ -38,25 +39,6 @@ a {
     top: 0;
     width: 100%;
     color: $color-light-x;
-}
-
-.pets {
-    .header {
-        height: 120px;
-        padding-bottom: 30px;
-        position: static;
-    }
-    
-    .logo__title, 
-    .nav__item {
-        color: $color-dark;
-    }
-
-    .logo__subtitle, 
-    .nav__item:hover,
-    .nav__item_active {
-        color: #292929;
-    }
 }
 
 .header__container {
@@ -95,15 +77,52 @@ a {
     @extend %paragraph-l;
     color: #CDCDCD;
     border-bottom: 3px solid transparent;
-    transition: color $transition-time;
+    transition: 
+        color $transition-time,
+        border-bottom-color $transition-time;
     &:hover {
         color: #FAFAFA;
+    }
+    &:active {
+        border-bottom-color: $special-color;
     }
 }
 
 .nav__item_active {
     color: #FAFAFA;
+    transition: none;
     border-bottom-color: $special-color;
+}
+
+.pets {
+    .header {
+        height: 120px;
+        padding-bottom: 30px;
+        position: static;
+    }
+    
+    .logo__title, 
+    .nav__item {
+        color: $color-dark;
+    }
+
+    .logo__subtitle, 
+    .nav__item:hover,
+    .nav__item_active {
+        color: #292929;
+    }
+
+    .logo:hover .logo__title,
+    .logo:hover .logo__subtitle {
+        transition: $transition-time;
+        color: $special-color;
+    }
+
+    .logo:active .logo__title,
+    .logo:active .logo__subtitle {
+        transition: $transition-time;
+        color: #1A1A1C;
+    }
 }
 
 .start-section {
@@ -222,6 +241,15 @@ a {
     padding-bottom: 30px;
     background-color: #FAFAFA;
     border-radius: 9px;
+
+    &:hover .button_hollow {
+        background-color: $special-color_light;
+        box-shadow: none;
+    }
+    &:active .button_hollow {
+        background-color: transparent;
+        box-shadow: inset 0px 0px 0px 2px $special-color;
+    }
 }
 
 .pet-card__name {
@@ -283,6 +311,13 @@ a {
     column-gap: 15px;
     background-color: $special-color;
     border-radius: 9px;
+
+    &:hover {
+        background-color: $special-color_light;
+    }
+    &:active {
+        background-color: #FFFFFF;
+    }
 }
 
 .footer {
@@ -325,6 +360,13 @@ a {
     display: flex;
     align-items: center;
     column-gap: 20px;
+
+    &:hover {
+        color: $special-color_light;
+    }
+    &:active {
+        color: #FFFFFF;
+    }
 }
 
 // Text styles
@@ -389,11 +431,8 @@ a {
     transition: 
         background-color $transition-time,
         transform 0.1s;
-    &:hover:not(.button_hollow_inactive) {
+    &:hover {
         background-color: $special-color_light;
-    }
-    &:active:not(.button_hollow_inactive) {
-        transform: translateY(2px);
     }
 }
 
@@ -401,7 +440,7 @@ a {
     @extend %button;
     background-color: $special-color;
     &:active {
-        background-color: $special-color;
+        background-color: #FFFFFF;
     }
 }
 
@@ -418,6 +457,7 @@ a {
     }
     &.button_hollow_inactive {
         color: #CDCDCD;
+        background-color: transparent;
         box-shadow: inset 0px 0px 0px 2px #CDCDCD;
     }
 }
