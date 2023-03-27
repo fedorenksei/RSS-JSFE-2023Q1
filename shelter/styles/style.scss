@@ -53,6 +53,17 @@ a {
     flex-direction: column;
     row-gap: 10px;
     align-items: end;
+
+    &:hover .logo__title,
+    &:hover .logo__subtitle {
+        transition: $transition-time;
+        color: $special-color-light;
+    }
+
+    &:active .logo__title,
+    &:active .logo__subtitle {
+        color: #FFFFFF;
+    }
 }
 
 .logo__title {
@@ -120,14 +131,13 @@ a {
 
     .logo:active .logo__title,
     .logo:active .logo__subtitle {
-        transition: $transition-time;
         color: #1A1A1C;
     }
 }
 
 .start-section {
     @include section(
-        url("/shelter/assets/images/noise_transparent.png") repeat, 
+        url("../assets/images/noise_transparent.png") repeat, 
         radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
         #211F20)
     ;
@@ -322,7 +332,7 @@ a {
 
 .footer {
     @include section(
-        url("/shelter/assets/images/noise_transparent.png"), 
+        url("../assets/images/noise_transparent.png"), 
         radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), 
         #211F20)
     ;
