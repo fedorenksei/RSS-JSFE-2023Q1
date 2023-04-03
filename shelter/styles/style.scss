@@ -214,7 +214,8 @@ a {
     justify-content: center;
     column-gap: 120px;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
+    row-gap: 80px;
 }
 
 .about-content {
@@ -258,13 +259,13 @@ a {
     justify-content: space-around;
     // column-gap: 90px;
 
-    :last-child {
+    > :last-child {
         @container (inline-size < 850px) {
             display: none;
         }
     }
     
-    :nth-last-child(2) {
+    > :nth-last-child(2) {
         @container (inline-size < 570px) {
             display: none;
         }
@@ -324,6 +325,12 @@ a {
     flex-wrap: wrap;
     justify-content: center;
     gap: 55px 120px;
+
+    @media (width <= 768px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        column-gap: 60px;
+    }
 }
 
 .help-item {
@@ -343,6 +350,8 @@ a {
     column-gap: 30px;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap-reverse;
+    row-gap: 60px;
 }
 
 .donation-content {
@@ -373,28 +382,60 @@ a {
         radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), 
         #211F20)
     ;
-    padding: 0;
+    padding-top: 30px;
+    padding-bottom: 0;
     color: $special-color;
     .section-header {
         color: $color-light-x;
     }
-    min-height: 350px;
 }
 
 .footer__container {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
+    row-gap: 25px;
+    column-gap: 20px;
+    
+    @media (width < 987px) {
+        flex-wrap: wrap;
+        > * {
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .footer-content {
+            max-width: none;
+            padding-right: 34px;
+            padding-left: 34px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            row-gap: 40px;
+            > * {
+                margin: 0 auto;
+            }
+        }
+    }
 }
 
 .footer-img {
-    align-self: flex-end;
+    margin-top: 10px;
+    flex: 1 260px;
+    max-width: 300px;
+    height: max(0.83vw, 310px);
+    background: 
+        url("../assets/images/footer-puppy.png")
+        bottom right / contain
+        no-repeat
+    ;
 }
 
 .footer-content {
     display: flex;
     align-items: center;
-    column-gap: 160px;
+    justify-content: space-between;
+    column-gap: 60px;
+    max-width: 740px;
+    flex: 1 640px;
+    margin-bottom: 30px;
 }
 
 .footer-subsection {
