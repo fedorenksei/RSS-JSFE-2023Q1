@@ -5,8 +5,17 @@
   scroll-behavior: smooth;
 }
 
-body {
+html {
+  height: 100%;
+}
+html body {
   color: #545454;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+html body .footer {
+  flex-grow: 1;
 }
 
 a {

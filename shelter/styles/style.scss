@@ -12,8 +12,17 @@ $transition-time: 0.3s;
     scroll-behavior: smooth;
 }
 
-body {
-    color: $color-dark;
+html {
+    height: 100%;
+    body {
+        color: $color-dark;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .footer {
+            flex-grow: 1;
+        }
+    }
 }
 
 a {
