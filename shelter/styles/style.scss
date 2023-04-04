@@ -20,6 +20,9 @@ html {
         display: flex;
         flex-direction: column;
         height: 100%;
+        .header {
+            flex-shrink: 0;
+        }
         .footer {
             flex-grow: 1;
         }
@@ -39,6 +42,10 @@ a {
     padding: 80px $padding-aside 100px $padding-aside;
     justify-content: center;
     background: $bg-color;
+    @media (width < $mobile-breakpoint) {
+        padding-top: 42px;
+        padding-bottom: 42px;
+    }
 }
 
 
@@ -51,6 +58,9 @@ a {
     top: 0;
     width: 100%;
     color: $color-light-x;
+    @media (width < $mobile-breakpoint) {
+        padding-top: 30px;
+    }
 }
 
 .header__container {
@@ -166,8 +176,11 @@ a {
         #211F20)
     ;
     min-height: 908px;
-    padding-bottom: 0;
-    padding-top: 90px;
+    @media (width < $mobile-breakpoint) {
+        min-height: 823px;
+    }
+    padding-bottom: 0 !important;
+    padding-top: 90px !important;
     color: $color-light-x;
 }
 
@@ -180,7 +193,7 @@ a {
     justify-content: space-between;
     flex-wrap: wrap;
     row-gap: 10px;
-    padding-top: 60px;
+    padding-top: 60px !important;
 
     @media (width < 1023px) {
         .button_filled {
@@ -201,7 +214,10 @@ a {
     row-gap: 42px;
 
     @media (width < $mobile-breakpoint) {
-        text-align: center;
+        .paragraph-l {
+            text-align: center;
+            padding: 0;
+        }
     }
 }
 
@@ -237,6 +253,9 @@ a {
     align-items: center;
     flex-wrap: wrap-reverse;
     row-gap: 80px;
+    @media (width < $mobile-breakpoint) {
+        row-gap: 42px;
+    }
 }
 
 .about-content {
@@ -258,6 +277,9 @@ a {
     flex-direction: column;
     align-items: center;
     row-gap: 60px;
+    @media (width < $mobile-breakpoint) {
+        row-gap: 42px;
+    }
 }
 
 .slider {
@@ -268,11 +290,23 @@ a {
     align-items: center;
     column-gap: 8px;
     // column-gap: 53px;
+
+    @media (width < $mobile-breakpoint) {
+        flex-wrap: wrap;
+        row-gap: 20px;
+        column-gap: 80px;
+        .slider__window {
+            flex-basis: 100%;
+            order: -1;
+        }
+    }
 }
 
 .slider__window {
     flex: 1;
     container: slider-window / inline-size;
+
+    
 }
 
 .slider__row {
@@ -386,7 +420,8 @@ a {
     align-items: flex-start;
 }
 
-.donation-img {
+.donation-img, 
+.about-img {
     width: min(81.25vw, 505px);
 }
 
@@ -490,13 +525,31 @@ a {
 
 // Our Pets page
 .all-pets-section {
-    @include section($color-light)
+    @include section($color-light);
+    @media (width < 780px) {
+        padding-bottom: 76px;
+    }
 }
 
 .all-pets-section__container {
     display: flex;
     flex-direction: column;
     row-gap: 60px;
+    @media (width < 780px) {
+        row-gap: 30px;
+        .page > :nth-last-child(-n + 2) {
+            display: none;
+        }
+        .page {
+            margin-bottom: 10px;
+        }
+
+        @media (width < $mobile-breakpoint) {
+            .page > :nth-last-child(-n + 5) {
+                display: none;
+            }
+        }
+    }
     align-items: center;
     .section-header {
         text-align: center;
@@ -523,7 +576,7 @@ a {
 .main-header {
     font: 44px/57px Georgia;
     @media (width < $mobile-breakpoint) {
-        font: 25px/32px Georgia;
+        font: 25px/32.5px Georgia;
         letter-spacing: 0.06em;
         text-align: center;
     }
@@ -532,6 +585,10 @@ a {
 .section-header {
     font: 35px/45px Georgia;
     letter-spacing: 0.06em;
+    @media (width < $mobile-breakpoint) {
+        font: 25px/32px Georgia;
+        text-align: center;
+    }
 }
 
 .third-header {
@@ -558,6 +615,10 @@ a {
 
 %paragraph-l {
     font: 15px/24px Arial;
+    @media (width < $mobile-breakpoint) {
+        text-align: justify;
+        padding: 0 15px;
+    }
 }
 
 .paragraph-l {
