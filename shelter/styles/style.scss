@@ -305,8 +305,6 @@ a {
 .slider__window {
     flex: 1;
     container: slider-window / inline-size;
-
-    
 }
 
 .slider__row {
@@ -369,6 +367,9 @@ a {
     display: flex;
     flex-direction: column;
     row-gap: 60px;
+    @media (width < $mobile-breakpoint) {
+        row-gap: 42px;
+    }
     align-items: center;
     .section-header {
         text-align: center;
@@ -388,6 +389,8 @@ a {
 
         @media (width < 540px) {
             grid-template-columns: repeat(2, 1fr);
+            row-gap: 30px;
+            column-gap: 35px;
         }
     }
 }
@@ -398,6 +401,21 @@ a {
     align-items: center;
     height: 113px;
     justify-content: space-between;
+
+    @media (width < $mobile-breakpoint) {
+        height: auto;
+        row-gap: 20px;
+
+        img {
+            height: 50px;
+        }
+
+        .third-header {
+            font: 15px/17px Georgia;
+            letter-spacing: 0.06em;
+            text-align: center;
+        }
+    }
 }
 
 .donation-section {
@@ -411,6 +429,9 @@ a {
     justify-content: center;
     flex-wrap: wrap-reverse;
     row-gap: 60px;
+    @media (width < $mobile-breakpoint) {
+        row-gap: 42px;
+    }
 }
 
 .donation-content {
@@ -418,6 +439,16 @@ a {
     flex-direction: column;
     row-gap: 20px;
     align-items: flex-start;
+    @media (width < $mobile-breakpoint) {
+        align-items: center;
+    }
+
+    @media (width < $mobile-breakpoint) {
+        .info-font {
+            font: 15px/17px Georgia;
+            text-align: left;
+        }
+    }
 }
 
 .donation-img, 
@@ -446,8 +477,8 @@ a {
         radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), 
         #211F20)
     ;
-    padding-top: 30px;
-    padding-bottom: 0;
+    padding-top: 30px !important;
+    padding-bottom: 0 !important;
     color: $special-color;
     .section-header {
         color: $color-light-x;
@@ -457,7 +488,9 @@ a {
 .footer__container {
     display: flex;
     justify-content: space-between;
-    row-gap: 25px;
+    @media (width >= $mobile-breakpoint) {
+        row-gap: 25px;
+    }
     column-gap: 20px;
     
     @media (width < 987px) {
@@ -468,8 +501,10 @@ a {
         }
         .footer-content {
             max-width: none;
-            padding-right: 34px;
-            padding-left: 34px;
+            @media (width >= $mobile-breakpoint) {
+                padding-right: 34px;
+                padding-left: 34px;
+            }
             flex-wrap: wrap;
             justify-content: space-between;
             row-gap: 40px;
@@ -503,10 +538,11 @@ a {
 }
 
 .footer-subsection {
-    height: 234px;
+    // height: 234px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    row-gap: 43px;
 }
 
 .footer-item {
@@ -600,6 +636,11 @@ a {
 .bank-name {
     font: 15px/17px Georgia;
     letter-spacing: 0.06em;
+    @media (width < $mobile-breakpoint) {
+        line-height: 24px;
+        letter-spacing: 0px;
+        text-align: left;
+    }
 }
 
 .info-font {
@@ -611,6 +652,9 @@ a {
     max-width: 380px;
     font: italic 12px/18px Arial;
     color: #B2B2B2;
+    @media (width < $mobile-breakpoint) {
+        text-align: justify;
+    }
 }
 
 %paragraph-l {
