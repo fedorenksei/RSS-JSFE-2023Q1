@@ -40,6 +40,11 @@ a {
   width: 100%;
   color: #FFFFFF;
 }
+@media (width > 1280px) {
+  .header {
+    grid-template-columns: 1200px;
+  }
+}
 @media (width < 426px) {
   .header {
     padding-top: 42px;
@@ -157,6 +162,11 @@ a {
   padding-top: 90px !important;
   color: #FFFFFF;
 }
+@media (width > 1280px) {
+  .start-section {
+    grid-template-columns: 1200px;
+  }
+}
 @media (width < 426px) {
   .start-section {
     padding-top: 42px;
@@ -219,6 +229,11 @@ a {
   justify-content: center;
   background: #FFFFFF;
 }
+@media (width > 1280px) {
+  .about-section {
+    grid-template-columns: 1200px;
+  }
+}
 @media (width < 426px) {
   .about-section {
     padding-top: 42px;
@@ -258,6 +273,11 @@ a {
   padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
   justify-content: center;
   background: #F6F6F6;
+}
+@media (width > 1280px) {
+  .friends-section {
+    grid-template-columns: 1200px;
+  }
 }
 @media (width < 426px) {
   .friends-section {
@@ -359,6 +379,11 @@ a {
   justify-content: center;
   background: #FFFFFF;
 }
+@media (width > 1280px) {
+  .help-section {
+    grid-template-columns: 1200px;
+  }
+}
 @media (width < 426px) {
   .help-section {
     padding-top: 42px;
@@ -433,6 +458,11 @@ a {
   justify-content: center;
   background: #F6F6F6;
 }
+@media (width > 1280px) {
+  .donation-section {
+    grid-template-columns: 1200px;
+  }
+}
 @media (width < 426px) {
   .donation-section {
     padding-top: 42px;
@@ -501,6 +531,11 @@ a {
   padding-top: 30px !important;
   padding-bottom: 0 !important;
   color: #F1CDB3;
+}
+@media (width > 1280px) {
+  .footer {
+    grid-template-columns: 1200px;
+  }
 }
 @media (width < 426px) {
   .footer {
@@ -595,6 +630,11 @@ a {
   padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
   justify-content: center;
   background: #F6F6F6;
+}
+@media (width > 1280px) {
+  .all-pets-section {
+    grid-template-columns: 1200px;
+  }
 }
 @media (width < 426px) {
   .all-pets-section {
