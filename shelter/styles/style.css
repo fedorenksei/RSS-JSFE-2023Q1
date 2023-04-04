@@ -248,6 +248,10 @@ a {
   max-width: 430px;
 }
 
+.about-img {
+  width: min(81.25vw, 300px);
+}
+
 .friends-section {
   display: grid;
   grid-template-columns: 1fr;
@@ -469,8 +473,7 @@ a {
   }
 }
 
-.donation-img,
-.about-img {
+.donation-img {
   width: min(81.25vw, 505px);
 }
 
