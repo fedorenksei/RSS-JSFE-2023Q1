@@ -38,6 +38,9 @@ a {
 @mixin section($bg-color...) {
     display: grid;
     grid-template-columns: 1fr;
+    @media (width > 1280px) {
+        grid-template-columns: 1200px;
+    }
     $padding-aside: clamp(10px, 3.90625%, 40px);
     padding: 80px $padding-aside 100px $padding-aside;
     justify-content: center;
