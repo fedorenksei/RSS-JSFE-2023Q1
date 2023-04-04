@@ -4,6 +4,7 @@ $color-light: #F6F6F6;
 $color-light-x: #FFFFFF;
 $color-dark: #545454;
 $transition-time: 0.3s;
+$mobile-breakpoint: 426px;
 
 * {
     margin: 0;
@@ -56,6 +57,8 @@ a {
     display: flex;
     justify-content: space-between;
     @media (width < 768px) {
+        padding-left: 10px;
+        padding-right: 10px;
         .nav {
             display: none;
         }
@@ -196,6 +199,10 @@ a {
     display: flex;
     flex-direction: column;
     row-gap: 42px;
+
+    @media (width < $mobile-breakpoint) {
+        text-align: center;
+    }
 }
 
 .intro__img {
@@ -212,6 +219,10 @@ a {
         bottom right / contain 
         no-repeat
     ;
+
+    @media (width < $mobile-breakpoint) {
+        min-height: 271.77px;
+    }
 }
 
 
@@ -511,6 +522,11 @@ a {
 
 .main-header {
     font: 44px/57px Georgia;
+    @media (width < $mobile-breakpoint) {
+        font: 25px/32px Georgia;
+        letter-spacing: 0.06em;
+        text-align: center;
+    }
 }
 
 .section-header {
