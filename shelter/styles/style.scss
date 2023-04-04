@@ -265,6 +265,10 @@ a {
     max-width: 430px;
 }
 
+.about-img {
+    width: min(81.25vw, 300px);
+}
+
 .friends-section {
     @include section($color-light);
     .section-header {
@@ -451,8 +455,7 @@ a {
     }
 }
 
-.donation-img, 
-.about-img {
+.donation-img {
     width: min(81.25vw, 505px);
 }
 
