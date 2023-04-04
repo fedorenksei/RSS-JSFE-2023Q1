@@ -4,6 +4,7 @@ $color-light: #F6F6F6;
 $color-light-x: #FFFFFF;
 $color-dark: #545454;
 $transition-time: 0.3s;
+$mobile-breakpoint: 426px;
 
 * {
     margin: 0;
@@ -12,8 +13,17 @@ $transition-time: 0.3s;
     scroll-behavior: smooth;
 }
 
-body {
-    color: $color-dark;
+html {
+    height: 100%;
+    body {
+        color: $color-dark;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .footer {
+            flex-grow: 1;
+        }
+    }
 }
 
 a {
@@ -24,16 +34,18 @@ a {
 
 @mixin section($bg-color...) {
     display: grid;
-    grid-template-columns: minmax(min-content, 1200px);
+    grid-template-columns: 1fr;
+    $padding-aside: clamp(10px, 3.90625%, 40px);
+    padding: 80px $padding-aside 100px $padding-aside;
     justify-content: center;
     background: $bg-color;
-    padding: 80px 0 100px 0;
 }
 
 
 .header {
     @include section(transparent);
-    padding: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     height: 90px;
     position: absolute;
     top: 0;
@@ -44,6 +56,18 @@ a {
 .header__container {
     display: flex;
     justify-content: space-between;
+    @media (width < 768px) {
+        padding-left: 10px;
+        padding-right: 10px;
+        .nav {
+            display: none;
+        }
+        &::after {
+            content: url('../assets/icons/burger.svg');
+            margin-bottom: 19px;
+            align-self: flex-end;
+        }
+    }
 }
 
 .logo {
@@ -141,29 +165,64 @@ a {
         radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
         #211F20)
     ;
-    padding: 0;
-    height: 908px;
+    min-height: 908px;
+    padding-bottom: 0;
     padding-top: 90px;
     color: $color-light-x;
 }
 
 .intro {
+    // display: grid;
+    // grid-template-columns: minmax(310px, 1fr) minmax(569px, 1fr);
+    column-gap: 40px;
+
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    padding-top: 60px;
+
+    @media (width < 1023px) {
+        .button_filled {
+            align-self: center;
+        }
+    }
 }
 
 .intro__content {
+    // place-self: center;
     align-self: center;
-
     max-width: 460px;
-    
+    flex: 1 310px;
+    margin: 0 auto 60px auto;
+
     display: flex;
     flex-direction: column;
     row-gap: 42px;
+
+    @media (width < $mobile-breakpoint) {
+        text-align: center;
+    }
 }
 
 .intro__img {
-    align-self: flex-end;
+    // place-self: end end;
+
+    // align-self: stretch;
+    // max-height: 728px;
+    margin-top: 30px;
+    min-height: 593px;
+    flex: 1 593px;
+    // max-width: 698px;
+    background: 
+        url('../assets/images/start-screen-puppy.png') 
+        bottom right / contain 
+        no-repeat
+    ;
+
+    @media (width < $mobile-breakpoint) {
+        min-height: 271.77px;
+    }
 }
 
 
@@ -176,6 +235,8 @@ a {
     justify-content: center;
     column-gap: 120px;
     align-items: center;
+    flex-wrap: wrap-reverse;
+    row-gap: 80px;
 }
 
 .about-content {
@@ -199,48 +260,37 @@ a {
     row-gap: 60px;
 }
 
-
-// Our Pets page
-.all-pets-section {
-    @include section($color-light)
-}
-
-.all-pets-section__container {
-    display: flex;
-    flex-direction: column;
-    row-gap: 60px;
-    align-items: center;
-    .section-header {
-        text-align: center;
-    }
-}
-
-.page {
-    display: flex;
-    gap: 30px 40px;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.page-controls {
-    display: flex;
-    column-gap: 20px;
-    justify-content: center;
-}
-// ---------
-
 .slider {
+    align-self: stretch;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    column-gap: 53px;
+    column-gap: 8px;
+    // column-gap: 53px;
+}
+
+.slider__window {
+    flex: 1;
+    container: slider-window / inline-size;
 }
 
 .slider__row {
     display: flex;
-    justify-content: center;
-    column-gap: 90px;
+    justify-content: space-around;
+    // column-gap: 90px;
+
+    > :last-child {
+        @container (inline-size < 850px) {
+            display: none;
+        }
+    }
+    
+    > :nth-last-child(2) {
+        @container (inline-size < 570px) {
+            display: none;
+        }
+    }
 }
 
 .pet-card {
@@ -296,6 +346,16 @@ a {
     flex-wrap: wrap;
     justify-content: center;
     gap: 55px 120px;
+
+    @media (width <= 768px) {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 60px;
+
+        @media (width < 540px) {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
 }
 
 .help-item {
@@ -315,6 +375,8 @@ a {
     column-gap: 30px;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap-reverse;
+    row-gap: 60px;
 }
 
 .donation-content {
@@ -322,6 +384,10 @@ a {
     flex-direction: column;
     row-gap: 20px;
     align-items: flex-start;
+}
+
+.donation-img {
+    width: min(81.25vw, 505px);
 }
 
 .bank-account {
@@ -345,27 +411,60 @@ a {
         radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), 
         #211F20)
     ;
-    padding: 0;
+    padding-top: 30px;
+    padding-bottom: 0;
     color: $special-color;
     .section-header {
         color: $color-light-x;
     }
-    min-height: 350px;
 }
 
 .footer__container {
     display: flex;
     justify-content: space-between;
+    row-gap: 25px;
+    column-gap: 20px;
+    
+    @media (width < 987px) {
+        flex-wrap: wrap;
+        > * {
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .footer-content {
+            max-width: none;
+            padding-right: 34px;
+            padding-left: 34px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            row-gap: 40px;
+            > * {
+                margin: 0 auto;
+            }
+        }
+    }
 }
 
 .footer-img {
-    align-self: flex-end;
+    margin-top: 10px;
+    flex: 1 260px;
+    max-width: 300px;
+    height: min(86.77vw, 310px);
+    background: 
+        url("../assets/images/footer-puppy.png")
+        bottom right / contain
+        no-repeat
+    ;
 }
 
 .footer-content {
     display: flex;
     align-items: center;
-    column-gap: 160px;
+    justify-content: space-between;
+    column-gap: 60px;
+    max-width: 740px;
+    flex: 1 640px;
+    margin-bottom: 30px;
 }
 
 .footer-subsection {
@@ -388,10 +487,46 @@ a {
     }
 }
 
+
+// Our Pets page
+.all-pets-section {
+    @include section($color-light)
+}
+
+.all-pets-section__container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 60px;
+    align-items: center;
+    .section-header {
+        text-align: center;
+    }
+}
+
+.page {
+    display: flex;
+    gap: 30px 40px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.page-controls {
+    display: flex;
+    column-gap: 20px;
+    justify-content: center;
+}
+// ---------
+
 // Text styles
 
 .main-header {
     font: 44px/57px Georgia;
+    @media (width < $mobile-breakpoint) {
+        font: 25px/32px Georgia;
+        letter-spacing: 0.06em;
+        text-align: center;
+    }
 }
 
 .section-header {
