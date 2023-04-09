@@ -389,25 +389,11 @@ a {
 
 .slider__window {
     flex: 1;
-    container: slider-window / inline-size;
 }
 
 .slider__row {
     display: flex;
     justify-content: space-around;
-    // column-gap: 90px;
-
-    > :last-child {
-        @container (inline-size < 850px) {
-            display: none;
-        }
-    }
-    
-    > :nth-last-child(2) {
-        @container (inline-size < 570px) {
-            display: none;
-        }
-    }
 }
 
 .pet-card {
