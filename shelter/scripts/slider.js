@@ -1,30 +1,47 @@
 import {Pets} from './pets.js'
 
-const Slider = new class {
-    constructor() {
-        const slider = document.querySelector('.slider')
+class Slider {
+    constructor(elem) {
+        this.slider = elem
 
-        const initialSet = getRandomNum(8, 3)
-        this.cardNumSets = {
-            current: initialSet,
-            right: getRandomNum(8, 3, initialSet),
-            left: getRandomNum(8, 3, initialSet)
+        this.mediaMatches = {
+            tablet: window.matchMedia('(min-width: 750px)'),
+            desktop: window.matchMedia('(min-width: 1100px)'),
+        }
+        debugger
+        [this.mediaMatches.tablet, this.mediaMatches.desktop].forEach(query => {
+            query.addEventListener('change', this.render.bind(this))
+        })
+
+        const buttons = this.slider.querySelectorAll('[data-direction]')
+        for (const button of buttons) {
+            button.addEventListener('click', this.buttonListener.bind(this))
         }
 
-        this.rowElem = slider.querySelector('.slider__row')
+        this.render()
+
+        
+    }
+
+    render() {
+        const initialSet = this.getSet()
+        this.cardNumSets = {
+            current: initialSet,
+            right: this.getSet(initialSet),
+            left: this.getSet(initialSet)
+        }
+
+        this.rowElem = this.slider.querySelector('.slider__row')
+        this.rowElem.replaceChildren()
         this.rowElem.append(
             this.createSlide(this.cardNumSets.left), 
             this.createSlide(this.cardNumSets.current), 
             this.createSlide(this.cardNumSets.right)
         )
-
-        const buttons = slider.querySelectorAll('[data-direction]')
-        for (const button of buttons) {
-            button.addEventListener('click', this.buttonListener.bind(this))
-        }
     }
 
     buttonListener(event) {
+        console.log('button')
         /* 
         три слайда (сдвинуто на -100)
         - кнопка вправо:
@@ -51,20 +68,18 @@ const Slider = new class {
             this.rowElem.classList.remove('slider__row_slide-right')
 
             this.rowElem.firstElementChild.remove()
-            const newSet = getRandomNum(8, 3, this.cardNumSets.right)
+            const newSet = this.getSet(this.cardNumSets.right)
             this.rowElem.append(this.createSlide(newSet))
-            debugger
-
+            
             this.cardNumSets.left = this.cardNumSets.current
             this.cardNumSets.current = this.cardNumSets.right
             this.cardNumSets.right = newSet
-            debugger
         }
 
         function addFirstDeleteThird() {
             this.rowElem.classList.remove('slider__row_slide-left')
 
-            const newSet = getRandomNum(8, 3, this.cardNumSets.left)
+            const newSet = this.getSet(this.cardNumSets.left)
             this.rowElem.prepend(this.createSlide(newSet))
             this.rowElem.lastElementChild.remove()
 
@@ -80,7 +95,28 @@ const Slider = new class {
         slide.append(...Pets.getCards(cardNums))
         return slide
     }
+
+    getSet(apart) {
+        const cardsAmount = (() => {
+            if (this.mediaMatches.desktop.matches) {
+                return 3
+            }
+            if (this.mediaMatches.tablet.matches) {
+                return 2
+            }
+            return 1
+        })()
+
+        return getRandomNum(
+            Pets.amount, 
+            cardsAmount,
+            apart
+        )
+    }
 }
+
+const sliders = document.querySelectorAll('.slider')
+sliders.forEach(elem => new Slider(elem))
 
 function getRandomNum(range, take = 1, apart = []) {
     let source = Array.from(Array(range).keys())
@@ -94,4 +130,3 @@ function getRandomNum(range, take = 1, apart = []) {
     }
     return result
 }
-// console.log(getRandomNum(range = 9))
