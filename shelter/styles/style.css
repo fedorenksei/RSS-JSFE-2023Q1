@@ -374,9 +374,10 @@ a {
 
 .slider {
   align-self: stretch;
-  display: flex;
-  justify-content: center;
+  max-width: 100%;
   align-items: center;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   -moz-column-gap: 8px;
        column-gap: 8px;
 }
@@ -395,10 +396,29 @@ a {
 
 .slider__window {
   flex: 1;
+  overflow-x: hidden;
+}
+
+.slider__row {
+  max-width: 100%;
+  display: grid;
+  grid-auto-columns: 100%;
+  grid-auto-flow: column;
+  transform: translate(-100%);
+}
+.slider__row.slider__row_slide-right {
+  transition: transform 0.7s ease-in-out;
+  transform: translate(-200%);
+}
+.slider__row.slider__row_slide-left {
+  transition: transform 0.7s ease-in-out;
+  transform: translate(0);
 }
 
 .slider__slide {
-  display: flex;
+  width: 100%;
+  display: grid;
+  grid-auto-flow: column;
   justify-content: space-around;
 }
 
@@ -849,6 +869,7 @@ a {
   font: 17px/22px Georgia;
   letter-spacing: 0.06em;
   text-decoration: none;
+  cursor: pointer;
   transition: background-color 0.3s, transform 0.1s;
 }
 .button_hollow:hover, .button_filled:hover {

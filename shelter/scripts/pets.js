@@ -37,6 +37,9 @@ HTML + CSS + JS
 import petsData from './pets-data.json' assert {type: 'json'}
 
 export const Pets = new class {
+    getAmount() {
+        return petsData.length
+    }
     getCard(petNum) {
         const petData = petsData[petNum]
         const petName = petData.name
