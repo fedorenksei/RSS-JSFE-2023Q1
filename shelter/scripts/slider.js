@@ -5,13 +5,17 @@ const Slider = new class {
         const slider = document.querySelector('.slider')
 
         const initialSet = getRandomNum(8, 3)
-        this.currentSet = initialSet
-        const firstSlide = this.createSlide(initialSet)
+        this.cardNumSets = {
+            current: initialSet,
+            right: getRandomNum(8, 3, initialSet),
+            left: getRandomNum(8, 3, initialSet)
+        }
+
         this.rowElem = slider.querySelector('.slider__row')
         this.rowElem.append(
-            this.createSlide(getRandomNum(8, 3, initialSet)), 
-            firstSlide,
-            this.createSlide(getRandomNum(8, 3, initialSet))
+            this.createSlide(this.cardNumSets.left), 
+            this.createSlide(this.cardNumSets.current), 
+            this.createSlide(this.cardNumSets.right)
         )
 
         const buttons = slider.querySelectorAll('[data-direction]')
@@ -45,21 +49,29 @@ const Slider = new class {
 
         function deleteFirstAddThird() {
             this.rowElem.classList.remove('slider__row_slide-right')
+
             this.rowElem.firstElementChild.remove()
-            this.rowElem.append(this.getNewSlide())
+            const newSet = getRandomNum(8, 3, this.cardNumSets.right)
+            this.rowElem.append(this.createSlide(newSet))
+            debugger
+
+            this.cardNumSets.left = this.cardNumSets.current
+            this.cardNumSets.current = this.cardNumSets.right
+            this.cardNumSets.right = newSet
+            debugger
         }
 
         function addFirstDeleteThird() {
             this.rowElem.classList.remove('slider__row_slide-left')
-            this.rowElem.prepend(this.getNewSlide())
-            this.rowElem.lastElementChild.remove()
-        }
-    }
 
-    getNewSlide() {
-        const newSet = getRandomNum(8, 3, this.currentSet || [])
-        this.currentSet = newSet
-        return this.createSlide(newSet)
+            const newSet = getRandomNum(8, 3, this.cardNumSets.left)
+            this.rowElem.prepend(this.createSlide(newSet))
+            this.rowElem.lastElementChild.remove()
+
+            this.cardNumSets.right = this.cardNumSets.current
+            this.cardNumSets.current = this.cardNumSets.left
+            this.cardNumSets.left = newSet
+        }
     }
 
     createSlide(cardNums) {
