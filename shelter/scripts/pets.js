@@ -83,12 +83,12 @@ class Card {
 
     closePopUp(event) {
         const bg = document.querySelector('.popup__bg')
-        bg.querySelector('.popup__img').src = ''
-
+        
         if (event.target !== bg 
             && !document.querySelector('[data-button="close-popup"]').contains(event.target)
         ) return
-
+        
+        bg.querySelector('.popup__img').src = ''
         bg.classList.remove('popup__bg_active')
     }
 }
