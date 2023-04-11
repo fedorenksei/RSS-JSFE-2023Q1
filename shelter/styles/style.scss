@@ -69,92 +69,19 @@ a {
 .header__container {
     display: flex;
     justify-content: space-between;
-    .bg-shadow {
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        visibility: hidden;
-        height: 100%;
-        width: 100vw;
-        background-color: rgba(41, 41, 41, 0);
-        transition: background-color 0.5s, visibility 0.5s;
-        cursor: pointer;
-    }
     @media (width < 768px) {
-        padding-left: 8px;
-        padding-right: 8px;
+        padding-left: 10px;
+        padding-right: 10px;
         .nav {
-            position: fixed;
-            z-index: 2;
-            top: 0;
-            left: 100%;
-            height: 100%;
-            width: 320px;
-    
-            display: grid;
-            grid-auto-rows: min-content;
-            row-gap: 40px;
-            align-content: center;
-            justify-items: center;
-    
-            background-color: #292929;
-            * {
-                font-size: 32px;
-                line-height: 160%;
-            }
-    
-            transition: transform 0.5s;
-            &.nav_opened {
-                transform: translateX(-320px);
-            }
-    
-            .nav__item {
-                cursor: pointer;
-            }
+            display: none;
         }
-    
-        .burger-icon {
-            display: grid;
-        }
-        
-        .nav_opened {
-
-            ~ .burger-icon {
-                transform: rotate(90deg);
-            }
-
-            ~ .bg-shadow {
-                visibility: visible;
-                background-color: rgba(41, 41, 41, 0.6);
-            }
+        &::after {
+            content: url('../assets/icons/burger.svg');
+            margin-bottom: 19px;
+            align-self: flex-end;
         }
     }
 }
-
-@media (width < 768px) {
-    body:has(.nav_opened) {
-        overflow-y: hidden;
-    }
-}
-
-.burger-icon {
-    margin-bottom: 19px;
-    align-self: flex-end;
-    
-    position: relative;
-    z-index: 3;
-    display: none;
-    grid-template-columns: 30px;
-    grid-template-rows: repeat(3, 2px);
-    row-gap: 8px;
-    .burger-icon__bar {
-        background-color: $special-color;
-    }
-    transition: transform 0.5s;
-    cursor: pointer;
-}
-
 
 .logo {
     align-self: flex-end;
@@ -242,17 +169,6 @@ a {
     .logo:active .logo__title,
     .logo:active .logo__subtitle {
         color: #1A1A1C;
-    }
-
-    .burger-icon__bar {
-        background: #000000;
-    }
-
-    @media (width < 768px) {
-        .nav,
-        .nav_opened {
-            background-color: #FFFFFF
-        }
     }
 }
 
