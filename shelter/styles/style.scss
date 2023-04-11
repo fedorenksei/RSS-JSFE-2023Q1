@@ -33,18 +33,16 @@ a {
 
 @mixin section($bg-color...) {
     display: grid;
-    grid-template-columns: 1fr;
-    $padding-aside: clamp(10px, 3.90625%, 40px);
-    padding: 80px $padding-aside 100px $padding-aside;
+    grid-template-columns: minmax(min-content, 1200px);
     justify-content: center;
     background: $bg-color;
+    padding: 80px 0 100px 0;
 }
 
 
 .header {
     @include section(transparent);
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
     height: 90px;
     position: absolute;
     top: 0;
@@ -152,56 +150,29 @@ a {
         radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
         #211F20)
     ;
-    min-height: 908px;
-    padding-bottom: 0;
+    padding: 0;
+    height: 908px;
     padding-top: 90px;
     color: $color-light-x;
 }
 
 .intro {
-    // display: grid;
-    // grid-template-columns: minmax(310px, 1fr) minmax(569px, 1fr);
-    column-gap: 40px;
-
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    row-gap: 10px;
-    padding-top: 60px;
-
-    @media (width < 1023px) {
-        .button_filled {
-            align-self: center;
-        }
-    }
 }
 
 .intro__content {
-    // place-self: center;
     align-self: center;
-    max-width: 460px;
-    flex: 1 310px;
-    margin: 0 auto 60px auto;
 
+    max-width: 460px;
+    
     display: flex;
     flex-direction: column;
     row-gap: 42px;
 }
 
 .intro__img {
-    // place-self: end end;
-
-    // align-self: stretch;
-    // max-height: 728px;
-    margin-top: 30px;
-    min-height: 593px;
-    flex: 1 593px;
-    // max-width: 698px;
-    background: 
-        url('../assets/images/start-screen-puppy.png') 
-        bottom right / contain 
-        no-repeat
-    ;
+    align-self: flex-end;
 }
 
 
@@ -214,7 +185,6 @@ a {
     justify-content: center;
     column-gap: 120px;
     align-items: center;
-    flex-wrap: wrap;
 }
 
 .about-content {
@@ -259,13 +229,13 @@ a {
     // column-gap: 90px;
 
     :last-child {
-        @container (inline-size < 850px) {
+        @container (inline-size < 830px) {
             display: none;
         }
     }
     
     :nth-last-child(2) {
-        @container (inline-size < 570px) {
+        @container (inline-size < 550px) {
             display: none;
         }
     }
@@ -384,7 +354,6 @@ a {
 .footer__container {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
 }
 
 .footer-img {

@@ -25,12 +25,11 @@ a {
 
 .header {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
+  grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
   background: transparent;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 80px 0 100px 0;
+  padding: 0;
   height: 90px;
   position: absolute;
   top: 0;
@@ -120,54 +119,39 @@ a {
 
 .start-section {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
+  grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
   background: url("../assets/images/noise_transparent.png") repeat, radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%), #211F20;
-  min-height: 908px;
-  padding-bottom: 0;
+  padding: 80px 0 100px 0;
+  padding: 0;
+  height: 908px;
   padding-top: 90px;
   color: #FFFFFF;
 }
 
 .intro {
-  -moz-column-gap: 40px;
-       column-gap: 40px;
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
-  row-gap: 10px;
-  padding-top: 60px;
-}
-@media (width < 1023px) {
-  .intro .button_filled {
-    align-self: center;
-  }
 }
 
 .intro__content {
   align-self: center;
   max-width: 460px;
-  flex: 1 310px;
-  margin: 0 auto 60px auto;
   display: flex;
   flex-direction: column;
   row-gap: 42px;
 }
 
 .intro__img {
-  margin-top: 30px;
-  min-height: 593px;
-  flex: 1 593px;
-  background: url("../assets/images/start-screen-puppy.png") bottom right/contain no-repeat;
+  align-self: flex-end;
 }
 
 .about-section {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
+  grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
   background: #FFFFFF;
+  padding: 80px 0 100px 0;
 }
 
 .about-section__container {
@@ -176,7 +160,6 @@ a {
   -moz-column-gap: 120px;
        column-gap: 120px;
   align-items: center;
-  flex-wrap: wrap;
 }
 
 .about-content {
@@ -188,10 +171,10 @@ a {
 
 .friends-section {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
+  grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
   background: #F6F6F6;
+  padding: 80px 0 100px 0;
 }
 .friends-section .section-header {
   text-align: center;
@@ -222,12 +205,12 @@ a {
   display: flex;
   justify-content: space-around;
 }
-@container (inline-size < 850px) {
+@container (inline-size < 830px) {
   .slider__row :last-child {
     display: none;
   }
 }
-@container (inline-size < 570px) {
+@container (inline-size < 550px) {
   .slider__row :nth-last-child(2) {
     display: none;
   }
@@ -265,10 +248,10 @@ a {
 
 .help-section {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
+  grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
   background: #FFFFFF;
+  padding: 80px 0 100px 0;
 }
 
 .help-section__container {
@@ -298,10 +281,10 @@ a {
 
 .donation-section {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
+  grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
   background: #F6F6F6;
+  padding: 80px 0 100px 0;
 }
 
 .donation-section__container {
@@ -336,10 +319,10 @@ a {
 
 .footer {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
+  grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
   background: url("../assets/images/noise_transparent.png"), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
+  padding: 80px 0 100px 0;
   padding: 0;
   color: #F1CDB3;
   min-height: 350px;
@@ -351,7 +334,6 @@ a {
 .footer__container {
   display: flex;
   justify-content: space-between;
-  flex-wrap: wrap;
 }
 
 .footer-img {
@@ -387,10 +369,10 @@ a {
 
 .all-pets-section {
   display: grid;
-  grid-template-columns: 1fr;
-  padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
+  grid-template-columns: minmax(min-content, 1200px);
   justify-content: center;
   background: #F6F6F6;
+  padding: 80px 0 100px 0;
 }
 
 .all-pets-section__container {
