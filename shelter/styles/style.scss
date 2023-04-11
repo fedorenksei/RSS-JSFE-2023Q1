@@ -53,17 +53,6 @@ a {
     flex-direction: column;
     row-gap: 10px;
     align-items: end;
-
-    &:hover .logo__title,
-    &:hover .logo__subtitle {
-        transition: $transition-time;
-        color: $special-color-light;
-    }
-
-    &:active .logo__title,
-    &:active .logo__subtitle {
-        color: #FFFFFF;
-    }
 }
 
 .logo__title {
@@ -131,6 +120,7 @@ a {
 
     .logo:active .logo__title,
     .logo:active .logo__subtitle {
+        transition: $transition-time;
         color: #1A1A1C;
     }
 }
