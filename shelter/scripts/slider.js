@@ -33,10 +33,10 @@ const Slider = new class {
         const direction = event.target.dataset.direction
         if (direction === 'right') {
             this.rowElem.classList.add('slider__row_slide-right')
-            this.rowElem.addEventListener('transitionend', deleteFirstAddThird.bind(this))
+            setTimeout(deleteFirstAddThird.bind(this), 700)
         } else {
             this.rowElem.classList.add('slider__row_slide-left')
-            this.rowElem.addEventListener('transitionend', addFirstDeleteThird.bind(this))
+            setTimeout(addFirstDeleteThird.bind(this), 700)
         }
 
         function deleteFirstAddThird() {
