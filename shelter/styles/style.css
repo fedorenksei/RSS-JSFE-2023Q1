@@ -368,11 +368,6 @@ a {
   row-gap: 60px;
   align-items: center;
 }
-@media (width < 426px) {
-  .help-section__container {
-    row-gap: 42px;
-  }
-}
 .help-section__container .section-header {
   text-align: center;
 }
@@ -394,9 +389,6 @@ a {
 @media (width <= 768px) and (width < 540px) {
   .help-items {
     grid-template-columns: repeat(2, 1fr);
-    row-gap: 30px;
-    -moz-column-gap: 35px;
-         column-gap: 35px;
   }
 }
 
@@ -406,20 +398,6 @@ a {
   align-items: center;
   height: 113px;
   justify-content: space-between;
-}
-@media (width < 426px) {
-  .help-item {
-    height: auto;
-    row-gap: 20px;
-  }
-  .help-item img {
-    height: 50px;
-  }
-  .help-item .third-header {
-    font: 15px/17px Georgia;
-    letter-spacing: 0.06em;
-    text-align: center;
-  }
 }
 
 .donation-section {
@@ -445,28 +423,12 @@ a {
   flex-wrap: wrap-reverse;
   row-gap: 60px;
 }
-@media (width < 426px) {
-  .donation-section__container {
-    row-gap: 42px;
-  }
-}
 
 .donation-content {
   display: flex;
   flex-direction: column;
   row-gap: 20px;
   align-items: flex-start;
-}
-@media (width < 426px) {
-  .donation-content {
-    align-items: center;
-  }
-}
-@media (width < 426px) {
-  .donation-content .info-font {
-    font: 15px/17px Georgia;
-    text-align: left;
-  }
 }
 
 .donation-img,
@@ -495,8 +457,8 @@ a {
   padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
   justify-content: center;
   background: url("../assets/images/noise_transparent.png"), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
-  padding-top: 30px !important;
-  padding-bottom: 0 !important;
+  padding-top: 30px;
+  padding-bottom: 0;
   color: #F1CDB3;
 }
 @media (width < 426px) {
@@ -512,13 +474,9 @@ a {
 .footer__container {
   display: flex;
   justify-content: space-between;
+  row-gap: 25px;
   -moz-column-gap: 20px;
        column-gap: 20px;
-}
-@media (width >= 426px) {
-  .footer__container {
-    row-gap: 25px;
-  }
 }
 @media (width < 987px) {
   .footer__container {
@@ -530,18 +488,12 @@ a {
   }
   .footer__container .footer-content {
     max-width: none;
+    padding-right: 34px;
+    padding-left: 34px;
     flex-wrap: wrap;
     justify-content: space-between;
     row-gap: 40px;
   }
-}
-@media (width < 987px) and (width >= 426px) {
-  .footer__container .footer-content {
-    padding-right: 34px;
-    padding-left: 34px;
-  }
-}
-@media (width < 987px) {
   .footer__container .footer-content > * {
     margin: 0 auto;
   }
@@ -567,10 +519,10 @@ a {
 }
 
 .footer-subsection {
+  height: 234px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  row-gap: 43px;
 }
 
 .footer-item {
@@ -678,13 +630,6 @@ a {
   font: 15px/17px Georgia;
   letter-spacing: 0.06em;
 }
-@media (width < 426px) {
-  .bank-name {
-    line-height: 24px;
-    letter-spacing: 0px;
-    text-align: left;
-  }
-}
 
 .info-font {
   font: 20px/23px Georgia;
@@ -695,11 +640,6 @@ a {
   max-width: 380px;
   font: italic 12px/18px Arial;
   color: #B2B2B2;
-}
-@media (width < 426px) {
-  .legal-info {
-    text-align: justify;
-  }
 }
 
 .paragraph-l, .nav__item {
