@@ -427,7 +427,6 @@ a {
 }
 
 .pet-card {
-  max-width: 270px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -756,9 +755,8 @@ a {
 }
 
 .all-pets-section__container {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   row-gap: 60px;
   align-items: center;
 }
@@ -766,43 +764,28 @@ a {
   .all-pets-section__container {
     row-gap: 30px;
   }
+  .all-pets-section__container .page > :nth-last-child(-n+2) {
+    display: none;
+  }
   .all-pets-section__container .page {
     margin-bottom: 10px;
+  }
+}
+@media (width < 780px) and (width < 426px) {
+  .all-pets-section__container .page > :nth-last-child(-n+5) {
+    display: none;
   }
 }
 .all-pets-section__container .section-header {
   text-align: center;
 }
 
-.pages__window {
-  max-width: 100%;
-  align-self: flex-start;
-  overflow-x: hidden;
-}
-
-.pages__row {
-  max-width: 100%;
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: 100%;
-  transition: transform 0.7s;
-}
-
 .page {
-  display: grid;
+  display: flex;
   gap: 30px 40px;
-  justify-content: space-around;
-  grid-template-columns: repeat(1, auto);
-}
-@media (min-width: 750px) {
-  .page {
-    grid-template-columns: repeat(2, auto);
-  }
-}
-@media (min-width: 1279px) {
-  .page {
-    grid-template-columns: repeat(4, auto);
-  }
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .page-controls {
@@ -919,7 +902,6 @@ a {
   color: #CDCDCD;
   background-color: transparent;
   box-shadow: inset 0px 0px 0px 2px #CDCDCD;
-  cursor: auto;
 }
 
 .circle-button {

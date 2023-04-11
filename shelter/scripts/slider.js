@@ -1,5 +1,4 @@
 import {Pets} from './pets.js'
-import {getRandomNum} from './random.js'
 
 class Slider {
     constructor(elem) {
@@ -9,7 +8,7 @@ class Slider {
             tablet: window.matchMedia('(min-width: 750px)'),
             desktop: window.matchMedia('(min-width: 1100px)'),
         }
-
+        
         for (const query of [this.mediaMatches.tablet, this.mediaMatches.desktop]) {
             query.addEventListener('change', this.render.bind(this))
         }
@@ -115,3 +114,16 @@ class Slider {
 
 const sliders = document.querySelectorAll('.slider')
 sliders.forEach(elem => new Slider(elem))
+
+function getRandomNum(range, take = 1, apart = []) {
+    let source = Array.from(Array(range).keys())
+    source = source.filter(el => !apart.includes(el))
+    
+    let result = []
+    while (result.length < take && source.length > 0) {
+        const index = Math.floor(Math.random() * source.length)
+        result.push(source[index])
+        source.splice(index, 1)
+    }
+    return result
+}
