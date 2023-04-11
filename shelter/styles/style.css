@@ -203,38 +203,6 @@ a {
   justify-content: space-between;
 }
 
-.donation-section {
-  display: grid;
-  grid-template-columns: minmax(min-content, 1200px);
-  justify-content: center;
-  background-color: #F6F6F6;
-  padding: 80px 0 100px 0;
-}
-
-.donation-section__container {
-  display: flex;
-  -moz-column-gap: 30px;
-       column-gap: 30px;
-  align-items: center;
-  justify-content: center;
-}
-
-.donation-content {
-  display: flex;
-  flex-direction: column;
-  row-gap: 20px;
-  align-items: flex-start;
-}
-
-.bank-account {
-  padding: 10px 15px;
-  display: flex;
-  -moz-column-gap: 15px;
-       column-gap: 15px;
-  background-color: #F1CDB3;
-  border-radius: 9px;
-}
-
 .main-header {
   font: 44px/57px Georgia;
 }
@@ -248,22 +216,6 @@ a {
   font: 20px/23px Georgia;
   letter-spacing: 0.06em;
   text-align: center;
-}
-
-.bank-name {
-  font: 15px/17px Georgia;
-  letter-spacing: 0.06em;
-}
-
-.bank-account__numbers {
-  font: 20px/23px Georgia;
-  letter-spacing: 0.06em;
-}
-
-.legal-info {
-  max-width: 380px;
-  font: italic 12px/18px Arial;
-  color: #B2B2B2;
 }
 
 .paragraph-l, .nav__item {
