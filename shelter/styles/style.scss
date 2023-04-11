@@ -55,16 +55,6 @@ a {
 .header__container {
     display: flex;
     justify-content: space-between;
-    @media (width < 768px) {
-        .nav {
-            display: none;
-        }
-        &::after {
-            content: url('../assets/icons/burger.svg');
-            margin-bottom: 19px;
-            align-self: flex-end;
-        }
-    }
 }
 
 .logo {
@@ -338,12 +328,8 @@ a {
 
     @media (width <= 768px) {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 1fr 1fr 1fr;
         column-gap: 60px;
-
-        @media (width < 540px) {
-            grid-template-columns: repeat(2, 1fr);
-        }
     }
 }
 
@@ -373,10 +359,6 @@ a {
     flex-direction: column;
     row-gap: 20px;
     align-items: flex-start;
-}
-
-.donation-img {
-    width: min(81.25vw, 505px);
 }
 
 .bank-account {
@@ -438,7 +420,7 @@ a {
     margin-top: 10px;
     flex: 1 260px;
     max-width: 300px;
-    height: min(86.77vw, 310px);
+    height: max(0.83vw, 310px);
     background: 
         url("../assets/images/footer-puppy.png")
         bottom right / contain
