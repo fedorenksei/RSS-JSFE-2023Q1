@@ -178,39 +178,27 @@ a {
         radial-gradient(100% 215.42% at 0% 0%, #5B483A 0%, #262425 100%),
         #211F20)
     ;
-    // // min-height: 908px;
-    // @media (width < $mobile-breakpoint) {
-    //     // min-height: 823px;
-    // }
+    min-height: 908px;
+    @media (width < $mobile-breakpoint) {
+        min-height: 823px;
+    }
     padding-bottom: 0 !important;
     padding-top: 90px !important;
     color: $color-light-x;
 }
 
 .intro {
-    display: grid;
-    gap: 40px;
+    // display: grid;
+    // grid-template-columns: minmax(310px, 1fr) minmax(569px, 1fr);
+    column-gap: 40px;
 
-    $breakpoint: 1023px;
-    
-    @media (width > $breakpoint) {
-        grid-template-columns: 460px 1fr;
-        column-gap: 40px;
-        .intro__img {
-            width: 100%;
-            margin-top: 90px;
-        }
-        .button_filled {
-            align-self: start;
-        }
-    }
-    @media (width < $breakpoint) {
-        padding-top: 60px;
-        row-gap: 100px;
-        .intro__img {
-            width: max(260px, 74.0885416666667vw);
-            max-width: 698px;
-        }
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    padding-top: 60px !important;
+
+    @media (width < 1023px) {
         .button_filled {
             align-self: center;
         }
@@ -218,9 +206,11 @@ a {
 }
 
 .intro__content {
+    // place-self: center;
     align-self: center;
     max-width: 460px;
-    margin: 0 auto;
+    flex: 1 310px;
+    margin: 0 auto 60px auto;
 
     display: flex;
     flex-direction: column;
@@ -235,7 +225,23 @@ a {
 }
 
 .intro__img {
-    margin-left: auto;
+    // place-self: end end;
+
+    // align-self: stretch;
+    // max-height: 728px;
+    margin-top: 30px;
+    min-height: 593px;
+    flex: 1 593px;
+    // max-width: 698px;
+    background: 
+        url('../assets/images/start-screen-puppy.png') 
+        bottom right / contain 
+        no-repeat
+    ;
+
+    @media (width < $mobile-breakpoint) {
+        min-height: 271.77px;
+    }
 }
 
 
