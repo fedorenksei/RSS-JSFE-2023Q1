@@ -528,18 +528,14 @@ a {
     height: min(86.77vw, 310px);
     background: 
         url("../assets/images/footer-puppy.png")
-        bottom center / contain
+        bottom right / contain
         no-repeat
     ;
-    
 }
 
 .footer-content {
     display: flex;
     align-items: center;
-    @media (width < $mobile-breakpoint) {
-        align-items: flex-start;
-    }
     justify-content: space-between;
     column-gap: 60px;
     max-width: 740px;
@@ -548,24 +544,11 @@ a {
 }
 
 .footer-subsection {
-    height: 234px;
-    @media (width < $mobile-breakpoint) {
-        height: auto;
-        row-gap: 41px;
-    }
+    // height: 234px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    @media (width < $mobile-breakpoint) {
-        align-items: center;
-        &.address .footer-item {
-            align-self: flex-start;
-        }
-    }
-
-    .section-header {
-        max-width: 279px;
-    }
+    row-gap: 43px;
 }
 
 .footer-item {

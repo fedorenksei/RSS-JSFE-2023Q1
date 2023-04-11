@@ -590,7 +590,7 @@ a {
   flex: 1 260px;
   max-width: 300px;
   height: min(86.77vw, 310px);
-  background: url("../assets/images/footer-puppy.png") bottom center/contain no-repeat;
+  background: url("../assets/images/footer-puppy.png") bottom right/contain no-repeat;
 }
 
 .footer-content {
@@ -603,34 +603,12 @@ a {
   flex: 1 640px;
   margin-bottom: 30px;
 }
-@media (width < 426px) {
-  .footer-content {
-    align-items: flex-start;
-  }
-}
 
 .footer-subsection {
-  height: 234px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-}
-@media (width < 426px) {
-  .footer-subsection {
-    height: auto;
-    row-gap: 41px;
-  }
-}
-@media (width < 426px) {
-  .footer-subsection {
-    align-items: center;
-  }
-  .footer-subsection.address .footer-item {
-    align-self: flex-start;
-  }
-}
-.footer-subsection .section-header {
-  max-width: 279px;
+  row-gap: 43px;
 }
 
 .footer-item {
