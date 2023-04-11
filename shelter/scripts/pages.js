@@ -1,5 +1,4 @@
 import {Pets} from './pets.js'
-import {getRandomNum} from './random.js'
 
 class Pages {
     constructor(elem) {

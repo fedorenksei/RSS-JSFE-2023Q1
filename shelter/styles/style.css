@@ -116,7 +116,8 @@ a {
 }
 
 @media (width < 768px) {
-  body:has(.nav_opened) {
+  body:has(.nav_opened),
+  body:has(.popup__bg.popup__bg_active) {
     overflow-y: hidden;
   }
 }
@@ -926,4 +927,109 @@ a {
   padding: 0;
   height: 52px;
   width: 52px;
+}
+
+.popup__bg {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  cursor: pointer;
+  background-color: transparent;
+  display: grid;
+  place-items: center;
+}
+.popup__bg.popup__bg_active {
+  visibility: visible;
+  background-color: rgba(41, 41, 41, 0.6);
+}
+
+.popup__card {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  width: 75vw;
+  background-color: #FAFAFA;
+  border-radius: 9px;
+  cursor: auto;
+}
+.popup__card .popup__info {
+  justify-self: center;
+  grid-column: 2;
+  display: grid;
+  align-content: start;
+  row-gap: 20px;
+  padding: 10px 10px 10px 11px;
+}
+.popup__card .popup__name {
+  font: 35px/45.5px Georgia;
+  letter-spacing: 0.06em;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.popup__card .popup__type {
+  font: 20px/23px Georgia;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+.popup__card .popup__description {
+  max-width: 350px;
+  font: 13px/14px Georgia;
+  letter-spacing: 0.06em;
+  text-align: justified;
+}
+.popup__card .popup__img {
+  display: none;
+  border-radius: 9px;
+}
+.popup__card .popup__properties {
+  padding-left: 15px;
+  font: 15px/17px Georgia;
+  letter-spacing: 0.06em;
+  text-align: left;
+}
+.popup__card .popup__properties ul {
+  display: grid;
+  row-gap: 6px;
+}
+.popup__card .popup__properties .popup__prop {
+  font-weight: 700;
+}
+.popup__card .circle-button {
+  position: absolute;
+  right: -30px;
+  top: -52px;
+}
+@media (min-width: 750px) {
+  .popup__card {
+    width: min(82vw, 900px);
+  }
+  .popup__card .popup__name,
+  .popup__card .popup__type {
+    text-align: left;
+  }
+  .popup__card .popup__img {
+    display: unset;
+    width: 350px;
+  }
+  .popup__card .popup__info {
+    padding: 10px 9px 9px 11px;
+  }
+  .popup__card ul {
+    display: grid;
+    row-gap: 11px;
+  }
+}
+@media (min-width: 1279px) {
+  .popup__card .popup__img {
+    display: unset;
+    width: 500px;
+  }
+  .popup__card .popup__info {
+    row-gap: 40px;
+    padding: 50px 20px 20px 30px;
+  }
 }/*# sourceMappingURL=style.css.map */
