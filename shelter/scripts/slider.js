@@ -8,10 +8,10 @@ class Slider {
             tablet: window.matchMedia('(min-width: 750px)'),
             desktop: window.matchMedia('(min-width: 1100px)'),
         }
-        
-        for (const query of [this.mediaMatches.tablet, this.mediaMatches.desktop]) {
+        debugger
+        [this.mediaMatches.tablet, this.mediaMatches.desktop].forEach(query => {
             query.addEventListener('change', this.render.bind(this))
-        }
+        })
 
         const buttons = this.slider.querySelectorAll('[data-direction]')
         for (const button of buttons) {
@@ -19,6 +19,8 @@ class Slider {
         }
 
         this.render()
+
+        
     }
 
     render() {
@@ -39,6 +41,7 @@ class Slider {
     }
 
     buttonListener(event) {
+        console.log('button')
         /* 
         три слайда (сдвинуто на -100)
         - кнопка вправо:
