@@ -395,11 +395,22 @@ a {
 
 .slider__window {
   flex: 1;
+  container: slider-window/inline-size;
 }
 
 .slider__row {
   display: flex;
   justify-content: space-around;
+}
+@container (inline-size < 850px) {
+  .slider__row > :last-child {
+    display: none;
+  }
+}
+@container (inline-size < 570px) {
+  .slider__row > :nth-last-child(2) {
+    display: none;
+  }
 }
 
 .pet-card {
