@@ -18,9 +18,3 @@ for (var element of [bgShadow, ...navLinks]) {
 function closeMenu() {
     nav.classList.remove(menuOpenedClass)
 }
-
-
-const biggerScreenQuery = window.matchMedia('(min-width: 768px)')
-biggerScreenQuery.addEventListener('change', (event) => {
-    if (event.target.matches) closeMenu()
-})
