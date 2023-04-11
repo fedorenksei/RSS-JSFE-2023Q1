@@ -4,14 +4,12 @@ const Slider = new class {
     constructor() {
         const slider = document.querySelector('.slider')
 
-        const initialSet = getRandomNum(8, 3)
-        this.currentSet = initialSet
-        const firstSlide = this.createSlide(initialSet)
+        const firstSlide = this.createSlide(0, 1, 2)
         this.rowElem = slider.querySelector('.slider__row')
         this.rowElem.append(
-            this.createSlide(getRandomNum(8, 3, initialSet)), 
+            this.createSlide(3, 5, 6), 
             firstSlide,
-            this.createSlide(getRandomNum(8, 3, initialSet))
+            this.createSlide(4, 3, 7)
         )
 
         const buttons = slider.querySelectorAll('[data-direction]')
@@ -31,55 +29,40 @@ const Slider = new class {
             + сдвиг на 0
             + без анимации вставить новый первый слайд и вернуть на -100
          */
-        const button = event.target.closest('[data-direction]')
-        const direction = button.dataset.direction
+
+        const direction = event.target.dataset.direction
         if (direction === 'right') {
             this.rowElem.classList.add('slider__row_slide-right')
-            setTimeout(deleteFirstAddThird.bind(this), 700)
-            // this.rowElem.addEventListener('transitionend', deleteFirstAddThird.bind(this))
+            this.rowElem.addEventListener('transitionend', deleteFirstAddThird.bind(this))
         } else {
             this.rowElem.classList.add('slider__row_slide-left')
-            setTimeout(addFirstDeleteThird.bind(this), 700)
-            // this.rowElem.addEventListener('transitionend', addFirstDeleteThird.bind(this))
+            this.rowElem.addEventListener('transitionend', addFirstDeleteThird.bind(this))
         }
 
         function deleteFirstAddThird() {
             this.rowElem.classList.remove('slider__row_slide-right')
             this.rowElem.firstElementChild.remove()
-            this.rowElem.append(this.getNewSlide())
+            this.rowElem.append(this.createSlide(0, 0, 0))
         }
 
         function addFirstDeleteThird() {
             this.rowElem.classList.remove('slider__row_slide-left')
-            this.rowElem.prepend(this.getNewSlide())
+            this.rowElem.prepend(this.createSlide(1, 1, 1))
             this.rowElem.lastElementChild.remove()
         }
     }
 
-    getNewSlide() {
-        const newSet = getRandomNum(8, 3, this.currentSet || [])
-        this.currentSet = newSet
-        return this.createSlide(newSet)
+    
+
+    getNewCards() {
+
     }
 
-    createSlide(cardNums) {
+    createSlide(...cardNums) {
         const slide = document.createElement('div')
         slide.classList.add('slider__slide')
-        slide.append(...Pets.getCards(cardNums))
+        slide.append(...Pets.getCards(...cardNums))
         return slide
     }
 }
 
-function getRandomNum(range, take = 1, apart = []) {
-    let source = Array.from(Array(range).keys())
-    source = source.filter(el => !apart.includes(el))
-    
-    let result = []
-    while (result.length < take && source.length > 0) {
-        const index = Math.floor(Math.random() * source.length)
-        result.push(source[index])
-        source.splice(index, 1)
-    }
-    return result
-}
-// console.log(getRandomNum(range = 9))

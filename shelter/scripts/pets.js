@@ -62,7 +62,7 @@ export const Pets = new class {
         card.append(image, title, button)
         return card
     }
-    getCards(petNums) {
+    getCards(...petNums) {
         return petNums.map(num => this.getCard(num))
     }
 }
