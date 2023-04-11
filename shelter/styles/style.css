@@ -176,8 +176,7 @@ a {
   -moz-column-gap: 120px;
        column-gap: 120px;
   align-items: center;
-  flex-wrap: wrap-reverse;
-  row-gap: 80px;
+  flex-wrap: wrap;
 }
 
 .about-content {
@@ -224,12 +223,12 @@ a {
   justify-content: space-around;
 }
 @container (inline-size < 850px) {
-  .slider__row > :last-child {
+  .slider__row :last-child {
     display: none;
   }
 }
 @container (inline-size < 570px) {
-  .slider__row > :nth-last-child(2) {
+  .slider__row :nth-last-child(2) {
     display: none;
   }
 }
@@ -288,14 +287,6 @@ a {
   justify-content: center;
   gap: 55px 120px;
 }
-@media (width <= 768px) {
-  .help-items {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    -moz-column-gap: 60px;
-         column-gap: 60px;
-  }
-}
 
 .help-item {
   display: flex;
@@ -319,8 +310,6 @@ a {
        column-gap: 30px;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap-reverse;
-  row-gap: 60px;
 }
 
 .donation-content {
@@ -351,9 +340,9 @@ a {
   padding: 80px clamp(10px, 3.90625%, 40px) 100px clamp(10px, 3.90625%, 40px);
   justify-content: center;
   background: url("../assets/images/noise_transparent.png"), radial-gradient(110.67% 538.64% at 5.73% 50%, #513D2F 0%, #1A1A1C 100%), #211F20;
-  padding-top: 30px;
-  padding-bottom: 0;
+  padding: 0;
   color: #F1CDB3;
+  min-height: 350px;
 }
 .footer .section-header {
   color: #FFFFFF;
@@ -362,48 +351,18 @@ a {
 .footer__container {
   display: flex;
   justify-content: space-between;
-  row-gap: 25px;
-  -moz-column-gap: 20px;
-       column-gap: 20px;
-}
-@media (width < 987px) {
-  .footer__container {
-    flex-wrap: wrap;
-  }
-  .footer__container > * {
-    margin-right: auto;
-    margin-left: auto;
-  }
-  .footer__container .footer-content {
-    max-width: none;
-    padding-right: 34px;
-    padding-left: 34px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    row-gap: 40px;
-  }
-  .footer__container .footer-content > * {
-    margin: 0 auto;
-  }
+  flex-wrap: wrap;
 }
 
 .footer-img {
-  margin-top: 10px;
-  flex: 1 260px;
-  max-width: 300px;
-  height: max(0.83vw, 310px);
-  background: url("../assets/images/footer-puppy.png") bottom right/contain no-repeat;
+  align-self: flex-end;
 }
 
 .footer-content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  -moz-column-gap: 60px;
-       column-gap: 60px;
-  max-width: 740px;
-  flex: 1 640px;
-  margin-bottom: 30px;
+  -moz-column-gap: 160px;
+       column-gap: 160px;
 }
 
 .footer-subsection {
