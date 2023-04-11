@@ -11,7 +11,6 @@ body {
 
 a {
   text-decoration: none;
-  color: inherit;
 }
 
 .header {
@@ -26,6 +25,21 @@ a {
   top: 0;
   width: 100%;
   color: #FFFFFF;
+}
+
+.pets .header {
+  height: 120px;
+  padding-bottom: 30px;
+  position: static;
+}
+.pets .logo__title,
+.pets .nav__item {
+  color: #545454;
+}
+.pets .logo__subtitle,
+.pets .nav__item:hover,
+.pets .nav__item_active {
+  color: #292929;
 }
 
 .header__container {
@@ -62,44 +76,15 @@ a {
 .nav__item {
   color: #CDCDCD;
   border-bottom: 3px solid transparent;
-  transition: color 0.3s, border-bottom-color 0.3s;
+  transition: color 0.3s;
 }
 .nav__item:hover {
   color: #FAFAFA;
 }
-.nav__item:active {
-  border-bottom-color: #F1CDB3;
-}
 
 .nav__item_active {
   color: #FAFAFA;
-  transition: none;
   border-bottom-color: #F1CDB3;
-}
-
-.pets .header {
-  height: 120px;
-  padding-bottom: 30px;
-  position: static;
-}
-.pets .logo__title,
-.pets .nav__item {
-  color: #545454;
-}
-.pets .logo__subtitle,
-.pets .nav__item:hover,
-.pets .nav__item_active {
-  color: #292929;
-}
-.pets .logo:hover .logo__title,
-.pets .logo:hover .logo__subtitle {
-  transition: 0.3s;
-  color: #F1CDB3;
-}
-.pets .logo:active .logo__title,
-.pets .logo:active .logo__subtitle {
-  transition: 0.3s;
-  color: #1A1A1C;
 }
 
 .start-section {
@@ -229,14 +214,6 @@ a {
   background-color: #FAFAFA;
   border-radius: 9px;
 }
-.pet-card:hover .button_hollow {
-  background-color: #FDDCC4;
-  box-shadow: none;
-}
-.pet-card:active .button_hollow {
-  background-color: transparent;
-  box-shadow: inset 0px 0px 0px 2px #F1CDB3;
-}
 
 .pet-card__name {
   font: 20px/23px Georgia;
@@ -308,12 +285,6 @@ a {
   background-color: #F1CDB3;
   border-radius: 9px;
 }
-.bank-account:hover {
-  background-color: #FDDCC4;
-}
-.bank-account:active {
-  background-color: #FFFFFF;
-}
 
 .footer {
   display: grid;
@@ -357,12 +328,6 @@ a {
   align-items: center;
   -moz-column-gap: 20px;
        column-gap: 20px;
-}
-.footer-item:hover {
-  color: #FDDCC4;
-}
-.footer-item:active {
-  color: #FFFFFF;
 }
 
 .main-header {
@@ -414,15 +379,18 @@ a {
   text-decoration: none;
   transition: background-color 0.3s, transform 0.1s;
 }
-.button_hollow:hover, .button_filled:hover {
+.button_hollow:hover:not(.button_hollow_inactive), .button_filled:hover:not(.button_hollow_inactive) {
   background-color: #FDDCC4;
+}
+.button_hollow:active:not(.button_hollow_inactive), .button_filled:active:not(.button_hollow_inactive) {
+  transform: translateY(2px);
 }
 
 .button_filled {
   background-color: #F1CDB3;
 }
 .button_filled:active {
-  background-color: #FFFFFF;
+  background-color: #F1CDB3;
 }
 
 .button_hollow {
@@ -438,7 +406,6 @@ a {
 }
 .button_hollow.button_hollow_inactive {
   color: #CDCDCD;
-  background-color: transparent;
   box-shadow: inset 0px 0px 0px 2px #CDCDCD;
 }
 
