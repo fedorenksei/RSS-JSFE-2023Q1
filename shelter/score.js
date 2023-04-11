@@ -1,3 +1,3 @@
-const score = `Оценка: 110`
+const score = `Оценка: 110 `
 
 console.log(score)
