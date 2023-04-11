@@ -43,10 +43,6 @@ a {
   justify-content: space-between;
 }
 @media (width < 768px) {
-  .header__container {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
   .header__container .nav {
     display: none;
   }
@@ -168,22 +164,12 @@ a {
   flex-direction: column;
   row-gap: 42px;
 }
-@media (width < 426px) {
-  .intro__content {
-    text-align: center;
-  }
-}
 
 .intro__img {
   margin-top: 30px;
   min-height: 593px;
   flex: 1 593px;
   background: url("../assets/images/start-screen-puppy.png") bottom right/contain no-repeat;
-}
-@media (width < 426px) {
-  .intro__img {
-    min-height: 271.77px;
-  }
 }
 
 .about-section {
@@ -494,13 +480,6 @@ a {
 
 .main-header {
   font: 44px/57px Georgia;
-}
-@media (width < 426px) {
-  .main-header {
-    font: 25px/32px Georgia;
-    letter-spacing: 0.06em;
-    text-align: center;
-  }
 }
 
 .section-header {
