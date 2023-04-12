@@ -116,8 +116,7 @@ a {
 }
 
 @media (width < 768px) {
-  body:has(.nav_opened),
-  body:has(.popup__bg.popup__bg_active) {
+  body:has(.nav_opened) {
     overflow-y: hidden;
   }
 }
@@ -439,6 +438,7 @@ a {
   transition: background-color 0.3s, box-shadow 0.3s;
 }
 .pet-card:hover {
+  overflow: visible;
   background-color: #FFFFFF;
   box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
   cursor: pointer;
@@ -1032,4 +1032,8 @@ a {
     row-gap: 40px;
     padding: 50px 20px 20px 30px;
   }
+}
+
+body:has(.popup__bg.popup__bg_active) {
+  overflow-y: hidden;
 }/*# sourceMappingURL=style.css.map */

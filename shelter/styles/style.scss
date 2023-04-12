@@ -133,8 +133,7 @@ a {
 }
 
 @media (width < 768px) {
-    body:has(.nav_opened),
-    body:has(.popup__bg.popup__bg_active) {
+    body:has(.nav_opened) {
         overflow-y: hidden;
     }
 }
@@ -438,6 +437,7 @@ a {
         box-shadow $transition-time
     ;
     &:hover {
+        overflow: visible;
         background-color: $color-light-x;
         box-shadow: 0px 2px 35px 14px rgba(13, 13, 13, 0.04);
         cursor: pointer;
@@ -982,4 +982,8 @@ a {
             padding: 50px 20px 20px 30px;
         }
     } 
+}
+
+body:has(.popup__bg.popup__bg_active) {
+    overflow-y: hidden;
 }
