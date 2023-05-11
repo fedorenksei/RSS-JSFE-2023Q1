@@ -8,3 +8,4 @@ About me:
 
 Tasks done in this repo:
 1. Shelter
+2. Minesweeper
