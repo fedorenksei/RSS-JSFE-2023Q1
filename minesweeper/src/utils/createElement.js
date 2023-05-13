@@ -1,5 +1,5 @@
 export default function createElement(tag, className) {
   const element = document.createElement(tag);
-  if (className) element.classList.add(className);
+  if (className) element.className = className;
   return element;
 }

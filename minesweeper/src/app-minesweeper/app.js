@@ -1,8 +1,7 @@
-import createElement from '../utils/createElement.js';
-import './styles.css';
+import Game from './game/controller.js';
 
-const element = createElement('div', 'minesweeper__field');
+const defaultGame = new Game(10);
 
 export default function getElement() {
-  return element;
+  return defaultGame.getElement();
 }

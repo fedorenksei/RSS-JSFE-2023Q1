@@ -1,0 +1,14 @@
+.minesweeper__field {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+}
+
+.minesweeper-field__cell {
+  background-color: lightgrey;
+  /* box-shadow: 
+    inset 10px 10px white,
+    inset -10px -10px darkgray
+  ; */
+  border: 1px solid black;
+}
