@@ -10,6 +10,8 @@ export function create({ size, mines }) {
   const matrix = createMatrix(size);
   let areMinesPlaced = false;
   let minesIds;
+  let revealedCellsCounter = 0;
+  const cellsToRevealForWin = size ** 2 - mines;
 
   return {
     openCell(id) {
@@ -26,6 +28,7 @@ export function create({ size, mines }) {
       }
 
       const value = cell.getNumber();
+      cell.reveal();
 
       let secondaryCells = [];
       if (value === 0) {
@@ -35,6 +38,13 @@ export function create({ size, mines }) {
       viewApi.revealCell({
         primaryCell: { id, value },
         secondaryCells,
+      });
+
+      setTimeout(() => {
+        revealedCellsCounter += secondaryCells.length + 1;
+        if (revealedCellsCounter === cellsToRevealForWin) {
+          viewApi.winGame();
+        }
       });
     },
   };
@@ -50,7 +60,7 @@ function getCellsAround({ matrix, coordinates }) {
     const coordinatesAround = getCoordinatesAround({ x, y });
     coordinatesAround.forEach(({ x: cellX, y: cellY }) => {
       const cell = matrix.getByXY({ x: cellX, y: cellY });
-      if (!cell) return;
+      if (!cell || cell.isRevealed()) return;
       const id = cell.getId();
       if (checkedIds.has(id)) return;
       const value = cell.getNumber();

@@ -86,6 +86,11 @@ function createCell(id, { ...coord }) {
     isFlagged() { return !!this.state.flagged; },
 
     setNumber(num) { this.state.number = num; },
-    getNumber() { return this.state.number; },
+    getNumber() {
+      return this.state.number;
+    },
+
+    reveal() { this.state.revealed = true; },
+    isRevealed() { return !!this.state.revealed; },
   };
 }

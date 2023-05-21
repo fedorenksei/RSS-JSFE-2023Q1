@@ -20,5 +20,6 @@ export function getApi() {
   return {
     revealCell: field.revealCell,
     revealField: field.revealField,
+    winGame: field.winGame,
   };
 }

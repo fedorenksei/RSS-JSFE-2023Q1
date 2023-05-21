@@ -10,6 +10,7 @@ const CLASSES = {
     medium: 'minesweeper-field_size_medium',
     large: 'minesweeper-field_size_large',
   },
+  disabled: 'minesweeper-field_disabled',
 };
 
 let modelApi;
@@ -89,6 +90,12 @@ export function revealField({ explodedId, minesIds }) {
       falseFlaggedCell.isFalseFlagged();
     }
   });
+
+  fieldElement.classList.add(CLASSES.disabled);
+}
+
+export function winGame() {
+  fieldElement.classList.add(CLASSES.disabled);
 }
 
 export function getElement() {
