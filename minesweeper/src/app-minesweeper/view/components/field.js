@@ -18,8 +18,17 @@ const cellById = new Map();
 const flaggedCells = new Set();
 const modifiedCells = new Set();
 const fieldApi = {
-  flagCell(id) { flaggedCells.add(id); },
-  modifyCell(id) { modifiedCells.add(id); },
+  addToModified(id) { modifiedCells.add(id); },
+  removeFromModified(id) { modifiedCells.delete(id); },
+
+  addToFlagged(id) {
+    flaggedCells.add(id);
+    this.addToModified(id);
+  },
+  removeFromFlagged(id) {
+    flaggedCells.delete(id);
+    this.removeFromModified(id);
+  },
 };
 
 export function init(api) {

@@ -37,19 +37,19 @@ export function create(id) {
     if (!flagged) {
       flagged = true;
       element.append(createFlag());
+      fieldApi.addToFlagged(id);
     } else {
       flagged = false;
       element.replaceChildren();
+      fieldApi.removeFromFlagged(id);
     }
-
-    fieldApi.flagCell(id);
   });
 
   return {
     setValue(value) {
       revealed = true;
       element.classList.add(CLASSES.revealed);
-      fieldApi.modifyCell(id);
+      fieldApi.addToModified(id);
 
       if (typeof value === 'number' && value > 0 && value < 9) {
         element.classList.add(CLASSES.numericTemplate + value);
@@ -62,14 +62,14 @@ export function create(id) {
 
     explodes() {
       element.classList.add(CLASSES.explodes);
-      fieldApi.modifyCell(id);
+      fieldApi.addToModified(id);
     },
 
     remainsMined() {
       if (!flagged) {
         element.classList.add(CLASSES.mined);
       }
-      fieldApi.modifyCell(id);
+      fieldApi.addToModified(id);
     },
 
     isFalseFlagged() {
