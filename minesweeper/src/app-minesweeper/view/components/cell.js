@@ -67,7 +67,7 @@ export function create(id) {
 
     remainsMined() {
       if (!flagged) {
-        element.classList.add(CLASSES.mined);
+        element.append(createMine());
       }
       fieldApi.addToModified(id);
     },
@@ -126,6 +126,46 @@ function createFlag() {
 
   flagCanvas = canvas;
   return flagCanvas;
+}
+
+let mineCanvas;
+function createMine() {
+  if (mineCanvas) {
+    return cloneCanvas(mineCanvas);
+  }
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 20;
+  canvas.height = 20;
+  const context = canvas.getContext('2d');
+
+  // mine
+  const centerX = canvas.width / 2;
+  const centerY = canvas.height / 2;
+  const radius = 8;
+
+  context.beginPath();
+  context.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+  context.fillStyle = 'black';
+  context.fill();
+
+  // flash
+  context.beginPath();
+  context.moveTo(12, 13); // out
+  context.lineTo(15, 8); // in
+  context.lineTo(10, 5); // out
+  context.lineTo(15, 3); // in
+  context.lineTo(12, 0); // out
+  context.lineTo(18, 2); // in
+  context.lineTo(20, 3); // out
+  context.lineTo(17, 7); // in
+  context.lineTo(20, 10); // out
+  context.closePath();
+  context.fillStyle = 'yellow';
+  context.fill();
+
+  mineCanvas = canvas;
+  return mineCanvas;
 }
 
 function cloneCanvas(oldCanvas) {
