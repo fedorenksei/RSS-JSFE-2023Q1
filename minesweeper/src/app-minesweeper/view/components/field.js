@@ -15,9 +15,16 @@ const CLASSES = {
 let modelApi;
 const fieldElement = createElement('div', CLASSES.fieldInit);
 const cellById = new Map();
+const flaggedCells = new Set();
+const modifiedCells = new Set();
+const fieldApi = {
+  flagCell(id) { flaggedCells.add(id); },
+  modifyCell(id) { modifiedCells.add(id); },
+};
 
 export function init(api) {
   modelApi = api;
+  cellFactory.init({ modelApi, fieldApi });
 
   createAllCells();
 
@@ -58,7 +65,22 @@ export function revealCell({ primaryCell, secondaryCells }) {
   }
 }
 
-export function revealField() {}
+export function revealField({ explodedId, minesIds }) {
+  const explodedCell = cellById.get(explodedId);
+  explodedCell.explodes();
+
+  minesIds.forEach((id) => {
+    const remainedMineCell = cellById.get(id);
+    remainedMineCell.remainsMined();
+  });
+
+  flaggedCells.forEach((id) => {
+    if (!minesIds.includes(id)) {
+      const falseFlaggedCell = cellById.get(id);
+      falseFlaggedCell.isFalseFlagged();
+    }
+  });
+}
 
 export function getElement() {
   return fieldElement;

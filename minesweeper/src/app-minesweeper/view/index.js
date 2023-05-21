@@ -1,12 +1,10 @@
 import './styles.css';
 import createElement from './createElement';
 import * as field from './components/field';
-import * as cell from './components/cell';
 import * as gameState from './components/newGame';
 
 export function init(model) {
   field.init(model);
-  cell.init(model);
   gameState.init(model);
   // todo: inject model into other view submodules
 }

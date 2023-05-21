@@ -36,6 +36,7 @@ export default function create(size) {
 }
 
 function placeMines({ exceptCellId, howMuchMines }) {
+  const minesIds = [];
   const allIds = Array.from(this.data.cellById.keys());
   function remove(id) {
     allIds.splice(allIds.indexOf(id), 1);
@@ -47,6 +48,7 @@ function placeMines({ exceptCellId, howMuchMines }) {
     const randomId = allIds[Math.floor(Math.random() * allIds.length)];
     const cell = this.data.cellById.get(randomId);
     cell.mine();
+    minesIds.push(randomId);
     incrementAround.call(this, cell.getCoordinates());
     remove(randomId);
     minesCount += 1;
@@ -60,6 +62,8 @@ function placeMines({ exceptCellId, howMuchMines }) {
       targetCell.setNumber(targetCell.getNumber() + 1);
     });
   }
+
+  return minesIds;
 }
 
 function createCell(id, { ...coord }) {

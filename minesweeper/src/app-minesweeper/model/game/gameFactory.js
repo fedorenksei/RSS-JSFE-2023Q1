@@ -9,18 +9,19 @@ export function init(api) {
 export function create({ size, mines }) {
   const matrix = createMatrix(size);
   let areMinesPlaced = false;
+  let minesIds;
 
   return {
     openCell(id) {
       if (!areMinesPlaced) {
-        matrix.placeMines({ exceptCellId: id, howMuchMines: mines });
+        minesIds = matrix.placeMines({ exceptCellId: id, howMuchMines: mines });
         areMinesPlaced = true;
       }
 
       const cell = matrix.getById(id);
 
       if (cell.isMined()) {
-        viewApi.revealField(); // todo
+        viewApi.revealField({ explodedId: id, minesIds });
         return;
       }
 

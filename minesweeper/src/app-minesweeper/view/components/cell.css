@@ -42,7 +42,17 @@
   content: "🚩";
 }
 
-.cell_value_mine::after {
+.cell_value_explodes {
+  background-color: red;
+  box-shadow: none;
+}
+
+.cell_value_false-flag {
+  box-shadow: none;
+  background-color: pink;
+}
+
+.cell_value_mined::after {
   content: "💣";
 }
 
