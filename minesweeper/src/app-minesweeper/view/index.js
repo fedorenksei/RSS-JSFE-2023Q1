@@ -1,4 +1,5 @@
 import './styles.css';
+import createElement from './createElement';
 import * as field from './components/field';
 import * as cell from './components/cell';
 import * as gameState from './components/newGame';
@@ -11,8 +12,10 @@ export function init(model) {
 }
 
 export function getElement() {
+  const appElement = createElement('div', 'minesweeper-app');
+  appElement.append(field.getElement());
   // todo: add all elements
-  return field.getElement();
+  return appElement;
 }
 
 export function getApi() {

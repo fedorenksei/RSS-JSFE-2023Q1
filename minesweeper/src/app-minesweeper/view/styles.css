@@ -1,34 +1,4 @@
-.minesweeper-field {
+.minesweeper-app {
   display: grid;
-}
-
-.minesweeper-field_size_small {
-  grid-template-columns: repeat(10, min-content);
-}
-
-.minesweeper-field_size_small > .minesweeper-field__cell:nth-last-child(-n+525) {
-  display: none;
-}
-
-.minesweeper-field_size_medium {
-  grid-template-columns: repeat(15, min-content);
-}
-
-.minesweeper-field_size_medium > .minesweeper-field__cell:nth-last-child(-n+400) {
-  display: none;
-}
-
-.minesweeper-field_size_large {
-  grid-template-columns: repeat(25, min-content);
-}
-
-.minesweeper-field__cell {
-  width: 50px;
-  height: 50px;
-  background-color: lightgrey;
-  /* box-shadow: 
-    inset 10px 10px white,
-    inset -10px -10px darkgray
-  ; */
-  border: 1px solid black;
+  justify-content: center;
 }

@@ -1,0 +1,87 @@
+@font-face {
+  font-family: 'CellFont';
+  src: 
+    url('../assets/fonts/cell-font/NotoSansNagMundari-Regular.woff') format('woff') font-weight-normal,
+    /* url('../assets/fonts/cell-font/NotoSansNagMundari-Medium.woff') format('woff'), */
+    /* url('../assets/fonts/cell-font/NotoSansNagMundari-SemiBold.woff') format('woff'), */
+    url('../assets/fonts/cell-font/NotoSansNagMundari-Bold.woff') format('woff') font-weight-bold
+  ;
+}
+
+.cell {
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+
+  display: grid;
+  place-items: center;
+
+  font: bold 16px "CellFont", sans-serif;
+
+  background-color: lightgrey;
+  box-shadow: 
+    inset 3px 3px white,
+    inset -3px -3px darkgray
+  ;
+  border: 1px solid black;
+  border-radius: 5px;
+
+  cursor: pointer;
+
+  transition: all 0.1s;
+}
+
+.cell_revealed {
+  cursor: unset;
+  box-shadow: none;
+  background-color: white;
+}
+
+.cell_value_flag::after {
+  /* content: url('../assets/flag.png'); */
+  content: "🚩";
+}
+
+.cell_value_mine::after {
+  content: "💣";
+}
+
+.cell_value_1::after {
+  content: '1';
+  color: blue;
+}
+
+.cell_value_2::after {
+  content: '2';
+  color: green;
+}
+
+.cell_value_3::after {
+  content: '3';
+  color: orangered;
+}
+
+.cell_value_4::after {
+  content: '4';
+  color: brown;
+}
+
+.cell_value_5::after {
+  content: '5';
+  color: red;
+}
+
+.cell_value_6::after {
+  content: '6';
+  color: darkviolet;
+}
+
+.cell_value_7::after {
+  content: '7';
+  color: coral;
+}
+
+.cell_value_8::after {
+  content: '8';
+  color: royalblue;
+}

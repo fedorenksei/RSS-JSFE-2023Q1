@@ -1,0 +1,28 @@
+.minesweeper-field {
+  width: min-content;
+  display: grid;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid black;
+  background-color: white;
+}
+
+.minesweeper-field_size_small {
+  grid-template-columns: repeat(10, min-content);
+}
+
+.minesweeper-field_size_small > .minesweeper-field__cell:nth-last-child(-n+525) {
+  display: none;
+}
+
+.minesweeper-field_size_medium {
+  grid-template-columns: repeat(15, min-content);
+}
+
+.minesweeper-field_size_medium > .minesweeper-field__cell:nth-last-child(-n+400) {
+  display: none;
+}
+
+.minesweeper-field_size_large {
+  grid-template-columns: repeat(25, min-content);
+}

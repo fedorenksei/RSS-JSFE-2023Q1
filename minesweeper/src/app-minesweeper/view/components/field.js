@@ -1,3 +1,4 @@
+import './field.css';
 import createElement from '../createElement';
 import * as cellFactory from './cell';
 
