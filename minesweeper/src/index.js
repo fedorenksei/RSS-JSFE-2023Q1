@@ -1,3 +1,3 @@
-import getMinesweeperElement from './app-minesweeper/app.js';
+import getMinesweeperElement from './app-minesweeper/controller.js';
 
 document.body.prepend(getMinesweeperElement());
