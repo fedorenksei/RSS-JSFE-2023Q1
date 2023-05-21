@@ -36,10 +36,10 @@ export function create(id) {
 
     if (!flagged) {
       flagged = true;
-      element.classList.add(CLASSES.flagged);
+      element.append(createFlag());
     } else {
       flagged = false;
-      element.classList.remove(CLASSES.flagged);
+      element.replaceChildren();
     }
 
     fieldApi.flagCell(id);
@@ -96,4 +96,43 @@ function clickHandler(id) {
 
 function createCellElement() {
   return createElement('div', CLASSES.init);
+}
+
+let flagCanvas;
+function createFlag() {
+  if (flagCanvas) {
+    return cloneCanvas(flagCanvas);
+  }
+
+  const canvas = document.createElement('canvas');
+  canvas.width = 20;
+  canvas.height = 20;
+
+  const context = canvas.getContext('2d');
+
+  // flagpole
+  context.fillStyle = 'black';
+  context.fillRect(2, 0, 2, 20);
+  context.fillRect(0, 18, 6, 2);
+
+  // flag
+  context.beginPath();
+  context.moveTo(4, 0);
+  context.lineTo(20, 7);
+  context.lineTo(4, 14);
+  context.closePath();
+  context.fillStyle = 'red';
+  context.fill();
+
+  flagCanvas = canvas;
+  return flagCanvas;
+}
+
+function cloneCanvas(oldCanvas) {
+  const newCanvas = document.createElement('canvas');
+  const context = newCanvas.getContext('2d');
+  newCanvas.width = oldCanvas.width;
+  newCanvas.height = oldCanvas.height;
+  context.drawImage(oldCanvas, 0, 0);
+  return newCanvas;
 }
