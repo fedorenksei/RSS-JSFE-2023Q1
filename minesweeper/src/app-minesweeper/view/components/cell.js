@@ -1,9 +1,14 @@
+import './cell.css';
 import createElement from '../createElement';
 import * as newGame from './newGame';
+// import flagIcon from '../assets/flag.svg';
 
 const CLASSES = {
-  cell: 'minesweeper-field__cell cell',
-  revealedCell: 'cell_revealed',
+  init: 'minesweeper-field__cell cell',
+  revealed: 'cell_revealed',
+  numericTemplate: 'cell_value_',
+  flagged: 'cell_value_flag',
+  mine: 'cell_value_mine',
 };
 
 let modelApi;
@@ -12,17 +17,51 @@ export function init(api) {
 }
 
 export function create(id) {
+  let flagged;
+  let revealed;
+
   const element = createCellElement();
-  element.addEventListener('click', () => { clickHandler(id); });
+  element.addEventListener('click', () => {
+    if (flagged) return;
+    clickHandler(id);
+  });
+
+  element.addEventListener('contextmenu', (event) => {
+    event.preventDefault();
+    if (revealed) return;
+    if (!flagged) {
+      flagged = true;
+      element.classList.add(CLASSES.flagged);
+    } else {
+      flagged = false;
+      element.classList.remove(CLASSES.flagged);
+    }
+    // flag(element);
+  });
 
   return {
     setValue(value) {
-      element.classList.add(CLASSES.revealedCell);
-      element.textContent = value;
+      revealed = true;
+      element.classList.add(CLASSES.revealed);
+
+      if (typeof value === 'number' && value > 0 && value < 9) {
+        element.classList.add(CLASSES.numericTemplate + value);
+      }
+
+      if (value === 'mine') {
+        element.classList.add(CLASSES.mine);
+      }
     },
     getElement: () => element,
   };
 }
+
+// function flag(elem) {
+//   // webpack error
+//   const flagIconElement = new Image();
+//   flagIconElement.src = flagIcon;
+//   elem.append(flagIconElement);
+// }
 
 function clickHandler(id) {
   if (!modelApi.isGameNow) {
@@ -32,5 +71,5 @@ function clickHandler(id) {
 }
 
 function createCellElement() {
-  return createElement('div', CLASSES.cell);
+  return createElement('div', CLASSES.init);
 }
