@@ -1,3 +1,5 @@
+import getCoordinatesAround from './utils.js';
+
 export default function create(size) {
   const cellById = new Map();
   // const cellByCoordinates = new Map();
@@ -24,7 +26,7 @@ export default function create(size) {
       matrix,
       // cellByCoordinates,
     },
-    getByXY(x, y) {
+    getByXY({ x, y }) {
       return matrix?.[x]?.[y];
     },
     getById(id) { return cellById.get(id); },
@@ -51,23 +53,12 @@ function placeMines({ exceptCellId, howMuchMines }) {
   }
 
   function incrementAround({ x, y }) {
-    const range = [-1, 0, 1];
-    const res = [];
-    for (let xIndex = 0; xIndex < range.length; xIndex += 1) {
-      const dX = range[xIndex];
-      for (let yIndex = 0; yIndex < range.length; yIndex += 1) {
-        /* eslint-disable no-continue */
-        const dY = range[yIndex];
-        if (dX === 0 && dY === 0) continue;
-        const targetCell = this.getByXY(x + dX, y + dY);
-        // this.data.cellByCoordinates.get({x: x + dX, y: y + dY});
-        if (!targetCell) continue;
-        targetCell.setNumber(targetCell.getNumber() + 1);
-        // targetCell.state.number += 1;
-        res.push();
-      }
-    }
-    return res;
+    const cellsAround = getCoordinatesAround({ x, y });
+    cellsAround.forEach(({ x: cellX, y: cellY }) => {
+      const targetCell = this.getByXY({ x: cellX, y: cellY });
+      if (!targetCell) return;
+      targetCell.setNumber(targetCell.getNumber() + 1);
+    });
   }
 }
 
