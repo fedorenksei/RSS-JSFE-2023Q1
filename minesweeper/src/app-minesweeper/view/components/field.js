@@ -47,10 +47,15 @@ function setSize(size) {
   });
 }
 
-export function revealCell({ primaryCell }) {
-  const cell = cellById.get(primaryCell.id);
-  cell.setValue(primaryCell.value);
-  // todo: secondaryCells
+export function revealCell({ primaryCell, secondaryCells }) {
+  reveal(primaryCell);
+  secondaryCells.forEach((cellData) => {
+    reveal(cellData);
+  });
+  function reveal({ id, value }) {
+    const cell = cellById.get(id);
+    cell.setValue(value);
+  }
 }
 
 export function revealField() {}

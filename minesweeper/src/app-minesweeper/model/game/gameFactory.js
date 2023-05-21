@@ -1,3 +1,4 @@
+import getCoordinatesAround from './utils';
 import createMatrix from './matrixFactory';
 
 let viewApi;
@@ -24,10 +25,42 @@ export function create({ size, mines }) {
       }
 
       const value = cell.getNumber();
+
+      let secondaryCells = [];
+      if (value === 0) {
+        secondaryCells = getCellsAround({ matrix, coordinates: cell.getCoordinates() });
+      }
+
       viewApi.revealCell({
         primaryCell: { id, value },
-        secondaryCells: [], // todo
+        secondaryCells,
       });
     },
   };
+}
+
+function getCellsAround({ matrix, coordinates }) {
+  const result = [];
+
+  const checkedIds = new Set();
+  checkCell(coordinates);
+
+  function checkCell({ x, y }) {
+    const coordinatesAround = getCoordinatesAround({ x, y });
+    coordinatesAround.forEach(({ x: cellX, y: cellY }) => {
+      const cell = matrix.getByXY({ x: cellX, y: cellY });
+      if (!cell) return;
+      const id = cell.getId();
+      if (checkedIds.has(id)) return;
+      const value = cell.getNumber();
+      result.push({ id, value });
+      checkedIds.add(id);
+
+      if (value === 0) {
+        checkCell({ x: cellX, y: cellY });
+      }
+    });
+  }
+
+  return result;
 }
