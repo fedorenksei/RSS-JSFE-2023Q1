@@ -13,6 +13,7 @@
     },
     "ignorePatterns": ["dist"],
     "rules": {
-        "import/extensions": "off"
+        "import/extensions": "off",
+        "no-use-before-define": "off"
     }
 }
