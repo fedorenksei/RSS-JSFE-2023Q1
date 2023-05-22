@@ -8,46 +8,57 @@ export function init(api) {
 
 export function create({ size, mines }) {
   const matrix = createMatrix(size);
+
   let areMinesPlaced = false;
   let minesIds;
+
   let revealedCellsCounter = 0;
   const cellsToRevealForWin = size ** 2 - mines;
 
-  return {
-    openCell(id) {
-      if (!areMinesPlaced) {
-        minesIds = matrix.placeMines({ exceptCellId: id, howMuchMines: mines });
-        areMinesPlaced = true;
-      }
+  let seconds = 0;
+  let steps = 0;
 
-      const cell = matrix.getById(id);
-
-      if (cell.isMined()) {
-        viewApi.revealField({ explodedId: id, minesIds });
-        return;
-      }
-
-      const value = cell.getNumber();
-      cell.reveal();
-
-      let secondaryCells = [];
-      if (value === 0) {
-        secondaryCells = getCellsAround({ matrix, coordinates: cell.getCoordinates() });
-      }
-
-      viewApi.revealCell({
-        primaryCell: { id, value },
-        secondaryCells,
-      });
-
-      setTimeout(() => {
-        revealedCellsCounter += secondaryCells.length + 1;
-        if (revealedCellsCounter === cellsToRevealForWin) {
-          viewApi.winGame();
-        }
-      });
-    },
+  const gameObject = {
+    openCell,
+    countSecond() { seconds += 1; },
+    countStep() { steps += 1; },
   };
+
+  return gameObject;
+
+  function openCell(id) {
+    if (!areMinesPlaced) {
+      minesIds = matrix.placeMines({ exceptCellId: id, howMuchMines: mines });
+      areMinesPlaced = true;
+    }
+
+    const cell = matrix.getById(id);
+
+    if (cell.isMined()) {
+      viewApi.revealField({ explodedId: id, minesIds });
+      return;
+    }
+
+    const value = cell.getNumber();
+    cell.reveal();
+
+    let secondaryCells = [];
+    if (value === 0) {
+      secondaryCells = getCellsAround({ matrix, coordinates: cell.getCoordinates() });
+    }
+
+    viewApi.revealCell({
+      primaryCell: { id, value },
+      secondaryCells,
+    });
+
+    setTimeout(() => {
+      revealedCellsCounter += secondaryCells.length + 1;
+      if (revealedCellsCounter === cellsToRevealForWin) {
+        viewApi.winGame();
+      }
+    });
+  }
 }
 
 function getCellsAround({ matrix, coordinates }) {
