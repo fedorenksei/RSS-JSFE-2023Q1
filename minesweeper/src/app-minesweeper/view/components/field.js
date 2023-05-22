@@ -19,16 +19,13 @@ const cellById = new Map();
 const flaggedCells = new Set();
 const modifiedCells = new Set();
 const fieldApi = {
-  addToModified(id) { modifiedCells.add(id); },
-  removeFromModified(id) { modifiedCells.delete(id); },
-
   addToFlagged(id) {
     flaggedCells.add(id);
-    this.addToModified(id);
+    modifiedCells.add(id);
   },
   removeFromFlagged(id) {
     flaggedCells.delete(id);
-    this.removeFromModified(id);
+    modifiedCells.delete(id);
   },
 };
 
@@ -72,6 +69,7 @@ export function revealCell({ primaryCell, secondaryCells }) {
   function reveal({ id, value }) {
     const cell = cellById.get(id);
     cell.setValue(value);
+    modifiedCells.add(id);
   }
 }
 
@@ -82,6 +80,7 @@ export function revealField({ explodedId, minesIds }) {
   minesIds.forEach((id) => {
     const remainedMineCell = cellById.get(id);
     remainedMineCell.remainsMined();
+    modifiedCells.add(id);
   });
 
   flaggedCells.forEach((id) => {

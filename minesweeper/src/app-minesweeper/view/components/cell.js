@@ -49,7 +49,6 @@ export function create(id) {
     setValue(value) {
       revealed = true;
       element.classList.add(CLASSES.revealed);
-      fieldApi.addToModified(id);
 
       if (typeof value === 'number' && value > 0 && value < 9) {
         element.classList.add(CLASSES.numericTemplate + value);
@@ -62,14 +61,12 @@ export function create(id) {
 
     explodes() {
       element.classList.add(CLASSES.explodes);
-      fieldApi.addToModified(id);
     },
 
     remainsMined() {
       if (!flagged) {
         element.append(createMine());
       }
-      fieldApi.addToModified(id);
     },
 
     isFalseFlagged() {
