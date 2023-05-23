@@ -1,5 +1,6 @@
 import * as fieldView from './fieldView';
 import * as cellFactory from './cell';
+import * as newGame from './newGame';
 
 let modelApi;
 let cellById;
@@ -26,6 +27,7 @@ const fieldApi = {
     flaggedCells.delete(id);
     modifiedCells.delete(id);
   },
+  startGame() { newGame.startGame(); },
 };
 
 export function revealCell({ primaryCell, secondaryCells }) {

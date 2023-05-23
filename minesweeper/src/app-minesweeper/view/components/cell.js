@@ -1,6 +1,5 @@
 import './cell.css';
 import createElement from '../createElement';
-import * as newGame from './newGame';
 // import flagIcon from '../assets/flag.svg';
 
 const CLASSES = {
@@ -86,7 +85,7 @@ export function create(id) {
 
 function clickHandler(id) {
   if (!modelApi.isGameNow) {
-    newGame.startGame(id);
+    modelApi.startGame(id);
   }
   modelApi.openCell(id);
 }
