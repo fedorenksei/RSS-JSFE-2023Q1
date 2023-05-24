@@ -1,17 +1,22 @@
 import './styles.css';
 import createElement from './createElement';
 import * as field from './components/field';
-import * as gameState from './components/newGame';
+import * as newGame from './components/newGame';
+import * as counters from './components/counters';
 
-export function init(model) {
-  field.init(model);
-  gameState.init(model);
+export function init(modelApi) {
+  field.init(modelApi);
+  newGame.init(modelApi);
+  counters.init(modelApi);
   // todo: inject model into other view submodules
 }
 
 export function getElement() {
   const appElement = createElement('div', 'minesweeper-app');
-  appElement.append(field.getElement());
+  appElement.replaceChildren(
+    counters.getElement(),
+    field.getElement(),
+  );
   // todo: add all elements
   return appElement;
 }

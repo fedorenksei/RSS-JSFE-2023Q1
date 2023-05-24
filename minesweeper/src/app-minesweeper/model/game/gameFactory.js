@@ -20,8 +20,18 @@ export function create({ size, mines }) {
 
   const gameObject = {
     openCell,
+    getMinesAmount() { return mines; },
     countSecond() { seconds += 1; },
     countStep() { steps += 1; },
+    getDataForView() {
+      return {
+        mines,
+        seconds,
+        steps,
+        getRevealedCells() { matrix.getRevealedCells(); },
+        getFlaggedCells() { matrix.getFlaggedCells(matrix); },
+      };
+    },
   };
 
   return gameObject;

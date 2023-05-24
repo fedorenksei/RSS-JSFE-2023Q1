@@ -15,8 +15,7 @@ const CLASSES = {
 let modelApi;
 let fieldApi;
 export function init(apis) {
-  modelApi = apis.modelApi;
-  fieldApi = apis.fieldApi;
+  ({ modelApi, fieldApi } = apis);
 }
 
 export function create(id) {
@@ -85,7 +84,7 @@ export function create(id) {
 
 function clickHandler(id) {
   if (!modelApi.isGameNow) {
-    modelApi.startGame(id);
+    fieldApi.startGame(id);
   }
   modelApi.openCell(id);
 }

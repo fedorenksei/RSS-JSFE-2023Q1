@@ -1,3 +1,5 @@
+import * as counters from './counters';
+
 const MODES = {
   easy: {
     size: 10,
@@ -23,4 +25,5 @@ export function startGame() {
   const mode = MODES.easy;
 
   modelApi.startGame(mode);
+  counters.reset();
 }
