@@ -1,4 +1,28 @@
 body {
+  --light-x: white;
+  --light: rgb(209, 206, 206);
+  --dark: rgb(139, 139, 139);
+  --dark-x: rgb(83, 83, 83);
+
+  --base-color: var(--light-x);
+  --base-m-color: var(--light);
+  --content-m-color: var(--dark);
+  --content-color: var(--dark-x);
+  
   margin: 0;
-  background-color: white;
+  background-color: var(--base-color);
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.body__night-mode {
+  --base-color: var(--dark-x);
+  --base-m-color: var(--dark);
+  --content-m-color: var(--light);
+  --content-color: var(--light-x);
+
+  color: var(--content-color);
+}
+
+p {
+  margin: 0;
 }

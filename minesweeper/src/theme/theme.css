@@ -1,0 +1,11 @@
+.theme-switcher {
+  margin: 15px auto;
+  padding: 10px;
+  width: fit-content;
+  border: 1px solid var(--content-color);
+  border-radius: 5px;
+}
+
+.theme-switcher::after {
+  content: 'Switch theme';
+}

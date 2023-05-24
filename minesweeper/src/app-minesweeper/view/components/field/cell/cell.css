@@ -18,12 +18,12 @@
 
   font: bold 16px "CellFont", sans-serif;
 
-  background-color: lightgrey;
+  background-color: rgb(185, 185, 185);
   box-shadow: 
-    inset 3px 3px white,
-    inset -3px -3px darkgray
+    inset 3px 3px var(--base-m-color),
+    inset -3px -3px var(--content-m-color)
   ;
-  border: 0.1px solid black;
+  border: 0.1px solid var(--content-color);
 
   cursor: pointer;
 
@@ -33,7 +33,7 @@
 .cell_revealed {
   cursor: unset;
   box-shadow: none;
-  background-color: white;
+  background-color: rgb(241, 240, 240);
 }
 
 .cell_value_flag::after {

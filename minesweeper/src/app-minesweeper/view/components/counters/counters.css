@@ -2,4 +2,13 @@
   display: flex;
   justify-content: space-evenly;
   flex-wrap: wrap;
+  padding: 1em;
+  margin: 1em;
+  border: 1px solid var(--content-m-color);
+  border-radius: 10px;
+}
+
+.counter {
+  display: grid;
+  gap: 0.5em;
 }
