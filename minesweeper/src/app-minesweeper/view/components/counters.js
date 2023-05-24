@@ -1,36 +1,44 @@
+import './counters.css';
 import * as countersView from './countersView';
 
 let modelApi;
 export function init(api) {
   modelApi = api;
-  if (modelApi) {
-    setCounters();
+  reset();
+}
+
+const counterValues = {
+  seconds: 0,
+  steps: 0,
+  flags: 0,
+  mines: 0,
+};
+let secondIntervalId;
+
+reset();
+
+export function reset() {
+  if (modelApi && modelApi.isGameNow) {
+    modelApi.getDataForView();
+    ({
+      seconds: counterValues.seconds,
+      steps: counterValues.steps,
+      flags: counterValues.flags,
+      mines: counterValues.mines,
+    } = modelApi.getDataForView());
+  }
+
+  countersView.setValues(counterValues);
+
+  if (modelApi && modelApi.isGameNow) {
+    continueSecondsCounter();
   }
 }
 
-let seconds;
-let steps;
-let flags;
-let mines;
-export function setCounters() {
-  if (!modelApi) throw new Error('Counters are not initialized');
-  if (!modelApi.isGameNow) return;
-
-  ({
-    seconds,
-    steps,
-    flags,
-    mines,
-  } = modelApi.getDataForView());
-  launchSecondsCounter();
-}
-
-let secondIntervalId;
-function launchSecondsCounter() {
-  if (typeof seconds !== 'number') throw new Error('seconds are not initialized');
+export function continueSecondsCounter() {
   secondIntervalId = setInterval(() => {
-    seconds += 1;
-    console.log(seconds);
+    counterValues.seconds += 1;
+    countersView.count('seconds');
   }, 1000);
 }
 
@@ -40,7 +48,7 @@ export function stopSecondCounter() {
 }
 
 export function countFlag() {
-  flags += 1;
+  counterValues.flags += 1;
 }
 
 export function getElement() {

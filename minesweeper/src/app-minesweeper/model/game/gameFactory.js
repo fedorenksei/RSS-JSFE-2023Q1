@@ -32,6 +32,14 @@ export function create({ size, mines }) {
         getFlaggedCells() { matrix.getFlaggedCells(matrix); },
       };
     },
+    flagCell(id) {
+      const cell = matrix.getById(id);
+      cell.flag();
+    },
+    unflagCell(id) {
+      const cell = matrix.getById(id);
+      cell.unflag();
+    },
   };
 
   return gameObject;
@@ -81,7 +89,7 @@ function getCellsAround({ matrix, coordinates }) {
     const coordinatesAround = getCoordinatesAround({ x, y });
     coordinatesAround.forEach(({ x: cellX, y: cellY }) => {
       const cell = matrix.getByXY({ x: cellX, y: cellY });
-      if (!cell || cell.isRevealed()) return;
+      if (!cell || cell.isRevealed() || cell.isFlagged()) return;
       const id = cell.getId();
       if (checkedIds.has(id)) return;
       const value = cell.getNumber();

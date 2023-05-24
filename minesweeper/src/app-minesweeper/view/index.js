@@ -23,8 +23,11 @@ export function getElement() {
 
 export function getApi() {
   return {
-    revealCell: field.revealCell,
-    revealField: field.revealField,
+    revealCell(data) { field.revealCell(data); },
+    revealField(data) {
+      field.revealField(data);
+      counters.stopSecondCounter();
+    },
     winGame: field.winGame,
   };
 }

@@ -30,15 +30,17 @@ export function create(id) {
 
   element.addEventListener('contextmenu', (event) => {
     event.preventDefault();
-    if (revealed) return;
+    if (revealed || !modelApi.flagCell) return;
 
     if (!flagged) {
       flagged = true;
-      element.append(createFlag());
+      element.replaceChildren(createFlag());
+      modelApi.flagCell(id);
       fieldApi.addToFlagged(id);
     } else {
       flagged = false;
       element.replaceChildren();
+      modelApi.unflagCell(id);
       fieldApi.removeFromFlagged(id);
     }
   });

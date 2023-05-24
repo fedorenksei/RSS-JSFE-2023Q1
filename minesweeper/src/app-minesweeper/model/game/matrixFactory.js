@@ -83,6 +83,7 @@ function createCell(id, { ...coord }) {
     isMined() { return !!this.state.mined; },
 
     flag() { this.state.flagged = true; },
+    unflag() { this.state.flagged = false; },
     isFlagged() { return !!this.state.flagged; },
 
     setNumber(num) { this.state.number = num; },
