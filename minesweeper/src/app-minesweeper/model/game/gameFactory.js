@@ -17,6 +17,7 @@ export function create({ size, mines }) {
 
   let seconds = 0;
   let steps = 0;
+  let flags = 0; // todo: it's redundant variable, can be calculated on view side
 
   const gameObject = {
     openCell,
@@ -28,6 +29,7 @@ export function create({ size, mines }) {
         mines,
         seconds,
         steps,
+        flags,
         getRevealedCells() { matrix.getRevealedCells(); },
         getFlaggedCells() { matrix.getFlaggedCells(matrix); },
       };
@@ -35,10 +37,12 @@ export function create({ size, mines }) {
     flagCell(id) {
       const cell = matrix.getById(id);
       cell.flag();
+      flags += 1;
     },
     unflagCell(id) {
       const cell = matrix.getById(id);
       cell.unflag();
+      flags -= 1;
     },
   };
 

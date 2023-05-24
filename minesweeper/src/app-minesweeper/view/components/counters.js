@@ -47,8 +47,16 @@ export function stopSecondCounter() {
   clearInterval(secondIntervalId);
 }
 
-export function countFlag() {
+export function plusFlag() {
   counterValues.flags += 1;
+  counterValues.mines -= 1;
+  countersView.setValues(counterValues);
+}
+
+export function minusFlag() {
+  counterValues.flags -= 1;
+  counterValues.mines += 1;
+  countersView.setValues(counterValues);
 }
 
 export function getElement() {

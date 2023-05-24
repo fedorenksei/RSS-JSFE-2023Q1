@@ -1,6 +1,7 @@
 import * as fieldView from './fieldView';
 import * as cellFactory from './cell';
 import * as newGame from './newGame';
+import * as counters from './counters';
 
 let modelApi;
 let cellById;
@@ -22,10 +23,12 @@ const fieldApi = {
   addToFlagged(id) {
     flaggedCells.add(id);
     modifiedCells.add(id);
+    counters.plusFlag();
   },
   removeFromFlagged(id) {
     flaggedCells.delete(id);
     modifiedCells.delete(id);
+    counters.minusFlag();
   },
   startGame() { newGame.startGame(); },
 };
