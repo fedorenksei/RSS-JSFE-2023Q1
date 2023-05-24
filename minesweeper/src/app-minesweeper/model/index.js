@@ -6,10 +6,13 @@ export function init(api) {
   gameFactory.init(api);
 }
 
-const modelApi = {
-  isGameNow: false,
-  startGame,
-};
+const modelApi = {};
+initApi();
+function initApi() {
+  modelApi.isGameNow = false;
+  modelApi.startGame = startGame;
+  modelApi.abortGame = abortGame;
+}
 export function getApi() {
   return modelApi;
 }
@@ -20,4 +23,8 @@ function startGame(params) {
   const game = gameFactory.create(params);
   modelApi.isGameNow = true;
   Object.assign(modelApi, game);
+}
+
+export function abortGame() {
+  initApi();
 }

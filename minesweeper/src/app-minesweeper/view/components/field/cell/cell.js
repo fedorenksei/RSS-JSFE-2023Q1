@@ -74,6 +74,13 @@ export function create(id) {
     },
 
     getElement: () => element,
+
+    reset() {
+      flagged = false;
+      revealed = false;
+      element.className = CLASSES.init;
+      element.replaceChildren();
+    },
   };
 }
 

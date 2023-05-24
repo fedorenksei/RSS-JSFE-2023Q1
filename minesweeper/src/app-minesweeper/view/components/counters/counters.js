@@ -7,12 +7,16 @@ export function init(api) {
   reset();
 }
 
-const counterValues = {
-  seconds: 0,
-  steps: 0,
-  flags: 0,
-  mines: 0,
-};
+let counterValues;
+initValues();
+function initValues() {
+  counterValues = {
+    seconds: 0,
+    steps: 0,
+    flags: 0,
+    mines: 0,
+  };
+}
 let secondIntervalId;
 
 reset();
@@ -26,13 +30,11 @@ export function reset() {
       flags: counterValues.flags,
       mines: counterValues.mines,
     } = modelApi.getDataForView());
+  } else {
+    initValues();
   }
 
   countersView.setValues(counterValues);
-
-  if (modelApi && modelApi.isGameNow) {
-    continueSecondsCounter();
-  }
 }
 
 export function continueSecondsCounter() {

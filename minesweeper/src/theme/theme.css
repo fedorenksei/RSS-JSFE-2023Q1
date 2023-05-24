@@ -4,6 +4,7 @@
   width: fit-content;
   border: 1px solid var(--content-color);
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .theme-switcher::after {

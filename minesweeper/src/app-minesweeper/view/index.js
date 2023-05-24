@@ -16,6 +16,7 @@ export function init(modelApi) {
 export function getElement() {
   const appElement = createElement('div', 'minesweeper-app');
   appElement.replaceChildren(
+    newGame.getElement(),
     counters.getElement(),
     field.getElement(),
   );

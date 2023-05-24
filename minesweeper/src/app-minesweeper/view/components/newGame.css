@@ -1,0 +1,15 @@
+.new-game {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 1em;
+  margin: 1em;
+  border: 1px solid var(--content-m-color);
+  border-radius: 10px;
+}
+
+.new-game__button {
+  border: 1px solid var(--content-m-color);
+  padding: 5px;
+  cursor: pointer;
+}

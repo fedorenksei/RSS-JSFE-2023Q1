@@ -70,6 +70,10 @@ export function winGame() {
   fieldView.disableField();
 }
 
+export function reset() {
+  cellById.forEach((cell) => { cell.reset(); });
+}
+
 export function getElement() {
   return fieldView.getElement();
 }
