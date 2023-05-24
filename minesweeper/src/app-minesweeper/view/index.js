@@ -3,11 +3,13 @@ import createElement from './createElement';
 import * as field from './components/field/field';
 import * as newGame from './components/newGame';
 import * as counters from './components/counters/counters';
+import * as message from './components/message/message.js';
 
 export function init(modelApi) {
   field.init(modelApi);
   newGame.init(modelApi);
   counters.init(modelApi);
+  message.init(modelApi);
   // todo: inject model into other view submodules
 }
 
@@ -27,10 +29,12 @@ export function getApi() {
     revealField(data) {
       field.revealField(data);
       counters.stopSecondCounter();
+      message.loose();
     },
     winGame() {
       field.winGame();
       counters.stopSecondCounter();
+      message.win();
     },
   };
 }
