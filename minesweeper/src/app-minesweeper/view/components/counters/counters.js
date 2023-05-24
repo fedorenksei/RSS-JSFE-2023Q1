@@ -38,6 +38,7 @@ export function reset() {
 export function continueSecondsCounter() {
   secondIntervalId = setInterval(() => {
     counterValues.seconds += 1;
+    modelApi.countSecond();
     countersView.count('seconds');
   }, 1000);
 }
