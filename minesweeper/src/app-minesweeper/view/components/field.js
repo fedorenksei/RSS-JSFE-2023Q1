@@ -38,6 +38,7 @@ export function revealCell({ primaryCell, secondaryCells }) {
   secondaryCells.forEach((cellData) => {
     reveal(cellData);
   });
+  counters.countStep();
   function reveal({ id, value }) {
     const cell = cellById.get(id);
     cell.setValue(value);

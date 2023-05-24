@@ -63,6 +63,7 @@ export function create({ size, mines }) {
 
     const value = cell.getNumber();
     cell.reveal();
+    steps += 1;
 
     let secondaryCells = [];
     if (value === 0) {

@@ -59,6 +59,11 @@ export function minusFlag() {
   countersView.setValues(counterValues);
 }
 
+export function countStep() {
+  counterValues.steps += 1;
+  countersView.setValues(counterValues);
+}
+
 export function getElement() {
   return countersView.getElement();
 }
