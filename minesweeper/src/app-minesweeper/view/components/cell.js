@@ -24,7 +24,7 @@ export function create(id) {
 
   const element = createCellElement();
   element.addEventListener('click', () => {
-    if (flagged) return;
+    if (flagged || revealed) return;
     clickHandler(id);
   });
 

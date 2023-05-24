@@ -93,6 +93,7 @@ function getCellsAround({ matrix, coordinates }) {
       const id = cell.getId();
       if (checkedIds.has(id)) return;
       const value = cell.getNumber();
+      cell.reveal();
       result.push({ id, value });
       checkedIds.add(id);
 

@@ -28,6 +28,9 @@ export function getApi() {
       field.revealField(data);
       counters.stopSecondCounter();
     },
-    winGame: field.winGame,
+    winGame() {
+      field.winGame();
+      counters.stopSecondCounter();
+    },
   };
 }
