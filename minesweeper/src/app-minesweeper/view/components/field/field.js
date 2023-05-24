@@ -1,7 +1,7 @@
 import * as fieldView from './fieldView';
-import * as cellFactory from './cell';
-import * as newGame from './newGame';
-import * as counters from './counters';
+import * as cellFactory from './cell/cell';
+import * as newGame from '../newGame';
+import * as counters from '../counters/counters';
 
 let modelApi;
 let cellById;

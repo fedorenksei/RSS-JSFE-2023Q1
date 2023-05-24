@@ -1,4 +1,4 @@
-import * as counters from './counters';
+import * as counters from './counters/counters';
 
 const MODES = {
   easy: {

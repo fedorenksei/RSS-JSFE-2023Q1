@@ -1,5 +1,5 @@
 import './cell.css';
-import createElement from '../createElement';
+import createElement from '../../../createElement';
 // import flagIcon from '../assets/flag.svg';
 
 const CLASSES = {

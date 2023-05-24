@@ -1,6 +1,6 @@
 import './field.css';
-import createElement from '../createElement';
-import * as cellFactory from './cell';
+import createElement from '../../createElement';
+import * as cellFactory from './cell/cell';
 
 let modelApi;
 export function init(api) {

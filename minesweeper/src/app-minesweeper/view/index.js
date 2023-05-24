@@ -1,8 +1,8 @@
 import './styles.css';
 import createElement from './createElement';
-import * as field from './components/field';
+import * as field from './components/field/field';
 import * as newGame from './components/newGame';
-import * as counters from './components/counters';
+import * as counters from './components/counters/counters';
 
 export function init(modelApi) {
   field.init(modelApi);
