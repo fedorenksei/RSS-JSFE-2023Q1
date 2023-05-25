@@ -1,7 +1,7 @@
 import './newGame.css';
-import createElement from '../createElement';
-import * as counters from './counters/counters';
-import * as field from './field/field';
+import createElement from '../../createElement';
+import * as counters from '../counters/counters';
+import * as field from '../field/field';
 
 const MODES = {
   easy: {
@@ -18,6 +18,7 @@ const MODES = {
   },
 };
 let chosenMode = MODES.easy;
+let currentSize = 'easy';
 
 let modelApi;
 export function init(api) {
@@ -34,11 +35,14 @@ const wrapperElement = createElement('div', ClASSES.wrapper);
 const buttonElement = createElement('div', ClASSES.button);
 buttonElement.textContent = 'New game';
 buttonElement.addEventListener('click', () => {
+  newGame();
+});
+function newGame() {
   modelApi.abortGame();
-  field.reset();
+  field.reset(currentSize);
   counters.reset();
   counters.stopSecondCounter();
-});
+}
 
 const modeElement = createElement('select', ClASSES.mode);
 ['easy', 'medium', 'hard'].forEach((mode) => {
@@ -46,6 +50,12 @@ const modeElement = createElement('select', ClASSES.mode);
   option.value = mode;
   option.textContent = mode;
   modeElement.append(option);
+});
+// eslint-disable-next-line prefer-arrow-callback
+modeElement.addEventListener('change', function () {
+  currentSize = this.value;
+  chosenMode = MODES[this.value];
+  newGame();
 });
 
 const minesElement = createElement('div', ClASSES.mines);
@@ -57,9 +67,9 @@ export function getElement() {
 
 export function startGame() {
   // todo implement the mode choice
-  const mode = MODES.easy;
+  // const mode = MODES.easy;
 
-  modelApi.startGame(mode);
+  modelApi.startGame(chosenMode);
   counters.reset();
   counters.continueSecondsCounter();
 }

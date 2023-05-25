@@ -16,9 +16,9 @@ const MAX_CELLS = 25 ** 2;
 const CLASSES = {
   fieldInit: 'minesweeper__field minesweeper-field',
   fieldSizes: {
-    small: 'minesweeper-field_size_small',
+    easy: 'minesweeper-field_size_small',
     medium: 'minesweeper-field_size_medium',
-    large: 'minesweeper-field_size_large',
+    hard: 'minesweeper-field_size_large',
   },
   disabled: 'minesweeper-field_disabled',
 };
@@ -52,6 +52,10 @@ export function setSize(size) {
 
 export function disableField() {
   fieldElement.classList.add(CLASSES.disabled);
+}
+
+export function activateField() {
+  fieldElement.classList.remove(CLASSES.disabled);
 }
 
 export function getElement() {

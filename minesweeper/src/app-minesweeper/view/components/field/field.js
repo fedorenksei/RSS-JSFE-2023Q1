@@ -1,6 +1,6 @@
 import * as fieldView from './fieldView';
 import * as cellFactory from './cell/cell';
-import * as newGame from '../newGame';
+import * as newGame from '../newGame/newGame';
 import * as counters from '../counters/counters';
 
 let modelApi;
@@ -13,7 +13,7 @@ export function init(api) {
   cellById = fieldView.getCellsMap();
 
   if (!modelApi.currentGame) {
-    fieldView.setSize('small');
+    fieldView.setSize('easy');
   }
 }
 
@@ -70,8 +70,10 @@ export function winGame() {
   fieldView.disableField();
 }
 
-export function reset() {
+export function reset(mode) {
   cellById.forEach((cell) => { cell.reset(); });
+  fieldView.setSize(mode);
+  fieldView.activateField();
 }
 
 export function getElement() {

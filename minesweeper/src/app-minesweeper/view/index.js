@@ -1,8 +1,8 @@
 import './styles.css';
 import createElement from './createElement';
-import * as field from './components/field/field';
-import * as newGame from './components/newGame';
-import * as counters from './components/counters/counters';
+import * as field from './components/field/field.js';
+import * as newGame from './components/newGame/newGame.js';
+import * as counters from './components/counters/counters.js';
 import * as message from './components/message/message.js';
 
 export function init(modelApi) {
