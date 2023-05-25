@@ -17,8 +17,12 @@ const MODES = {
     mines: 99,
   },
 };
-let chosenMode = MODES.easy;
-let currentSize = 'easy';
+const chosenMode = {};
+selectMode('easy');
+function selectMode(mode) {
+  if (!MODES[mode]) return;
+  Object.assign(chosenMode, MODES[mode]);
+}
 
 let modelApi;
 export function init(api) {
@@ -35,14 +39,26 @@ const wrapperElement = createElement('div', ClASSES.wrapper);
 const buttonElement = createElement('div', ClASSES.button);
 buttonElement.textContent = 'New game';
 buttonElement.addEventListener('click', () => {
-  newGame();
+  abortGame();
 });
-function newGame() {
-  modelApi.abortGame();
-  field.reset(currentSize);
-  counters.reset();
-  counters.stopSecondCounter();
-}
+
+const minesElement = createElement('select', ClASSES.mines);
+const minesOptions = Array(MODES.hard.mines - MODES.easy.mines + 1)
+  .fill(null)
+  .map((v, index) => index + 10);
+minesOptions.forEach((amount) => {
+  const option = createElement('option');
+  option.value = amount;
+  option.textContent = amount;
+  minesElement.append(option);
+});
+// eslint-disable-next-line prefer-arrow-callback, func-names
+minesElement.addEventListener('change', function () {
+  const value = parseInt(this.value, 10);
+  if (Number.isNaN(value)) return;
+  chosenMode.mines = value;
+  abortGame();
+});
 
 const modeElement = createElement('select', ClASSES.mode);
 ['easy', 'medium', 'hard'].forEach((mode) => {
@@ -51,18 +67,22 @@ const modeElement = createElement('select', ClASSES.mode);
   option.textContent = mode;
   modeElement.append(option);
 });
-// eslint-disable-next-line prefer-arrow-callback
+let currentSize = modeElement.value;
+// eslint-disable-next-line prefer-arrow-callback, func-names
 modeElement.addEventListener('change', function () {
   currentSize = this.value;
-  chosenMode = MODES[this.value];
-  newGame();
+  selectMode(this.value);
+  abortGame();
+  minesElement.value = chosenMode.mines;
 });
 
-const minesElement = createElement('div', ClASSES.mines);
 wrapperElement.append(modeElement, minesElement, buttonElement);
 
-export function getElement() {
-  return wrapperElement;
+function abortGame() {
+  modelApi.abortGame();
+  field.reset(currentSize);
+  counters.reset();
+  counters.stopSecondCounter();
 }
 
 export function startGame() {
@@ -72,4 +92,8 @@ export function startGame() {
   modelApi.startGame(chosenMode);
   counters.reset();
   counters.continueSecondsCounter();
+}
+
+export function getElement() {
+  return wrapperElement;
 }
