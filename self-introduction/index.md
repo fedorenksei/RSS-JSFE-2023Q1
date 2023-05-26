@@ -1,8 +1,8 @@
 # Self-introduction video
 
-Link to the video: https://youtu.be/IkrUr7Dw34A
+[Link to the video](https://youtu.be/IkrUr7Dw34A)
 
-Video text:
+Transcription:
 
 
 Hello, everyone! My name is Aleksei, and I am going to introduce myself as an aspiring frontend developer.
