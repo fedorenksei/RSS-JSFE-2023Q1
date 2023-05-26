@@ -9,3 +9,4 @@ About me:
 Tasks done in this repo:
 1. Shelter
 2. Minesweeper
+3. Self-presentation
