@@ -1,8 +1,8 @@
-import { Article, Source } from '../types/index';
+import { ArticlesCallback, SourcesCallback } from '../types/index';
 import AppLoader from './appLoader';
 
 class AppController extends AppLoader {
-  getSources(callback: (data: { sources: Source[] }) => void) {
+  getSources(callback: SourcesCallback) {
     super.getResp(
       {
         endpoint: 'sources',
@@ -11,7 +11,7 @@ class AppController extends AppLoader {
     );
   }
 
-  getNews(e: Event, callback: (data: { articles: Article[] }) => void) {
+  getNews(e: Event, callback: ArticlesCallback) {
     let target = e.target as HTMLElement;
     const newsContainer = e.currentTarget as HTMLElement;
 
