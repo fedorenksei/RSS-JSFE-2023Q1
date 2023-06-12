@@ -11,3 +11,8 @@ export interface Article {
   urlToImage: string;
   publishedAt: string;
 }
+
+export interface Source {
+  id: string;
+  name: string;
+}
