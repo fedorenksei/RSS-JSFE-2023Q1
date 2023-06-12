@@ -1,3 +1,5 @@
+import { CallbackFromView } from '../types/index';
+
 type LoaderOptions = {
   apiKey: string;
 };
@@ -15,8 +17,6 @@ type FetchResponse = {
   json: () => Promise<JSON>;
 };
 
-type CallbackFromView = (data?: JSON) => void;
-
 class Loader {
   baseLink: string;
   options: LoaderOptions;
@@ -27,7 +27,7 @@ class Loader {
   }
 
   getResp(
-    { endpoint, options = {} }: { endpoint: NewsApiEndpoint; options: NewsApiOptions },
+    { endpoint, options = {} }: { endpoint: NewsApiEndpoint; options?: NewsApiOptions },
     callback = () => {
       console.error('No callback for GET response');
     }
