@@ -1,4 +1,4 @@
-import { CallbackFromView } from '../types/index';
+import { Article, Source } from '../types/index';
 
 type LoaderOptions = {
   apiKey: string;
@@ -21,7 +21,10 @@ class Loader {
 
   protected getResp(
     { endpoint, options = {} }: { endpoint: NewsApiEndpoint; options?: NewsApiOptions },
-    callback = () => {
+    callback: ((data: { sources: Source[] }) => void) | ((data: { articles: Article[] }) => void) = (
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      _data: { sources: Source[] } | { articles: Article[] }
+    ) => {
       console.error('No callback for GET response');
     }
   ) {
@@ -52,7 +55,12 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  private load(method: 'GET', endpoint: NewsApiEndpoint, callback: CallbackFromView, options: NewsApiOptions = {}) {
+  private load(
+    method: 'GET',
+    endpoint: NewsApiEndpoint,
+    callback: ((data: { sources: Source[] }) => void) | ((data: { articles: Article[] }) => void),
+    options: NewsApiOptions = {}
+  ) {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res) => res.json())
