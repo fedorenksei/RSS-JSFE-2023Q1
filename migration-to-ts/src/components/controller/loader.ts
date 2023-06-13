@@ -44,6 +44,8 @@ class Loader {
 
     Object.keys(urlOptions).forEach((key) => {
       // todo: find a better workaround
+      // if (!(key in urlOptions)) return; // why this doesn't work??
+      // if (!Object.prototype.hasOwnProperty.call(urlOptions, key)) return;
       if (key !== 'apiKey' && key !== 'sources') return;
 
       url += `${key}=${urlOptions[key]}&`;
