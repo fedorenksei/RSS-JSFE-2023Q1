@@ -1,4 +1,4 @@
-export interface Article {
+interface Article {
   source: {
     name: string;
   };
@@ -10,17 +10,20 @@ export interface Article {
   publishedAt: string;
 }
 
-export interface Source {
+interface Source {
   id: string;
   name: string;
 }
 
+export type ArticleCollection = readonly Article[];
+export type SourceCollection = readonly Source[];
+
 export interface ArticlesResponse {
-  articles: Article[];
+  articles: ArticleCollection;
 }
 
 export interface SourcesResponse {
-  sources: Source[];
+  sources: readonly Source[];
 }
 
 type GeneralCallback<Data> = (data: Data) => void;
