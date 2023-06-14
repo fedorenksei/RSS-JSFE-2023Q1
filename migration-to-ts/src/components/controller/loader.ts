@@ -1,4 +1,4 @@
-import { RenderingCallback } from '../types/index';
+import { ArticlesResponse, RenderingCallback, SourcesResponse } from '../types/index';
 
 type LoaderOptions = {
   apiKey: string;
@@ -24,11 +24,11 @@ class Loader {
     callback: RenderingCallback = () => {
       console.error('No callback for GET response');
     }
-  ) {
+  ): void {
     this.load('GET', endpoint, callback, options);
   }
 
-  private errorHandler(res: Response) {
+  private errorHandler(res: Response): Response {
     if (!res.ok) {
       if (res.status === 401 || res.status === 404)
         console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
@@ -38,7 +38,7 @@ class Loader {
     return res;
   }
 
-  private makeUrl(options: NewsApiOptions, endpoint: NewsApiEndpoint) {
+  private makeUrl(options: NewsApiOptions, endpoint: NewsApiEndpoint): string {
     const urlOptions = { ...this.options, ...options };
     let url = `${this.baseLink}${endpoint}?`;
 
@@ -54,12 +54,18 @@ class Loader {
     return url.slice(0, -1);
   }
 
-  private load(method: 'GET', endpoint: NewsApiEndpoint, callback: RenderingCallback, options: NewsApiOptions = {}) {
+  private load(
+    method: 'GET',
+    endpoint: NewsApiEndpoint,
+    callback: RenderingCallback,
+    options: NewsApiOptions = {}
+  ): void {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
-      .then((res) => res.json())
-      .then((data) => callback(data))
-      .catch((err) => console.error(err));
+      // why here SourcesResponse & ArticlesResponse is requested, but not SourcesResponse | ArticlesResponse?
+      .then((res: Response): Promise<SourcesResponse & ArticlesResponse> => res.json())
+      .then((data: SourcesResponse & ArticlesResponse): void => callback(data))
+      .catch((err: Error): void => console.error(err));
   }
 }
 
