@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+}
+
+.app {
+  display: grid;
+  grid-template-areas: 
+    "figure figure levels"
+    "input html levels";
+}
+
+.figure {
+  grid-area: figure;
+}
+
+.input {
+  grid-area: input;
+}
+
+.levels {
+  grid-area: levels;
+}
+
+.html {
+  grid-area: html;
+}

@@ -1,1 +1,4 @@
-document.body.innerText = 'Hello world';
+import * as app from './app/controller';
+
+app.start();
+document.body.append(app.getElement());
