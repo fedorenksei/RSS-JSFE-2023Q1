@@ -10,3 +10,6 @@ Tasks done in this repo:
 1. Shelter
 2. Minesweeper
 3. Self-presentation
+4. Migration to TS
+5. RSS CSS Selectors
+6. Async Race
