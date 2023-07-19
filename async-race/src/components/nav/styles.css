@@ -1,0 +1,24 @@
+.nav {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+
+  --color-basic: white;
+  --color-hover: lightgrey;
+  --color-active-effect: rgb(111, 159, 67);
+}
+
+.nav__item {
+  padding: 0.5em;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-basic);
+}
+
+.nav__item:not(.nav__item_active):hover {
+  cursor: pointer;
+  background-color: var(--color-hover);
+}
+
+.nav__item_active {
+  box-shadow: inset 0px 0px 3px 5px var(--color-active-effect);
+}
