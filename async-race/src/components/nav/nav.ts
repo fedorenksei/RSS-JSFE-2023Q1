@@ -22,7 +22,7 @@ export class Nav {
 
   constructor() {
     this.items = {} as Record<ViewName, HTMLElement>;
-    viewNames.forEach((viewName) => {
+       viewNames.forEach((viewName) => {
       this.items[viewName] = createNavItem(viewName);
     });
 
@@ -36,7 +36,9 @@ export class Nav {
       this.activeItem.classList.add(classNames.item.active);
     };
     navSwitchPub.subscribe(changeActiveItem);
-
+  }
+  
+  init() {
     navSwitchPub.fire(defaultView);
   }
 
