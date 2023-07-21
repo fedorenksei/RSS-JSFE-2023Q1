@@ -1,4 +1,31 @@
+.car {
+  display: grid;
+  grid-template-areas:
+    "select remove name"
+    "start stop wheel";
+  justify-content: start;
+  gap: 5px;
+  padding: 10px;
+}
+
+.car__name {
+  grid-area: name;
+}
+
 .car__image {
+  grid-area: wheel;
   height: 10px;
   width: 20px;
+}
+
+.car-button {
+  width: min-content;
+}
+
+.select-button {
+  grid-area: select;
+}
+
+.remove-button {
+  grid-area: remove;
 }

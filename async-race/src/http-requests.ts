@@ -1,12 +1,16 @@
 import { CarParams } from './types';
 
 const urlBase = 'http://127.0.0.1:3000/';
-const urls = {
-  garage: new URL('garage', urlBase),
+type Path = 'garage' | 'winners' | 'engine';
+function url(path: Path) {
+  return new URL(path, urlBase);
+}
+function urlWithId(path: Path, id: number) {
+  return new URL(`${path}/${id}`, urlBase);
 }
 
 export function getCars() {
-  const fetchPromise = fetch(urls.garage);
+  const fetchPromise = fetch(url('garage'));
   return catchFetch(fetchPromise).then((jsonResp) => {
     if (!Array.isArray(jsonResp)) {
       throw new Error('getCars response is not an array');
@@ -16,7 +20,7 @@ export function getCars() {
 }
 
 export function createCar(carParams: CarParams) {
-  const fetchPromise = fetch(urls.garage, {
+  const fetchPromise = fetch(url('garage'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -26,6 +30,12 @@ export function createCar(carParams: CarParams) {
   return catchFetch(fetchPromise);
 }
 
+export function deleteCar(id: number) {
+  const fetchPromise = fetch(urlWithId('garage', id), {
+    method: 'DELETE',
+  });
+  return catchFetch(fetchPromise);
+}
 
 function catchFetch(fetchPromise: Promise<Response>) {
   return fetchPromise
