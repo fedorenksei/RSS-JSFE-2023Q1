@@ -1,13 +1,24 @@
-import { getCars } from '../../http-requests';
-import { CarData } from '../../types';
+import { createCar, getCars } from '../../http-requests';
+import { CarData, CarParams } from '../../types';
 import { createElement } from '../../utils';
-import { Car } from './components/car';
+import { Car } from './components/car/car';
+import { CreateForm, UpdateForm } from './components/forms/forms';
 
 export class Garage {
   private element: HTMLElement;
+  private createForm: CreateForm;
+  private updateForm: UpdateForm;
 
   constructor() {
     this.element = getGarageElement();
+
+    this.createForm = new CreateForm();
+    this.updateForm = new UpdateForm();
+    this.createForm.submission.subscribe((carParams) => {
+      this.createCar(carParams);
+    });
+    this.element.prepend(this.createForm.getElement(), this.updateForm.getElement());
+
     this.init();
   }
 
@@ -16,27 +27,22 @@ export class Garage {
   }
 
   init() {
-    getCars()
-      .then((resp: Response) => {
-        if (!resp.ok) {
-          throw new Error('getCars response is not ok');
-        }
-        return resp.json();
-      })
-      .then((jsonResp) => {
-        if (!Array.isArray(jsonResp)) throw new Error('getCars response is not an array');
-        jsonResp.forEach((carData) => {
-          this.addCar(carData);
-        });
-      })
-      .catch((err) => {
-        console.error(err);
+    getCars().then((jsonResp) => {
+      jsonResp.forEach((carData) => {
+        this.addCar(carData);
       });
+    });
   }
 
   addCar(carData: CarData): void {
     const car = new Car(carData);
     this.element.append(car.getElement());
+  }
+
+  createCar(carParams: CarParams) {
+    createCar(carParams).then((jsonResp) => {
+      this.addCar(jsonResp);
+    });
   }
 }
 

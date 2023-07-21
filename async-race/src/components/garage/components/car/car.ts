@@ -1,6 +1,6 @@
 import './styles.css';
-import { CarData, HexColor } from '../../../types';
-import { createElement } from '../../../utils';
+import { CarData, HexColor } from '../../../../types';
+import { createElement } from '../../../../utils';
 
 export class Car {
   private props: CarData;
@@ -37,9 +37,10 @@ function getCarNameElement(name: string) {
 
 function getCarImg(color: HexColor) {
   const element = createElement({
-    tagName: 'div',
+    tagName: 'img',
     className: 'car__image',
   })
   element.style.backgroundColor = color;
+  // element.src = carIcon;
   return element;
 }
