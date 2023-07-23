@@ -29,3 +29,7 @@
 .remove-button {
   grid-area: remove;
 }
+
+.car_selected {
+  border: 1px solid blue;
+}

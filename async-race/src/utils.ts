@@ -39,3 +39,44 @@ export function createElement<K extends keyof HTMLElementTagNameMap>({
   if (onclick) element.addEventListener('click', onclick);
   return element;
 }
+
+export class Button {
+  private element: HTMLButtonElement;
+
+  constructor(data: { text: string; className: string; onclick: () => void }) {
+    const tag: { tagName: 'button' } = { tagName: 'button' };
+    this.element = createElement(Object.assign(data, tag));
+  }
+
+  getElement() {
+    return this.element;
+  }
+
+  disable() {
+    this.element.setAttribute('disabled', '');
+  }
+
+  enable() {
+    this.element.removeAttribute('disabled');
+  }
+}
+
+export class TextElement {
+  private element: HTMLElement;
+
+  constructor(data: {
+    tagName: keyof HTMLElementTagNameMap;
+    text: string;
+    className: string;
+  }) {
+    this.element = createElement(data);
+  }
+
+  getElement() {
+    return this.element;
+  }
+
+  setText(text: string) {
+    this.element.innerText = text;
+  }
+}

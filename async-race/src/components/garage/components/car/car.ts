@@ -1,6 +1,6 @@
 import './styles.css';
 import { CarActionName, CarData, CarParams, HexColor } from '../../../../types';
-import { PubSub, createElement } from '../../../../utils';
+import { Button, PubSub, TextElement, createElement } from '../../../../utils';
 import { deleteCar, updateCar } from '../../../../http-requests';
 
 const CLASS_NAMES = {
@@ -15,10 +15,9 @@ const CLASS_NAMES = {
 export class Car {
   private props: CarData;
   private element: HTMLElement;
-  private selectButton: HTMLButtonElement;
-  private removeButton: HTMLButtonElement;
-  private nameElement: HTMLElement;
-  private wheelElement: HTMLElement;
+  private selectButton: Button;
+  private nameElement: TextElement;
+  private wheel: Wheel;
   events: Record<CarActionName, PubSub<number>>;
 
   constructor(props: CarData) {
@@ -26,9 +25,8 @@ export class Car {
     ({
       element: this.element,
       selectButton: this.selectButton,
-      removeButton: this.removeButton,
       nameElement: this.nameElement,
-      wheelElement: this.wheelElement,
+      wheel: this.wheel,
     } = getCarElements.call(this, props));
     this.events = {
       select: new PubSub<number>(),
@@ -61,64 +59,73 @@ export class Car {
   }
 
   private markSelected() {
-    // this.element.classList.add('car_selected')
-    this.selectButton.setAttribute('disabled', '');
+    this.element.classList.add('car_selected')
+    this.selectButton.disable();
   }
 
   unmarkSelected() {
-    // this.element.classList.add('car_selected')
-    this.selectButton.removeAttribute('disabled');
+    this.element.classList.remove('car_selected')
+    this.selectButton.enable();
   }
 
   update(carParams: CarParams) {
     updateCar(this.props.id, carParams)
     .then(() => {
-      this.nameElement.innerText = carParams.name;
-      this.wheelElement.style.backgroundColor = carParams.color;
+      this.nameElement.setText(carParams.name);
+      this.wheel.setColor(carParams.color);
     })
   }
 }
 
 function getCarElements(this: Car, props: CarData) {
-  const selectButton = getButton.call(this, 'select');
-  const removeButton = getButton.call(this, 'remove');
+  const selectButton = getButtonObject.call(this, 'select');
+  const removeButton = getButtonObject.call(this, 'remove');
   const nameElement = getCarNameElement(props.name);
-  const wheelElement = getCarImg(props.color);
+  const wheel = new Wheel(props.color);
   const element = createElement({
     tagName: 'div',
     className: CLASS_NAMES.element,
     children: [
-      nameElement, 
-      wheelElement, selectButton, removeButton],
+      nameElement.getElement(), 
+      wheel.getElement(), selectButton.getElement(), removeButton.getElement()],
   });
-  return { element, selectButton, removeButton, nameElement, wheelElement };
+  return { element, selectButton, removeButton, nameElement, wheel };
 }
 
 function getCarNameElement(name: string) {
-  return createElement({
+  return new TextElement({
     tagName: 'span',
     className: CLASS_NAMES.carName,
     text: name,
   });
 }
 
-function getCarImg(color: HexColor) {
-  const element = createElement({
-    tagName: 'img',
-    className: 'car__image',
-  });
-  element.style.backgroundColor = color;
-  // element.src = carIcon;
-  return element;
-}
-
-function getButton(this: Car, carActionName: CarActionName) {
-  return createElement({
-    tagName: 'button',
+function getButtonObject(this: Car, carActionName: CarActionName) {
+  return new Button({
     className: CLASS_NAMES.buttons[carActionName],
     text: carActionName,
     onclick: () => {
       this.fireEvent(carActionName);
     },
   });
+}
+
+class Wheel {
+  private element: HTMLElement;
+
+  constructor(color: HexColor) {
+    this.element = createElement({
+      tagName: 'img',
+      className: 'car__image',
+    })
+    this.setColor(color);
+  }
+
+  getElement() {
+    return this.element;
+  }
+
+  setColor(color: HexColor) {
+    this.element.style.backgroundColor = color;
+  }
 }
