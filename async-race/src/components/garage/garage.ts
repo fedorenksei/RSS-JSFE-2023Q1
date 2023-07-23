@@ -8,8 +8,12 @@ export class Garage {
   private element: HTMLElement;
   private createForm: CreateForm;
   private updateForm: UpdateForm;
+  private selectedCar?: number | null;
+  private cars: Map<number, Car>;
 
   constructor() {
+    this.cars = new Map();
+
     this.element = getGarageElement();
 
     this.createForm = new CreateForm();
@@ -17,6 +21,11 @@ export class Garage {
     this.createForm.submission.subscribe((carParams) => {
       this.createCar(carParams);
     });
+    this.updateForm.submission.subscribe((carParams) => {
+      if (!this.selectedCar) return;
+      const car = this.getCar(this.selectedCar);
+      car?.update(carParams);
+    })
     this.element.prepend(this.createForm.getElement(), this.updateForm.getElement());
 
     this.init();
@@ -36,6 +45,22 @@ export class Garage {
 
   addCar(carData: CarData): void {
     const car = new Car(carData);
+    this.cars.set(carData.id, car);
+    car.events.select.subscribe((id: number) => {
+      if (this.selectedCar) {
+        const selectedCar = this.getCar(this.selectedCar);
+        selectedCar?.unmarkSelected();
+      }
+      this.selectedCar = id;
+      this.updateForm.enable();
+    });
+    car.events.remove.subscribe((id: number) => {
+      if (this.selectedCar === id) {
+        this.selectedCar = null;
+        this.updateForm.disable();
+        this.updateForm.clear();
+      }
+    })
     this.element.append(car.getElement());
   }
 
@@ -43,6 +68,10 @@ export class Garage {
     createCar(carParams).then((jsonResp) => {
       this.addCar(jsonResp);
     });
+  }
+
+  private getCar(id: number): Car | undefined {
+    return this.cars.get(id);
   }
 }
 

@@ -30,6 +30,17 @@ export function createCar(carParams: CarParams) {
   return catchFetch(fetchPromise);
 }
 
+export function updateCar(id: number, carParams: CarParams) {
+  const fetchPromise = fetch(urlWithId('garage', id), {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(carParams),
+  });
+  return catchFetch(fetchPromise);
+}
+
 export function deleteCar(id: number) {
   const fetchPromise = fetch(urlWithId('garage', id), {
     method: 'DELETE',

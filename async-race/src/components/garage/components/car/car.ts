@@ -1,7 +1,7 @@
 import './styles.css';
-import { CarActionName, CarData, HexColor } from '../../../../types';
+import { CarActionName, CarData, CarParams, HexColor } from '../../../../types';
 import { PubSub, createElement } from '../../../../utils';
-import { deleteCar } from '../../../../http-requests';
+import { deleteCar, updateCar } from '../../../../http-requests';
 
 const CLASS_NAMES = {
   element: 'car',
@@ -15,17 +15,30 @@ const CLASS_NAMES = {
 export class Car {
   private props: CarData;
   private element: HTMLElement;
+  private selectButton: HTMLButtonElement;
+  private removeButton: HTMLButtonElement;
+  private nameElement: HTMLElement;
+  private wheelElement: HTMLElement;
   events: Record<CarActionName, PubSub<number>>;
 
   constructor(props: CarData) {
     this.props = props;
-    this.element = getCarElement.call(this, props);
+    ({
+      element: this.element,
+      selectButton: this.selectButton,
+      removeButton: this.removeButton,
+      nameElement: this.nameElement,
+      wheelElement: this.wheelElement,
+    } = getCarElements.call(this, props));
     this.events = {
       select: new PubSub<number>(),
       remove: new PubSub<number>(),
     };
-    this.events.remove.subscribe(() => {
+    this.subscribeToEvent('remove', () => {
       this.delete();
+    });
+    this.subscribeToEvent('select', () => {
+      this.markSelected();
     });
   }
 
@@ -46,19 +59,39 @@ export class Car {
       this.element.remove();
     });
   }
+
+  private markSelected() {
+    // this.element.classList.add('car_selected')
+    this.selectButton.setAttribute('disabled', '');
+  }
+
+  unmarkSelected() {
+    // this.element.classList.add('car_selected')
+    this.selectButton.removeAttribute('disabled');
+  }
+
+  update(carParams: CarParams) {
+    updateCar(this.props.id, carParams)
+    .then(() => {
+      this.nameElement.innerText = carParams.name;
+      this.wheelElement.style.backgroundColor = carParams.color;
+    })
+  }
 }
 
-function getCarElement(this: Car, props: CarData): HTMLElement {
-  return createElement({
+function getCarElements(this: Car, props: CarData) {
+  const selectButton = getButton.call(this, 'select');
+  const removeButton = getButton.call(this, 'remove');
+  const nameElement = getCarNameElement(props.name);
+  const wheelElement = getCarImg(props.color);
+  const element = createElement({
     tagName: 'div',
     className: CLASS_NAMES.element,
     children: [
-      getCarNameElement(props.name),
-      getCarImg(props.color),
-      getButton.call(this, 'select'),
-      getButton.call(this, 'remove'),
-    ],
+      nameElement, 
+      wheelElement, selectButton, removeButton],
   });
+  return { element, selectButton, removeButton, nameElement, wheelElement };
 }
 
 function getCarNameElement(name: string) {
