@@ -1,5 +1,8 @@
 import { CarParams, FormActionName, HTMLColorInputElement } from '../../../../types';
-import { PubSub, createElement } from '../../../../utils';
+import { PubSub } from '../../../../utils';
+import { Button } from '../../../common/button';
+import { createElement } from '../../../common/createElement';
+import { ColorInput, TextInput } from './input';
 
 const CLASS_NAMES = {
   element: 'form',
@@ -9,11 +12,11 @@ const CLASS_NAMES = {
   colorInput: 'color-input',
 };
 
-class Form {
-  protected element: HTMLElement;
-  textInput: HTMLInputElement;
-  colorInput: HTMLColorInputElement;
-  submitButton: HTMLButtonElement;
+export class Form {
+  readonly element: HTMLElement;
+  textInput: InstanceType<typeof TextInput>;
+  colorInput: InstanceType<typeof ColorInput>;
+  submitButton: InstanceType<typeof Button>;
   submission: PubSub<CarParams>;
 
   constructor(actionName: FormActionName) {
@@ -26,13 +29,23 @@ class Form {
     this.submission = new PubSub<CarParams>();
   }
 
-  getElement() {
-    return this.element;
+  clear() {
+    this.textInput.setDefaultValue();
+    this.colorInput.setDefaultValue();
   }
 
-  clear() {
-    this.textInput.value = this.textInput.defaultValue;
-    this.colorInput.value = this.colorInput.defaultValue;
+  enable() {
+    this.element.classList.remove('form_inactive');
+    [this.textInput, this.colorInput, this.submitButton].forEach((item) => {
+      item.enable();
+    });
+  }
+
+  disable() {
+    this.element.classList.add('form_inactive');
+    [this.textInput, this.colorInput, this.submitButton].forEach((item) => {
+      item.disable();
+    });
   }
 }
 
@@ -47,30 +60,16 @@ export class UpdateForm extends Form {
     super('update');
     this.disable();
   }
-
-  enable() {
-    this.element.classList.remove('form_inactive');
-    this.textInput.removeAttribute('disabled');
-    this.colorInput.removeAttribute('disabled');
-    this.submitButton.removeAttribute('disabled');
-  }
-
-  disable() {
-    this.element.classList.add('form_inactive');
-    this.textInput.setAttribute('disabled', '');
-    this.colorInput.setAttribute('disabled', '');
-    this.submitButton.setAttribute('disabled', '');
-  }
 }
 
 function getFormElements(this: Form, actionName: FormActionName) {
   const textInput = getTextInput();
   const colorInput = getColorInput();
-  const submitButton = getSubmitButton.call(this, { actionName, textInput, colorInput })
+  const submitButton = getSubmitButton.call(this, { actionName, textInput: textInput.element, colorInput: colorInput.element, });
   const element = createElement({
     tagName: 'form',
     className: CLASS_NAMES.element,
-    children: [textInput, colorInput, submitButton],
+    children: [textInput.element, colorInput.element, submitButton.element],
   });
   return { element, textInput, colorInput, submitButton };
 }
@@ -83,8 +82,7 @@ function getSubmitButton(
     colorInput,
   }: { actionName: FormActionName; textInput: HTMLInputElement; colorInput: HTMLColorInputElement }
 ) {
-  const element = createElement({
-    tagName: 'button',
+  return new Button({
     className: CLASS_NAMES.button,
     text: actionName,
     onclick: () => {
@@ -95,25 +93,12 @@ function getSubmitButton(
       this.clear();
     },
   });
-  element.type = 'button';
-  return element;
 }
 
 function getTextInput() {
-  const element = createElement({
-    tagName: 'input',
-    className: CLASS_NAMES.textInput,
-  });
-  element.type = 'text';
-  return element;
+  return new TextInput(CLASS_NAMES.textInput);
 }
 
-function getColorInput(): HTMLColorInputElement {
-  const element = createElement({
-    tagName: 'input',
-    className: CLASS_NAMES.colorInput,
-  }) as HTMLColorInputElement;
-  element.type = 'color';
-  element.defaultValue = '#000000';
-  return element;
+function getColorInput() {
+  return new ColorInput(CLASS_NAMES.colorInput);
 }

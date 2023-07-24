@@ -1,7 +1,11 @@
 import './styles.css';
-import { CarActionName, CarData, CarParams, HexColor } from '../../../../types';
-import { Button, PubSub, TextElement, createElement } from '../../../../utils';
+import { CarActionName, CarData, CarParams } from '../../../../types';
+import { PubSub } from '../../../../utils';
 import { deleteCar, updateCar } from '../../../../http-requests';
+import { Button } from '../../../common/button';
+import { TextElement } from '../../../common/text';
+import { createElement } from '../../../common/createElement';
+import { Wheel } from './wheel';
 
 const CLASS_NAMES = {
   element: 'car',
@@ -13,9 +17,9 @@ const CLASS_NAMES = {
 };
 
 export class Car {
+  readonly element: HTMLElement;
   private props: CarData;
-  private element: HTMLElement;
-  private selectButton: Button;
+  private selectButton: InstanceType<typeof Button>;
   private nameElement: TextElement;
   private wheel: Wheel;
   events: Record<CarActionName, PubSub<number>>;
@@ -36,12 +40,8 @@ export class Car {
       this.delete();
     });
     this.subscribeToEvent('select', () => {
-      this.markSelected();
+      this.setSelected();
     });
-  }
-
-  getElement() {
-    return this.element;
   }
 
   fireEvent(carActionName: CarActionName) {
@@ -58,12 +58,12 @@ export class Car {
     });
   }
 
-  private markSelected() {
+  private setSelected() {
     this.element.classList.add('car_selected')
     this.selectButton.disable();
   }
 
-  unmarkSelected() {
+  unsetSelected() {
     this.element.classList.remove('car_selected')
     this.selectButton.enable();
   }
@@ -71,7 +71,7 @@ export class Car {
   update(carParams: CarParams) {
     updateCar(this.props.id, carParams)
     .then(() => {
-      this.nameElement.setText(carParams.name);
+      if (carParams.name) this.nameElement.setText(carParams.name);
       this.wheel.setColor(carParams.color);
     })
   }
@@ -86,8 +86,8 @@ function getCarElements(this: Car, props: CarData) {
     tagName: 'div',
     className: CLASS_NAMES.element,
     children: [
-      nameElement.getElement(), 
-      wheel.getElement(), selectButton.getElement(), removeButton.getElement()],
+      nameElement.element, 
+      wheel.element, selectButton.element, removeButton.element],
   });
   return { element, selectButton, removeButton, nameElement, wheel };
 }
@@ -108,24 +108,4 @@ function getButtonObject(this: Car, carActionName: CarActionName) {
       this.fireEvent(carActionName);
     },
   });
-}
-
-class Wheel {
-  private element: HTMLElement;
-
-  constructor(color: HexColor) {
-    this.element = createElement({
-      tagName: 'img',
-      className: 'car__image',
-    })
-    this.setColor(color);
-  }
-
-  getElement() {
-    return this.element;
-  }
-
-  setColor(color: HexColor) {
-    this.element.style.backgroundColor = color;
-  }
 }

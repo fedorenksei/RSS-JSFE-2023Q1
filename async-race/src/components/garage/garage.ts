@@ -1,11 +1,11 @@
 import { createCar, getCars } from '../../http-requests';
 import { CarData, CarParams } from '../../types';
-import { createElement } from '../../utils';
+import { createElement } from '../common/createElement';
 import { Car } from './components/car/car';
-import { CreateForm, UpdateForm } from './components/forms/forms';
+import { CreateForm, Form, UpdateForm } from './components/forms/forms';
 
 export class Garage {
-  private element: HTMLElement;
+  readonly element: HTMLElement;
   private createForm: CreateForm;
   private updateForm: UpdateForm;
   private selectedCar?: number | null;
@@ -16,23 +16,23 @@ export class Garage {
 
     this.element = getGarageElement();
 
-    this.createForm = new CreateForm();
-    this.updateForm = new UpdateForm();
+    this.createForm = new Form('create');
+    this.updateForm = new Form('update');
+    this.updateForm.disable();
     this.createForm.submission.subscribe((carParams) => {
       this.createCar(carParams);
     });
     this.updateForm.submission.subscribe((carParams) => {
+      this.updateForm.disable();
       if (!this.selectedCar) return;
       const car = this.getCar(this.selectedCar);
-      car?.update(carParams);
+      if (!car) return;
+      car.update(carParams);
+      car.unsetSelected();
     })
-    this.element.prepend(this.createForm.getElement(), this.updateForm.getElement());
+    this.element.prepend(this.createForm.element, this.updateForm.element);
 
     this.init();
-  }
-
-  getElement() {
-    return this.element;
   }
 
   init() {
@@ -46,22 +46,25 @@ export class Garage {
   addCar(carData: CarData): void {
     const car = new Car(carData);
     this.cars.set(carData.id, car);
+    this.element.append(car.element);
+
     car.events.select.subscribe((id: number) => {
       if (this.selectedCar) {
         const selectedCar = this.getCar(this.selectedCar);
-        selectedCar?.unmarkSelected();
+        selectedCar?.unsetSelected();
       }
+
       this.selectedCar = id;
       this.updateForm.enable();
     });
+
     car.events.remove.subscribe((id: number) => {
       if (this.selectedCar === id) {
         this.selectedCar = null;
-        this.updateForm.disable();
         this.updateForm.clear();
+        this.updateForm.disable();
       }
     })
-    this.element.append(car.getElement());
   }
 
   createCar(carParams: CarParams) {

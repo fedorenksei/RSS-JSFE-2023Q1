@@ -1,14 +1,10 @@
-import { createElement } from "../../utils";
+import { createElement } from "../common/createElement";
 
 export class Winners {
-  private element: HTMLElement;
+  readonly element: HTMLElement;
 
   constructor() {
     this.element = getWinnersElement();
-  }
-
-  getElement() {
-    return this.element;
   }
 }
 

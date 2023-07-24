@@ -8,13 +8,13 @@ const garage = new Garage();
 const winners = new Winners();
 
 const viewElements: Record<ViewName, HTMLElement> = {
-  garage: garage.getElement(),
-  winners: winners.getElement(),
+  garage: garage.element,
+  winners: winners.element,
 };
 let activeView: ViewName | undefined;
 
 const navMenu = new Nav();
-document.body.prepend(navMenu.getElement());
+document.body.prepend(navMenu.element);
 navMenu.subscribe((viewName) => {
   if (viewName === activeView) return;
   if (activeView) {

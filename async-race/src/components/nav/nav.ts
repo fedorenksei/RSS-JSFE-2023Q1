@@ -1,6 +1,7 @@
 import './styles.css';
 import { ViewName } from '../../types';
-import { PubSub, createElement } from '../../utils';
+import { PubSub } from '../../utils';
+import { createElement } from '../common/createElement';
 
 const classNames = {
   menu: 'nav',
@@ -16,7 +17,7 @@ const defaultView = viewNames[0];
 const navSwitchPub = new PubSub<ViewName>();
 
 export class Nav {
-  private element: HTMLElement;
+  readonly element: HTMLElement;
   private items: Record<ViewName, HTMLElement>;
   private activeItem: HTMLElement;
 
@@ -40,10 +41,6 @@ export class Nav {
   
   init() {
     navSwitchPub.fire(defaultView);
-  }
-
-  getElement() {
-    return this.element;
   }
 
   subscribe(fn: (arg: ViewName) => void) {
