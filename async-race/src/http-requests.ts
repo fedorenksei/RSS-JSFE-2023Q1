@@ -48,6 +48,26 @@ export function deleteCar(id: number) {
   return catchFetch(fetchPromise);
 }
 
+export function startEngine(id: number) {
+  const resource = url('engine');
+  resource.searchParams.set('id', id.toString());
+  resource.searchParams.set('status', 'started');
+  const fetchPromise = fetch(resource, {
+    method: 'PATCH'
+  })
+  return catchFetch(fetchPromise)
+}
+
+export function startDriving(id: number): Promise<Response> {
+  const resource = url('engine');
+  resource.searchParams.set('id', id.toString());
+  resource.searchParams.set('status', 'drive');
+  const fetchPromise = fetch(resource, {
+    method: 'PATCH'
+  })
+  return fetchPromise;
+}
+
 function catchFetch(fetchPromise: Promise<Response>) {
   return fetchPromise
     .then((resp: Response) => {

@@ -5,7 +5,7 @@ import { deleteCar, updateCar } from '../../../../http-requests';
 import { Button } from '../../../common/button';
 import { TextElement } from '../../../common/text';
 import { createElement } from '../../../common/createElement';
-import { Wheel } from './wheel';
+import { Track } from './track';
 
 const CLASS_NAMES = {
   element: 'car',
@@ -26,7 +26,7 @@ export class Car {
   startButton: InstanceType<typeof Button>;
   stopButton: InstanceType<typeof Button>;
   nameElement: TextElement;
-  wheel: Wheel;
+  track: Track;
   events: Record<CarActionName, PubSub<number>>;
 
   constructor(props: CarData) {
@@ -36,19 +36,24 @@ export class Car {
     this.startButton = getButtonObject.call(this, 'start');
     this.stopButton = getButtonObject.call(this, 'stop');
     this.nameElement = getCarNameElement(props.name);
-    this.wheel = new Wheel(props.color);
+    this.track = new Track(props);
     this.element = getCarElement.call(this);
+
     this.events = {
       select: new PubSub<number>(),
       remove: new PubSub<number>(),
       start: new PubSub<number>(),
       stop: new PubSub<number>(),
     };
+
     this.subscribeToEvent('remove', () => {
       this.delete();
     });
     this.subscribeToEvent('select', () => {
       this.setSelected();
+    });
+    this.subscribeToEvent('start', () => {
+      this.track.start();
     });
   }
 
@@ -67,21 +72,20 @@ export class Car {
   }
 
   private setSelected() {
-    this.element.classList.add('car_selected')
+    this.element.classList.add('car_selected');
     this.selectButton.disable();
   }
 
   unsetSelected() {
-    this.element.classList.remove('car_selected')
+    this.element.classList.remove('car_selected');
     this.selectButton.enable();
   }
 
   update(carParams: CarParams) {
-    updateCar(this.props.id, carParams)
-    .then(() => {
+    updateCar(this.props.id, carParams).then(() => {
       if (carParams.name) this.nameElement.setText(carParams.name);
-      this.wheel.setColor(carParams.color);
-    })
+      this.track.setColor(carParams.color);
+    });
   }
 }
 
@@ -90,12 +94,12 @@ function getCarElement(this: Car) {
     tagName: 'div',
     className: CLASS_NAMES.element,
     children: [
-      this.selectButton.element, 
+      this.selectButton.element,
       this.removeButton.element,
       this.startButton.element,
       this.stopButton.element,
-      this.nameElement.element, 
-      this.wheel.element,
+      this.nameElement.element,
+      this.track.element,
     ],
   });
   return element;
