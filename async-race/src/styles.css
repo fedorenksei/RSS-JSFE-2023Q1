@@ -14,7 +14,7 @@ body {
   text-transform: capitalize;
 }
 
-.button:hover {
+.button:not(:disabled):hover {
   background-color: rgb(226, 226, 226);
 }
 

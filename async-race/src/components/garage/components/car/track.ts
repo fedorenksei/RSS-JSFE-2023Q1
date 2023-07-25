@@ -1,7 +1,7 @@
 import { carSvgText } from './car-icon';
 import { CarData, EngineData, HexColor } from '../../../../types';
 import { createElement } from '../../../common/createElement';
-import { startDriving, startEngine } from '../../../../http-requests';
+import { startDriving, startEngine, stopEngine } from '../../../../http-requests';
 
 const CLASS_NAMES = {
   track: {
@@ -16,6 +16,7 @@ export class Track {
   private carProps: CarData;
   readonly element: HTMLElement;
   carImage: SVGElement;
+  private stopAnimation?: boolean;
 
   constructor(props: CarData) {
     this.carProps = props;
@@ -42,17 +43,15 @@ export class Track {
 
   async start(): Promise<boolean> {
     this.reset();
+    this.stopAnimation = false;
 
     const engineData = (await startEngine(this.carProps.id)) as EngineData | undefined;
     if (!engineData) return false;
 
-    const animationState = {
-      stop: false,
-    }
-    this.drive(engineData, animationState);
+    this.drive(engineData);
     const driving: Response | undefined = await startDriving(this.carProps.id);
     if (driving.ok) {
-      this.setFinished();
+      if (!this.stopAnimation) this.setFinished();
       return true;
     }
 
@@ -60,11 +59,11 @@ export class Track {
       console.error(driving);
     }
     this.setStopped();
-    animationState.stop = true;
+    this.stopAnimation = true;
     return false;
   }
 
-  private drive({ distance, velocity }: EngineData, animationState: {stop: boolean}) {
+  private drive({ distance, velocity }: EngineData) {
     const duration = distance / velocity;
     const start = performance.now();
     const end = start + duration;
@@ -72,7 +71,7 @@ export class Track {
     let trackClientWidth = this.element.clientWidth;
     const drivingAnimation = (time: number) => {
       if (time >= end
-        || animationState.stop
+        || this.stopAnimation
       ) return;
 
       const progress = (time - start) / duration;
@@ -85,6 +84,17 @@ export class Track {
     const animationFrame = requestAnimationFrame(drivingAnimation);
 
     return animationFrame;
+  }
+
+  async stop() {
+    this.stopAnimation = true;
+    this.reset();
+    const response = await stopEngine(this.carProps.id);
+    if (!response.ok) {
+      console.log('test', response);
+    }
+    this.carImage.style.transform = '';
+    return;
   }
 }
 

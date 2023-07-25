@@ -35,6 +35,7 @@ export class Car {
     this.removeButton = getButtonObject.call(this, 'remove');
     this.startButton = getButtonObject.call(this, 'start');
     this.stopButton = getButtonObject.call(this, 'stop');
+    this.stopButton.disable();
     this.nameElement = getCarNameElement(props.name);
     this.track = new Track(props);
     this.element = getCarElement.call(this);
@@ -54,8 +55,15 @@ export class Car {
     });
     this.subscribeToEvent('start', async () => {
       this.startButton.disable();
+      this.stopButton.enable();
       await this.track.start();
       this.startButton.enable();
+    });
+    this.subscribeToEvent('stop', async () => {
+      this.startButton.disable();
+      await this.track.stop();
+      this.startButton.enable();
+      this.stopButton.disable();
     });
   }
 

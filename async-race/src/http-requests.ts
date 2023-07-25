@@ -8,6 +8,13 @@ function url(path: Path) {
 function urlWithId(path: Path, id: number) {
   return new URL(`${path}/${id}`, urlBase);
 }
+type EngineState = 'started' | 'stopped' | 'drive';
+function getEngineUrl(id: number, engineState: EngineState) {
+  const resource = url('engine');
+  resource.searchParams.set('id', id.toString());
+  resource.searchParams.set('status', engineState);
+  return resource;
+}
 
 export function getCars() {
   const fetchPromise = fetch(url('garage'));
@@ -45,26 +52,27 @@ export function deleteCar(id: number) {
   const fetchPromise = fetch(urlWithId('garage', id), {
     method: 'DELETE',
   });
-  return catchFetch(fetchPromise);
+  return fetchPromise;
 }
 
 export function startEngine(id: number) {
-  const resource = url('engine');
-  resource.searchParams.set('id', id.toString());
-  resource.searchParams.set('status', 'started');
-  const fetchPromise = fetch(resource, {
-    method: 'PATCH'
-  })
-  return catchFetch(fetchPromise)
+  const fetchPromise = fetch(getEngineUrl(id, 'started'), {
+    method: 'PATCH',
+  });
+  return catchFetch(fetchPromise);
 }
 
 export async function startDriving(id: number): Promise<Response> {
-  const resource = url('engine');
-  resource.searchParams.set('id', id.toString());
-  resource.searchParams.set('status', 'drive');
-  return await fetch(resource, {
-    method: 'PATCH'
+  return await fetch(getEngineUrl(id, 'drive'), {
+    method: 'PATCH',
   });
+}
+
+export async function stopEngine(id: number): Promise<Response> {
+  const fetchPromise = fetch(getEngineUrl(id, 'stopped'), {
+    method: 'PATCH',
+  });
+  return fetchPromise;
 }
 
 function catchFetch(fetchPromise: Promise<Response>) {
