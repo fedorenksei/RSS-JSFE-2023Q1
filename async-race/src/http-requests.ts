@@ -58,14 +58,13 @@ export function startEngine(id: number) {
   return catchFetch(fetchPromise)
 }
 
-export function startDriving(id: number): Promise<Response> {
+export async function startDriving(id: number): Promise<Response> {
   const resource = url('engine');
   resource.searchParams.set('id', id.toString());
   resource.searchParams.set('status', 'drive');
-  const fetchPromise = fetch(resource, {
+  return await fetch(resource, {
     method: 'PATCH'
-  })
-  return fetchPromise;
+  });
 }
 
 function catchFetch(fetchPromise: Promise<Response>) {

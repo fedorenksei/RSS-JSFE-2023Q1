@@ -14,6 +14,14 @@ body {
   text-transform: capitalize;
 }
 
+.button:hover {
+  background-color: rgb(226, 226, 226);
+}
+
+.button:not(:disabled) {
+  cursor: pointer;
+}
+
 .button:disabled {
   border-color: var(--button-disabled-color, rgba(0, 0, 0, 0.121));
 }

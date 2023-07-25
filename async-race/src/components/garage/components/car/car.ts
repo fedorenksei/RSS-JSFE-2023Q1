@@ -52,8 +52,10 @@ export class Car {
     this.subscribeToEvent('select', () => {
       this.setSelected();
     });
-    this.subscribeToEvent('start', () => {
-      this.track.start();
+    this.subscribeToEvent('start', async () => {
+      this.startButton.disable();
+      await this.track.start();
+      this.startButton.enable();
     });
   }
 
