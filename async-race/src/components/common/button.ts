@@ -8,6 +8,7 @@ class ButtonBase {
     const tag: { tagName: 'button' } = { tagName: 'button' };
     this.element = createElement(Object.assign(data, tag));
     this.element.type = 'button';
+    this.element.classList.add('button')
   }
 }
 export const Button = addDisabling(ButtonBase);

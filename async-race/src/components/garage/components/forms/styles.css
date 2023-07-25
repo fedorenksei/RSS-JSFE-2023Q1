@@ -1,0 +1,18 @@
+.form {
+  margin: 20px;
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.color-input {
+  height: auto;
+}
+
+.create-button {
+  --button-active-color: green;
+}
+
+.update-button {
+  --button-active-color: rgb(142, 152, 4);
+}

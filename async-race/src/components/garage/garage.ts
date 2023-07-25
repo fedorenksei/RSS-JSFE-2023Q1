@@ -2,12 +2,12 @@ import { createCar, getCars } from '../../http-requests';
 import { CarData, CarParams } from '../../types';
 import { createElement } from '../common/createElement';
 import { Car } from './components/car/car';
-import { CreateForm, Form, UpdateForm } from './components/forms/forms';
+import { Form } from './components/forms/forms';
 
 export class Garage {
   readonly element: HTMLElement;
-  private createForm: CreateForm;
-  private updateForm: UpdateForm;
+  private createForm: Form;
+  private updateForm: Form;
   private selectedCar?: number | null;
   private cars: Map<number, Car>;
 

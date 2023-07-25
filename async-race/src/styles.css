@@ -1,3 +1,19 @@
 body {
   margin: 0;
+  font: 24px Verdana, sans-serif;
+}
+
+.button {  
+  height: 2em;
+  width: min-content;
+  
+  border-radius: 5px;
+  border-color: var(--button-active-color, rgba(0, 0, 0, 0.636));
+
+  font-size: 16px;
+  text-transform: capitalize;
+}
+
+.button:disabled {
+  border-color: var(--button-disabled-color, rgba(0, 0, 0, 0.121));
 }

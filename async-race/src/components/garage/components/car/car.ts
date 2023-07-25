@@ -11,30 +11,38 @@ const CLASS_NAMES = {
   element: 'car',
   carName: 'car__name',
   buttons: {
-    select: 'select-button car-button',
-    remove: 'remove-button car-button',
+    select: 'select-button',
+    remove: 'remove-button',
+    start: 'start-button',
+    stop: 'stop-button',
   },
 };
 
 export class Car {
   readonly element: HTMLElement;
   private props: CarData;
-  private selectButton: InstanceType<typeof Button>;
-  private nameElement: TextElement;
-  private wheel: Wheel;
+  selectButton: InstanceType<typeof Button>;
+  removeButton: InstanceType<typeof Button>;
+  startButton: InstanceType<typeof Button>;
+  stopButton: InstanceType<typeof Button>;
+  nameElement: TextElement;
+  wheel: Wheel;
   events: Record<CarActionName, PubSub<number>>;
 
   constructor(props: CarData) {
     this.props = props;
-    ({
-      element: this.element,
-      selectButton: this.selectButton,
-      nameElement: this.nameElement,
-      wheel: this.wheel,
-    } = getCarElements.call(this, props));
+    this.selectButton = getButtonObject.call(this, 'select');
+    this.removeButton = getButtonObject.call(this, 'remove');
+    this.startButton = getButtonObject.call(this, 'start');
+    this.stopButton = getButtonObject.call(this, 'stop');
+    this.nameElement = getCarNameElement(props.name);
+    this.wheel = new Wheel(props.color);
+    this.element = getCarElement.call(this);
     this.events = {
       select: new PubSub<number>(),
       remove: new PubSub<number>(),
+      start: new PubSub<number>(),
+      stop: new PubSub<number>(),
     };
     this.subscribeToEvent('remove', () => {
       this.delete();
@@ -77,19 +85,20 @@ export class Car {
   }
 }
 
-function getCarElements(this: Car, props: CarData) {
-  const selectButton = getButtonObject.call(this, 'select');
-  const removeButton = getButtonObject.call(this, 'remove');
-  const nameElement = getCarNameElement(props.name);
-  const wheel = new Wheel(props.color);
+function getCarElement(this: Car) {
   const element = createElement({
     tagName: 'div',
     className: CLASS_NAMES.element,
     children: [
-      nameElement.element, 
-      wheel.element, selectButton.element, removeButton.element],
+      this.selectButton.element, 
+      this.removeButton.element,
+      this.startButton.element,
+      this.stopButton.element,
+      this.nameElement.element, 
+      this.wheel.element,
+    ],
   });
-  return { element, selectButton, removeButton, nameElement, wheel };
+  return element;
 }
 
 function getCarNameElement(name: string) {

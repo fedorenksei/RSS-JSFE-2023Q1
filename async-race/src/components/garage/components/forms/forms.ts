@@ -1,3 +1,4 @@
+import './styles.css';
 import { CarParams, FormActionName, HTMLColorInputElement } from '../../../../types';
 import { PubSub } from '../../../../utils';
 import { Button } from '../../../common/button';
@@ -7,7 +8,10 @@ import { ColorInput, TextInput } from './input';
 const CLASS_NAMES = {
   element: 'form',
   disabled: 'form_inactive',
-  button: 'form-button',
+  buttons: {
+    create: 'create-button',
+    update: 'update-button',
+  },
   textInput: 'text-input',
   colorInput: 'color-input',
 };
@@ -20,12 +24,14 @@ export class Form {
   submission: PubSub<CarParams>;
 
   constructor(actionName: FormActionName) {
-    ({
-      element: this.element,
-      textInput: this.textInput,
-      colorInput: this.colorInput,
-      submitButton: this.submitButton,
-    } = getFormElements.call(this, actionName));
+    this.textInput = getTextInput();
+    this.colorInput = getColorInput();
+    this.submitButton = getSubmitButton.call(this, {
+      actionName,
+      textInput: this.textInput.element,
+      colorInput: this.colorInput.element,
+    });
+    this.element = getFormElement.call(this);
     this.submission = new PubSub<CarParams>();
   }
 
@@ -49,29 +55,13 @@ export class Form {
   }
 }
 
-export class CreateForm extends Form {
-  constructor() {
-    super('create');
-  }
-}
-
-export class UpdateForm extends Form {
-  constructor() {
-    super('update');
-    this.disable();
-  }
-}
-
-function getFormElements(this: Form, actionName: FormActionName) {
-  const textInput = getTextInput();
-  const colorInput = getColorInput();
-  const submitButton = getSubmitButton.call(this, { actionName, textInput: textInput.element, colorInput: colorInput.element, });
+function getFormElement(this: Form) {
   const element = createElement({
     tagName: 'form',
     className: CLASS_NAMES.element,
-    children: [textInput.element, colorInput.element, submitButton.element],
+    children: [this.textInput.element, this.colorInput.element, this.submitButton.element],
   });
-  return { element, textInput, colorInput, submitButton };
+  return element;
 }
 
 function getSubmitButton(
@@ -83,7 +73,7 @@ function getSubmitButton(
   }: { actionName: FormActionName; textInput: HTMLInputElement; colorInput: HTMLColorInputElement }
 ) {
   return new Button({
-    className: CLASS_NAMES.button,
+    className: CLASS_NAMES.buttons[actionName],
     text: actionName,
     onclick: () => {
       this.submission.fire({
