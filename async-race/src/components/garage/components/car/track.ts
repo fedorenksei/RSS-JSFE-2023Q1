@@ -58,7 +58,7 @@ export class Track {
     if (driving.status !== 500) {
       console.error(driving);
     }
-    this.setStopped();
+    if (!this.stopAnimation) this.setStopped();
     this.stopAnimation = true;
     return false;
   }
@@ -94,7 +94,6 @@ export class Track {
       console.log('test', response);
     }
     this.carImage.style.transform = '';
-    return;
   }
 }
 

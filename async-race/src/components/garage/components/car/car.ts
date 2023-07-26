@@ -28,9 +28,11 @@ export class Car {
   nameElement: TextElement;
   track: Track;
   events: Record<CarActionName, PubSub<number>>;
+  carState: 'parking' | 'driving' | 'finished';
 
   constructor(props: CarData) {
     this.props = props;
+    this.carState = 'parking';
     this.selectButton = getButtonObject.call(this, 'select');
     this.removeButton = getButtonObject.call(this, 'remove');
     this.startButton = getButtonObject.call(this, 'start');
@@ -56,14 +58,23 @@ export class Car {
     this.subscribeToEvent('start', async () => {
       this.startButton.disable();
       this.stopButton.enable();
+      this.carState = 'driving';
+
       await this.track.start();
+
+      this.carState = 'finished';
       this.startButton.enable();
     });
     this.subscribeToEvent('stop', async () => {
       this.startButton.disable();
-      await this.track.stop();
-      this.startButton.enable();
       this.stopButton.disable();
+
+      await this.track.stop();
+
+      if (this.carState === 'finished') {
+        this.startButton.enable();
+      }
+      this.carState = 'parking';
     });
   }
 
