@@ -4,6 +4,7 @@ import { createElement } from '../common/createElement';
 import { Pagination } from '../common/pagination/pagination';
 import { Car } from './components/car/car';
 import { Form } from './components/forms/forms';
+import { Total } from './components/total/total';
 
 const ITEMS_ON_PAGE = 7;
 
@@ -14,12 +15,12 @@ export class Garage {
   private selectedCar?: number | null;
   private cars: Map<number, Car>;
   private pagination: Pagination;
+  private total: Total;
 
   constructor() {
     this.cars = new Map();
     this.pagination = new Pagination(ITEMS_ON_PAGE);
-
-    this.element = getGarageElement(this.pagination.element);
+    this.total = new Total();
 
     this.createForm = new Form('create');
     this.updateForm = new Form('update');
@@ -35,7 +36,8 @@ export class Garage {
       car.update(carParams);
       car.unsetSelected();
     });
-    this.element.prepend(this.createForm.element, this.updateForm.element);
+
+    this.element = getGarageElement([this.createForm.element, this.updateForm.element, this.total.element, this.pagination.element]);
 
     this.init();
   }
@@ -48,9 +50,10 @@ export class Garage {
     if (!carsData) return;
     for (let i = 0; i < carsData.length; i += ITEMS_ON_PAGE) {
       const carsDataOnPage = carsData.slice(i, i + ITEMS_ON_PAGE);
-      const cars = carsDataOnPage.map((carData: CarData) => this.addCar(carData))
-      this.pagination.addPage(cars.map(car => car.element));
+      const cars = carsDataOnPage.map((carData: CarData) => this.addCar(carData));
+      this.pagination.addPage(cars.map((car) => car.element));
     }
+    this.total.set(carsData.length);
   }
 
   addCar(carData: CarData): Car {
@@ -74,6 +77,7 @@ export class Garage {
         this.updateForm.clear();
         this.updateForm.disable();
       }
+      this.total.minusOne();
     });
 
     return car;
@@ -83,6 +87,7 @@ export class Garage {
     createCar(carParams).then((jsonResp) => {
       this.pagination.addItem(this.addCar(jsonResp).element);
     });
+    this.total.plusOne();
   }
 
   private getCar(id: number): Car | undefined {
@@ -90,10 +95,10 @@ export class Garage {
   }
 }
 
-function getGarageElement(paginationElement: HTMLElement): HTMLElement {
+function getGarageElement(children: HTMLElement[]): HTMLElement {
   return createElement({
     tagName: 'section',
     className: 'garage',
-    children: [paginationElement],
+    children,
   });
 }
