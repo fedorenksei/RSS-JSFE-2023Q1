@@ -10,7 +10,7 @@ const CLASS_NAMES = {
     finished: 'car__track_finished',
   },
   image: 'car__image',
-}
+};
 
 const GREY = '#d7d7d7';
 
@@ -18,7 +18,8 @@ export class Track {
   private carProps: CarData;
   readonly element: HTMLElement;
   carImage: SVGElement;
-  private stopAnimation?: boolean;
+  private abortAnimation?: boolean;
+  private pauseAnimation?: boolean;
 
   constructor(props: CarData) {
     this.carProps = props;
@@ -31,12 +32,12 @@ export class Track {
     this.carImage.style.fill = color;
   }
 
-  setStopped() {
-    this.element.classList.add(CLASS_NAMES.track.stopped)
+  private setStopped() {
+    this.element.classList.add(CLASS_NAMES.track.stopped);
   }
 
-  setFinished() {
-    this.element.classList.add(CLASS_NAMES.track.finished)
+  private setFinished() {
+    this.element.classList.add(CLASS_NAMES.track.finished);
   }
 
   private setWaiting() {
@@ -46,41 +47,49 @@ export class Track {
   private unsetWaiting() {
     this.setColor();
   }
-  
-  reset() {
-    this.element.classList.remove(CLASS_NAMES.track.stopped)
-    this.element.classList.remove(CLASS_NAMES.track.finished)
+
+  private positionStart() {
+    this.carImage.style.transform = '';
+    this.abortAnimation = true;
   }
 
-  async start(): Promise<EngineData | undefined> {
+  reset() {
+    this.element.classList.remove(CLASS_NAMES.track.stopped);
+    this.element.classList.remove(CLASS_NAMES.track.finished);
+  }
+
+  async startEngine(): Promise<EngineData | undefined> {
     this.reset();
-    this.stopAnimation = false;
+    this.positionStart();
     this.setWaiting();
     
     const engineData = (await startEngine(this.carProps.id)) as EngineData | undefined;
     if (!engineData) return;
+    
     return engineData;
   }
-  
+
   async drive(engineData: EngineData) {
+    this.abortAnimation = false;
+    this.pauseAnimation = false;
     this.unsetWaiting();
+
     this.animate(engineData);
     const driving: Response | undefined = await startDriving(this.carProps.id);
     if (driving.ok) {
-      if (!this.stopAnimation) this.setFinished();
+      if (!this.abortAnimation) this.setFinished();
       return;
     }
-
     if (driving.status !== 500) {
       console.error(driving);
     }
-    if (!this.stopAnimation) this.setStopped();
-    this.stopAnimation = true;
+    if (!this.abortAnimation) this.setStopped();
+    this.pauseAnimation = true;
     return;
   }
 
   async stop() {
-    this.stopAnimation = true;
+    this.pauseAnimation = true;
     this.reset();
     this.setWaiting();
     
@@ -90,7 +99,7 @@ export class Track {
     if (!response.ok) {
       console.log('test', response);
     }
-    this.carImage.style.transform = '';
+    this.positionStart();
   }
 
   private animate({ distance, velocity }: EngineData) {
@@ -99,18 +108,24 @@ export class Track {
     const end = start + duration;
 
     let trackClientWidth = this.element.clientWidth;
+    let progress = 0;
     const drivingAnimation = (time: number) => {
-      if (time >= end
-        || this.stopAnimation
-      ) return;
+      console.log('animation');
+      
+      if (this.abortAnimation) return;
 
-      const progress = (time - start) / duration;
+      if (!this.pauseAnimation) {
+        progress = time >= end ? 1 : (time - start) / duration;
+      }
+
       trackClientWidth = this.element.clientWidth || trackClientWidth;
       const trackLength = trackClientWidth - 100;
+
       const current = progress * trackLength;
-      this.carImage.style.transform = `translate(${current}px)`
-      requestAnimationFrame(drivingAnimation)
-    }
+      this.carImage.style.transform = `translate(${current}px)`;
+
+      requestAnimationFrame(drivingAnimation);
+    };
     const animationFrame = requestAnimationFrame(drivingAnimation);
 
     return animationFrame;

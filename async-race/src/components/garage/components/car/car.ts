@@ -64,7 +64,7 @@ export class Car {
       this.startButton.disable();
       this.process.driving = true;
 
-      const engineData = await this.track.start();
+      const engineData = await this.track.startEngine();
 
       if (engineData) {
         this.stopButton.enable();
