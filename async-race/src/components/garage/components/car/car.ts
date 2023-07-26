@@ -28,11 +28,15 @@ export class Car {
   nameElement: TextElement;
   track: Track;
   events: Record<CarActionName, PubSub<number>>;
-  carState: 'parking' | 'driving' | 'finished';
+  process: {
+    driving?: boolean;
+    stopping?: boolean;
+  }
 
   constructor(props: CarData) {
     this.props = props;
-    this.carState = 'parking';
+    this.process = {};
+
     this.selectButton = getButtonObject.call(this, 'select');
     this.removeButton = getButtonObject.call(this, 'remove');
     this.startButton = getButtonObject.call(this, 'start');
@@ -55,27 +59,39 @@ export class Car {
     this.subscribeToEvent('select', () => {
       this.setSelected();
     });
-    this.subscribeToEvent('start', async () => {
+
+    const driving = async () => {
       this.startButton.disable();
-      this.stopButton.enable();
-      this.carState = 'driving';
+      this.process.driving = true;
+      
+      const engineData = await this.track.start();
+      
+      if (engineData) {
+        this.stopButton.enable();
+  
+        await this.track.drive(engineData);
+      }
 
-      await this.track.start();
+      if (!this.process.stopping) {
+        this.startButton.enable();
+      }
+      this.process.driving = false;
+    }
+    this.subscribeToEvent('start', driving);
 
-      this.carState = 'finished';
-      this.startButton.enable();
-    });
-    this.subscribeToEvent('stop', async () => {
+    const stopping = async () => {
       this.startButton.disable();
       this.stopButton.disable();
+      this.process.stopping = true;
 
       await this.track.stop();
 
-      if (this.carState === 'finished') {
+      if (!this.process.driving) {
         this.startButton.enable();
       }
-      this.carState = 'parking';
-    });
+      this.process.stopping = false;
+    }
+    this.subscribeToEvent('stop', stopping);
   }
 
   fireEvent(carActionName: CarActionName) {
