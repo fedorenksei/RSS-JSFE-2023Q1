@@ -5,20 +5,25 @@
   --color-basic: white;
   --color-hover: lightgrey;
   --color-active-effect: rgb(111, 159, 67);
+  --color-light-green: rgb(242, 255, 222);
+  --color-inactive: rgb(222, 222, 222);
 }
 
 .nav__item {
   padding: 0.5em;
   display: grid;
   place-items: center;
+  transition: 0.3s background-color;
   background-color: var(--color-basic);
 }
 
 .nav__item:not(.nav__item_active):hover {
   cursor: pointer;
-  background-color: var(--color-hover);
+  background-color: var(--color-light-green);
 }
 
 .nav__item_active {
-  box-shadow: inset 0px 0px 3px 5px var(--color-active-effect);
+  /* box-shadow: inset 0px 0px 3px 5px var(--color-active-effect); */
+  background-color: rgb(235, 226, 239);
+  text-decoration: underline;
 }

@@ -16,6 +16,22 @@ function getEngineUrl(id: number, engineState: EngineState) {
   return resource;
 }
 
+export async function getPage({
+  resourceType,
+  itemsOnPage,
+  page,
+}: {
+  resourceType: 'winners' | 'garage';
+  itemsOnPage: number;
+  page: number;
+}) {
+  const resource = url(resourceType);
+  resource.searchParams.set('_limit', itemsOnPage.toString());
+  resource.searchParams.set('_page', page.toString());
+  const response = await fetch(resource);
+  return response;
+}
+
 export function getCars() {
   const fetchPromise = fetch(url('garage'));
   return catchFetch(fetchPromise).then((jsonResp) => {
