@@ -18,3 +18,9 @@ export function createElement<K extends keyof HTMLElementTagNameMap>({
   if (onclick) element.addEventListener('click', onclick);
   return element;
 }
+
+export function getSpanElement() {
+  return createElement({
+    tagName: 'span',
+  });
+}

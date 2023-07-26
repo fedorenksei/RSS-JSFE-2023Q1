@@ -4,8 +4,13 @@
   gap: 15px;
 }
 
-.pagination__wrapper {
+.pagination__wrapper,
+.pagination__page-info {
   grid-column: 1 / 3;
+}
+
+.pagination__page-info {
+  justify-self: center;
 }
 
 .next-button {

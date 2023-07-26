@@ -2,7 +2,7 @@ import './styles.css';
 import { PaginationActionName } from '../../../types';
 import { PubSub } from '../../../utils';
 import { Button } from '../button/button';
-import { createElement } from '../createElement';
+import { createElement, getSpanElement } from '../createElement';
 
 const CLASS_NAMES = {
   pagination: {
@@ -16,6 +16,7 @@ const CLASS_NAMES = {
     previous: 'prev-button',
   },
   wrapper: 'pagination__wrapper',
+  pageInfo: 'pagination__page-info',
 };
 
 export class Pagination {
@@ -24,6 +25,8 @@ export class Pagination {
   private pageByItemElement: Map<HTMLElement, number>;
   private pageElements: Map<number, HTMLElement>;
   private pageWrapper: HTMLElement;
+  private currentPageElement: HTMLElement;
+  private pageCounterElement: HTMLElement;
   private buttons: {
     next: InstanceType<typeof Button>;
     previous: InstanceType<typeof Button>;
@@ -50,7 +53,13 @@ export class Pagination {
     this.buttons.next.disable();
 
     this.pageWrapper = getWrapper();
-    this.element = getPaginationElement([this.pageWrapper, this.buttons.previous.element, this.buttons.next.element]);
+    this.currentPageElement = getSpanElement();
+    this.pageCounterElement = getSpanElement();    
+    const pageInfo = getPageInfoElement({
+      current: this.currentPageElement, 
+      total: this.pageCounterElement
+    });
+    this.element = getPaginationElement([this.pageWrapper, this.buttons.previous.element, this.buttons.next.element, pageInfo]);
     this.pageElements = new Map();
     this.itemElementsByPage = new Map();
     this.pageByItemElement = new Map();
@@ -149,11 +158,15 @@ export class Pagination {
   }
 
   private updateButtons(): void {
+    this.currentPageElement.innerText = (this.currentPage || 1).toString();
+    this.pageCounterElement.innerText = (this.pageCount || 1).toString();
+
     if (typeof this.currentPage !== 'number') {
       this.buttons.previous.disable();
       this.buttons.next.disable();
       return;
     }
+
     if (this.currentPage === 1) {
       this.buttons.previous.disable();
     }
@@ -211,4 +224,17 @@ function getButton(actionName: PaginationActionName, onclick: () => void): Insta
 
 function getWrapper(): HTMLElement {
   return createElement({ tagName: 'div', className: CLASS_NAMES.wrapper });
+}
+
+function getPageInfoElement({current, total}: {current: HTMLElement, total: HTMLElement}): HTMLElement {
+  const element = createElement({
+    tagName: 'p',
+    className: CLASS_NAMES.pageInfo,
+    text: 'Page ',
+  })
+  element.append(current);
+  const separator = document.createTextNode(' / ')
+  element.append(separator);
+  element.append(total);
+  return element;
 }
