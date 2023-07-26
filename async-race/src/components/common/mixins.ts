@@ -8,6 +8,9 @@ export function addDisabling<TBase extends ElementConstructor>(Base: TBase) {
 
     enable() {
       this.element.removeAttribute('disabled');
+      if (this.unsetWaiting) {
+        this.unsetWaiting();
+      }
     }
   };
 }

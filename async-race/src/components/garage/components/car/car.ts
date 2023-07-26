@@ -2,7 +2,7 @@ import './styles.css';
 import { CarActionName, CarData, CarParams } from '../../../../types';
 import { PubSub } from '../../../../utils';
 import { deleteCar, updateCar } from '../../../../http-requests';
-import { Button } from '../../../common/button';
+import { Button } from '../../../common/button/button';
 import { TextElement } from '../../../common/text';
 import { createElement } from '../../../common/createElement';
 import { Track } from './track';
@@ -86,7 +86,9 @@ export class Car {
 
       await this.track.stop();
 
-      if (!this.process.driving) {
+      if (this.process.driving) {
+        this.startButton.setWaiting();
+      } else {
         this.startButton.enable();
       }
       this.process.stopping = false;

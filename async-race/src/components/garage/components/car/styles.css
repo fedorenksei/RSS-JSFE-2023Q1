@@ -5,25 +5,6 @@
   padding: 10px;
 }
 
-.select-button {
-  --button-active-color: rgb(5, 5, 108);
-}
-
-.remove-button {
-  --button-active-color: rgb(108, 5, 5);
-}
-
-.start-button {
-  text-transform: uppercase;
-  margin-left: 15px;
-  --button-active-color: rgb(17, 196, 5);
-}
-
-.stop-button {
-  text-transform: uppercase;
-  --button-active-color: rgb(223, 10, 10);
-}
-
 .car__name {
   margin-left: 15px;
 }

@@ -1,7 +1,7 @@
 import './styles.css';
 import { CarParams, FormActionName, HTMLColorInputElement } from '../../../../types';
 import { PubSub } from '../../../../utils';
-import { Button } from '../../../common/button';
+import { Button } from '../../../common/button/button';
 import { createElement } from '../../../common/createElement';
 import { ColorInput, TextInput } from './input';
 

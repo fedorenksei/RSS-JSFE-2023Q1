@@ -18,7 +18,7 @@ export interface HTMLColorInputElement extends HTMLInputElement {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ElementConstructor<T = { element: HTMLElement }> = new (...args: any[]) => T;
+export type ElementConstructor<T = { element: HTMLElement; unsetWaiting?: () => void }> = new (...args: any[]) => T;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type InputElementConstructor<T = { element: HTMLInputElement }> = new (...args: any[]) => T;
 
