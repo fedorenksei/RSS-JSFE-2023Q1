@@ -31,7 +31,7 @@ export class Car {
   process: {
     driving?: boolean;
     stopping?: boolean;
-  }
+  };
 
   constructor(props: CarData) {
     this.props = props;
@@ -63,12 +63,12 @@ export class Car {
     const driving = async () => {
       this.startButton.disable();
       this.process.driving = true;
-      
+
       const engineData = await this.track.start();
-      
+
       if (engineData) {
         this.stopButton.enable();
-  
+
         await this.track.drive(engineData);
       }
 
@@ -76,7 +76,7 @@ export class Car {
         this.startButton.enable();
       }
       this.process.driving = false;
-    }
+    };
     this.subscribeToEvent('start', driving);
 
     const stopping = async () => {
@@ -92,7 +92,7 @@ export class Car {
         this.startButton.enable();
       }
       this.process.stopping = false;
-    }
+    };
     this.subscribeToEvent('stop', stopping);
   }
 
@@ -105,9 +105,7 @@ export class Car {
   }
 
   private delete() {
-    deleteCar(this.props.id).then(() => {
-      this.element.remove();
-    });
+    deleteCar(this.props.id);
   }
 
   private setSelected() {
@@ -124,6 +122,7 @@ export class Car {
     updateCar(this.props.id, carParams).then(() => {
       if (carParams.name) this.nameElement.setText(carParams.name);
       this.track.setColor(carParams.color);
+      ({ color: this.props.color, name: this.props.name } = carParams);
     });
   }
 }

@@ -35,7 +35,9 @@ export class Pagination {
   constructor(itemsOnPage: number) {
     this.itemsOnPage = itemsOnPage;
     this.navEvent = new PubSub<PaginationActionName>();
-    this.navEvent.subscribe((actionName: PaginationActionName) => {this.navigate(actionName)})
+    this.navEvent.subscribe((actionName: PaginationActionName) => {
+      this.navigate(actionName);
+    });
     this.buttons = {
       next: getButton('next', () => {
         this.navEvent.fire('next');
@@ -60,54 +62,118 @@ export class Pagination {
     this.pageElements.set(newPageNumber, pageElement);
 
     this.itemElementsByPage.set(newPageNumber, itemElements);
-    itemElements.forEach(itemElement => {
+    itemElements.forEach((itemElement) => {
       this.pageByItemElement.set(itemElement, newPageNumber);
-    })
+    });
 
     if (this.pageCount === 1) {
       this.setPage(1);
+    } else {
+      this.updateButtons();
     }
-    if (this.pageCount > 1) {this.buttons.next.enable()}
   }
 
-  addItem(itemElement: HTMLElement) {
+  addItem(itemElement: HTMLElement): void {
     const lastPageElements = this.itemElementsByPage.get(this.pageCount);
-    if (!lastPageElements) return;
-    if (lastPageElements.length >= this.itemsOnPage) {
+    const isLastPageFull = lastPageElements && lastPageElements.length >= this.itemsOnPage;
+    if (this.pageCount === 0 || isLastPageFull) {
       this.addPage([itemElement]);
     } else {
-      this.itemElementsByPage.get(this.pageCount)?.push(itemElement);
-      this.pageByItemElement.set(itemElement, this.pageCount);
-      this.pageElements.get(this.pageCount)?.append(itemElement);
+      this.addElementOnPage(itemElement, this.pageCount);
     }
   }
 
-  // removeItem(itemElement: HTMLElement) {}
+  removeItem(itemElement: HTMLElement): void {
+    const pageNumber = this.pageByItemElement.get(itemElement);
+    if (typeof pageNumber !== 'number') return;
+    const elementsOfPage = this.itemElementsByPage.get(pageNumber);
+    if (!elementsOfPage) return;
+    const pageElement = this.pageElements.get(pageNumber);
+    if (!pageElement) return;
 
-  navigate(actionName: PaginationActionName): void {
+    (() => {
+      const nextPage = pageNumber + 1;
+      const elementsOfNextPage = this.itemElementsByPage.get(nextPage);
+      if (!elementsOfNextPage) return;
+      const firstElementOnNextPage = elementsOfNextPage.shift();
+      if (!firstElementOnNextPage) return;
+
+      this.addElementOnPage(firstElementOnNextPage, pageNumber);
+
+      const isPageDeleted = this.deletePage(nextPage);
+      if (!isPageDeleted) return;
+      this.updateButtons();
+    })();
+    
+    itemElement.remove();
+    elementsOfPage.splice(elementsOfPage.indexOf(itemElement), 1);
+    this.pageByItemElement.delete(itemElement);
+    
+    const isPageDeleted = this.deletePage(pageNumber);
+    if (!isPageDeleted) return;
+    if (this.currentPage !== 1) this.setPage(pageNumber - 1);
+    this.updateButtons();
+  }
+
+  private addElementOnPage(itemElement: HTMLElement, pageNumber: number) {
+    const pageElement = this.pageElements.get(pageNumber);
+    if (!pageElement) return;
+    const itemElementsOfPage = this.itemElementsByPage.get(pageNumber);
+    if (!itemElementsOfPage) return;
+
+    itemElementsOfPage.push(itemElement);
+    this.pageByItemElement.set(itemElement, pageNumber);
+    pageElement.append(itemElement);
+  }
+
+  private deletePage(pageNumber: number): boolean {
+    const pageElement = this.pageElements.get(pageNumber);
+    if (!pageElement) return false;
+
+    const itemElements = this.itemElementsByPage.get(pageNumber);
+    if (!itemElements) return false;
+
+    if (itemElements.length) return false;
+
+    pageElement.remove();
+    this.pageElements.delete(pageNumber);
+    this.itemElementsByPage.delete(pageNumber);
+    return true;
+  }
+
+  private navigate(actionName: PaginationActionName): void {
     if (!this.currentPage) return;
     const targetPage = this.currentPage + (actionName === 'next' ? 1 : -1);
     if (targetPage <= 0 || targetPage > this.pageCount) return;
     this.setPage(targetPage);
-    if (targetPage === 1) {
+  }
+
+  private updateButtons(): void {
+    if (typeof this.currentPage !== 'number') {
+      this.buttons.previous.disable();
+      this.buttons.next.disable();
+      return;
+    }
+    if (this.currentPage === 1) {
       this.buttons.previous.disable();
     }
-    if (targetPage > 1) {
+    if (this.currentPage > 1) {
       this.buttons.previous.enable();
     }
-    if (targetPage === this.pageCount) {
+    if (this.currentPage === this.pageCount) {
       this.buttons.next.disable();
     }
-    if (targetPage < this.pageCount) {
+    if (this.currentPage < this.pageCount) {
       this.buttons.next.enable();
     }
   }
 
-  setPage(pageNumber: number): void {
-    this.currentPage = pageNumber;
+  private setPage(pageNumber: number): void {
     const pageElement = this.getPage(pageNumber);
     if (!pageElement) return;
     this.pageWrapper.replaceChildren(pageElement);
+    this.currentPage = pageNumber;
+    this.updateButtons();
   }
 
   private get pageCount(): number {

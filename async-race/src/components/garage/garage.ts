@@ -43,7 +43,7 @@ export class Garage {
   async init() {
     // const response = await getPage({ resourceType: 'garage', itemsOnPage: 7, page: 1 })
     // console.log(response.headers.get('X-Total-Count'));
-    
+
     const carsData = await getCars();
     if (!carsData) return;
     for (let i = 0; i < carsData.length; i += ITEMS_ON_PAGE) {
@@ -68,6 +68,7 @@ export class Garage {
     });
 
     car.events.remove.subscribe((id: number) => {
+      this.pagination.removeItem(car.element);
       if (this.selectedCar === id) {
         this.selectedCar = null;
         this.updateForm.clear();
