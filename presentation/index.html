@@ -33,7 +33,7 @@
         <section>
           <section>
             <h2>Micro- vs. Macro-tasks</h2>
-            <p><code>Promise</code>'s are "faster" than <code>setTimeOut</code>'s</p>
+            <p>Promises are "faster" than <code>setTimeOut</code></p>
           </section>
           <section>
             <p>E.g. this code:</p>
@@ -50,10 +50,10 @@ timeout</pre>
             <p>N.B.: promise printed earlier than timeout</p>
           </section>
           <section data-auto-animate>
-            <p>Promise's callbacks are Microtasks</p>
+            <p>Callbacks of Promises are Microtasks</p>
           </section>
           <section data-auto-animate>
-            <p>Promise's callbacks are Microtasks</p>
+            <p>Callbacks of Promises are Microtasks</p>
             <p>They got an other queue!</p>
           </section>
         </section>
@@ -92,6 +92,47 @@ timeout</pre>
                 How the rendering relates to macro- and micro-tasks?
               </li>
             </ul>
+          </section>
+        </section>
+
+        <!-- Eventloop Illustration -->
+        <section>
+          <section data-auto-animate>
+            <h2>Visual illustration</h2>
+          </section>
+          <section data-auto-animate>
+            <h2>Visual illustration</h2>
+            <p>N.B.: only macrotasks and render excluding microtasks</p>
+          </section>
+          <section data-auto-animate>
+            <h2>Visual illustration</h2>
+            <p>N.B.: only macrotasks and render excluding microtasks</p>
+            <video  data-autoplay data-src="./assets/eventloop-video.mov"></video>
+          </section>
+        </section>
+
+        <!-- 60 FPS -->
+        <section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+          </section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+            <p>Screen has to update 60 times a second (or every 16.6 milliseconds)</p>
+          </section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+            <p>Screen has to update 60 times per second <br>(or every 16.6 milliseconds)</p>
+            <img data-src="./assets/eventloop-timeline-normal.png">
+          </section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+            <p>If screen updates less regularly -> worse picture 🙁</p>
+            <img data-src="./assets/eventloop-timeline-bad.png">
+          </section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+            <p>Missed frames are not displayed</p>
           </section>
         </section>
 
@@ -158,47 +199,6 @@ timeout</pre>
             <h3>The queues work differently</h3>
             <p>RAFs: all those which were at start</p>
             <img data-src="./assets/rafs.png">
-          </section>
-        </section>
-
-        <!-- Eventloop Illustration -->
-        <section>
-          <section data-auto-animate>
-            <h2>Visual illustration</h2>
-          </section>
-          <section data-auto-animate>
-            <h2>Visual illustration</h2>
-            <p>N.B.: only macrotasks and render excluding microtasks</p>
-          </section>
-          <section data-auto-animate>
-            <h2>Visual illustration</h2>
-            <p>N.B.: only macrotasks and render excluding microtasks</p>
-            <video  data-autoplay data-src="./assets/eventloop-video.mov"></video>
-          </section>
-        </section>
-
-        <!-- 60 FPS -->
-        <section>
-          <section data-auto-animate>
-            <h2>What is rendering?</h2>
-          </section>
-          <section data-auto-animate>
-            <h2>What is rendering?</h2>
-            <p>Screen has to update 60 times a second (or every 16.6 milliseconds)</p>
-          </section>
-          <section data-auto-animate>
-            <h2>What is rendering?</h2>
-            <p>Screen has to update 60 times per second <br>(or every 16.6 milliseconds)</p>
-            <img data-src="./assets/eventloop-timeline-normal.png">
-          </section>
-          <section data-auto-animate>
-            <h2>What is rendering?</h2>
-            <p>If screen updates less regularly -> worse picture 🙁</p>
-            <img data-src="./assets/eventloop-timeline-bad.png">
-          </section>
-          <section data-auto-animate>
-            <h2>What is rendering?</h2>
-            <p>Missed frames are not displayed</p>
           </section>
         </section>
 
