@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>reveal.js</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h1>The Three Queues</h1>
+          <h2>of the Event Loop</h2>
+          <p>Aleksei Fedorenko <br>Rolling Scopes School <br> Summer 2023 </p>
+        </section>
+
+        <!-- Simple picture -->
+				<section>
+          <h2>What is the Event Loop?</h2>
+          <p>a simple picture</p>
+          <img data-src="./assets/eventloop.webp">
+        </section>
+
+        <!-- Micro tasks  -->
+        <section>
+          <section>
+            <h2>Micro- vs. Macro-tasks</h2>
+            <p><code>Promise</code>'s are "faster" than <code>setTimeOut</code>'s</p>
+          </section>
+          <section>
+            <p>E.g. this code:</p>
+            <pre><code>setTimeout(() => console.log("timeout"));
+
+Promise.resolve()
+  .then(() => console.log("promise"));
+
+console.log("code");</code></pre>
+            <p>would output to console this:</p>
+            <pre>code
+promise
+timeout</pre>
+            <p>N.B.: promise printed earlier than timeout</p>
+          </section>
+          <section data-auto-animate>
+            <p>Promise's callbacks are Microtasks</p>
+          </section>
+          <section data-auto-animate>
+            <p>Promise's callbacks are Microtasks</p>
+            <p>They got an other queue!</p>
+          </section>
+        </section>
+
+        <!-- Questions -->
+        <section>
+          <section data-auto-animate>
+            <h2>There are some questions..</h2>
+          </section>
+          <section data-auto-animate>
+            <ul>
+              <li>
+                Why do time consuming tasks block rendering?
+              </li>
+            </ul>
+          </section>
+          <section data-auto-animate>
+            <ul>
+              <li>
+                Why do time consuming tasks block rendering?
+              </li>
+              <li>
+                When the rendering happens and how?
+              </li>
+            </ul>
+          </section>
+          <section data-auto-animate>
+            <ul>
+              <li>
+                Why do time consuming tasks block rendering?
+              </li>
+              <li>
+                When the rendering happens and how?
+              </li>
+              <li>
+                How the rendering relates to macro- and micro-tasks?
+              </li>
+            </ul>
+          </section>
+        </section>
+
+        <!-- Three queues -->
+        <section>
+          <section data-auto-animate>
+            <h2>
+              There are three queues:
+            </h2>
+            <ol>
+            </ol>
+          </section>
+          <section data-auto-animate>
+            <h2>
+              There are three queues:
+            </h2>
+            <ol>
+              <li>(Macro) tasks</li>
+            </ol>
+          </section>
+          <section data-auto-animate>
+            <h2>
+              There are three queues:
+            </h2>
+            <ol>
+              <li>(Macro) tasks</li>
+              <li>Micro tasks</li>
+            </ol>
+          </section>
+          <section data-auto-animate>
+            <h2>
+              There are three queues:
+            </h2>
+            <ol>
+              <li>(Macro) tasks</li>
+              <li>Micro tasks</li>
+              <li>requestAnimationFrame queue (+rendering)</li>
+            </ol>
+          </section>
+        </section>
+
+        <!-- Different algorithms -->
+        <section>
+          <section data-auto-animate>
+            <h3>The queues work differently</h3>
+          </section>
+          <section data-auto-animate>
+            <h3>The queues work differently</h3>
+            <p>Macrotasks: by one at a time</p>
+            <img data-src="./assets/macrotasks.png">
+          </section>
+          <section data-auto-animate>
+            <h3>The queues work differently</h3>
+            <p>Microtasks: while the queue is not empty</p>
+            <img data-src="./assets/microtasks.png">
+          </section>
+          <section data-auto-animate>
+            <h3>The queues work differently</h3>
+            <p>Microtasks: while the queue is not empty</p>
+            <img data-src="./assets/microtasks.png">
+            <p>⚠️ Infinite (or too long) loop is possible!</p>
+          </section>
+          <section data-auto-animate>
+            <h3>The queues work differently</h3>
+            <p>RAFs: all those which were at start</p>
+            <img data-src="./assets/rafs.png">
+          </section>
+        </section>
+
+        <!-- Eventloop Illustration -->
+        <section>
+          <section data-auto-animate>
+            <h2>Visual illustration</h2>
+          </section>
+          <section data-auto-animate>
+            <h2>Visual illustration</h2>
+            <p>N.B.: only macrotasks and render excluding microtasks</p>
+          </section>
+          <section data-auto-animate>
+            <h2>Visual illustration</h2>
+            <p>N.B.: only macrotasks and render excluding microtasks</p>
+            <video  data-autoplay data-src="./assets/eventloop-video.mov"></video>
+          </section>
+        </section>
+
+        <!-- 60 FPS -->
+        <section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+          </section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+            <p>Screen has to update 60 times a second (or every 16.6 milliseconds)</p>
+          </section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+            <p>Screen has to update 60 times per second <br>(or every 16.6 milliseconds)</p>
+            <img data-src="./assets/eventloop-timeline-normal.png">
+          </section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+            <p>If screen updates less regularly -> worse picture 🙁</p>
+            <img data-src="./assets/eventloop-timeline-bad.png">
+          </section>
+          <section data-auto-animate>
+            <h2>What is rendering?</h2>
+            <p>Missed frames are not displayed</p>
+          </section>
+        </section>
+
+        <!-- Exceptions -->
+        <section>
+          <section data-auto-animate>
+            <h2>Exceptions</h2>
+          </section>
+          <section data-auto-animate>
+            <h2>Exceptions</h2>
+            <p>❗️ Some properties and methods force layout</p>
+            <img data-src="./assets/forcing-layout-features.png">
+          </section>
+          <section data-auto-animate>
+            <h2>Exceptions</h2>
+            <p>Safari execute RAFs after rendering...</p>
+            <img data-src="./assets/safari-rafs.png">
+          </section>
+        </section>
+
+        <!-- Eventloop full picture -->
+        <section>
+          <section data-auto-animate>
+            <h2>Full picture</h2>
+          </section>
+          <section data-auto-animate>
+            <h2>Full picture</h2>
+            <img data-src="./assets/eventloop-full.png">
+          </section>
+        </section>
+
+        <!-- Conclusion -->
+        <section>
+          <section data-auto-animate>
+            <h2>Conclusion</h2>
+          </section>
+          <section data-auto-animate>
+            <h2>Conclusion</h2>
+            <ol>
+              <li>There are three different queues</li>
+            </ol>
+          </section>
+          <section data-auto-animate>
+            <h2>Conclusion</h2>
+            <ol>
+              <li>There are three different queues</li>
+              <li>Don't chain too much immediately resolving Promises</li>
+            </ol>
+          </section>
+          <section data-auto-animate>
+            <h2>Conclusion</h2>
+            <ol>
+              <li>There are three different queues</li>
+              <li>Don't chain too much immediately resolving Promises</li>
+              <li>Pay attention to features forcing layout</li>
+            </ol>
+          </section>
+          <section data-auto-animate>
+            <h2>Conclusion</h2>
+            <ol>
+              <li>There are three different queues</li>
+              <li>Don't chain too much immediately resolving Promises</li>
+              <li>Pay attention to features forcing layout</li>
+              <li>Use transform instead of position features</li>
+            </ol>
+          </section>
+          <section data-auto-animate>
+            <h2>Conclusion</h2>
+            <ol>
+              <li>There are three different queues</li>
+              <li>Don't chain too much immediately resolving Promises</li>
+              <li>Pay attention to features forcing layout</li>
+              <li>Use transform instead of position features</li>
+              <li>Happy looping!</li>
+            </ol>
+          </section>
+        </section>
+
+        <!-- References -->
+        <section>
+          <section data-auto-animate>
+            <h2>References</h2>
+            <h3>Articles:</h3>
+            <ul>
+              <li>
+                <a href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif">
+                  ✨♻️ JavaScript Visualized: Event Loop
+                </a> by Lydia Hallie
+              </li>
+              <li>
+                <a href="https://blog.xnim.me/event-loop-and-render-queue">
+                  Browser Event loop: micro and macro tasks, call stack, render queue: layout, paint, composite
+                </a> by Nik
+              </li>
+            </ul>
+          </section>
+          <section data-auto-animate>
+            <h2>References</h2>
+            <h3>Videos:</h3>
+            <ul>
+              <li>
+                <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">
+                  What the heck is the event loop anyway?
+                </a> by Philip Roberts
+              </li>
+              <li>
+                <a href="https://www.youtube.com/watch?v=cCOL7MC4Pl0">
+                  Jake Archibald on web browser event loop, setTimeout, micro tasks, requestAnimationFrame, ...
+                </a> by Jake Archibald
+              </li>
+              <li>
+                <a href="https://www.youtube.com/watch?v=9pyowMcJTaM">
+                  Разбираемся в очередях event loop'а JavaScript
+                </a> by Ayub Begimkulov
+              </li>
+            </ul>
+          </section>
+
+        </section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
