@@ -1,8 +1,10 @@
-import { createElement } from "../../../common/createElement";
+import { createElement } from '../../../common/createElement';
 
 export class Total {
   readonly element: HTMLElement;
+
   private counterElement: HTMLElement;
+
   private counter: number;
 
   constructor() {
@@ -19,15 +21,15 @@ export class Total {
   }
 
   plusOne() {
-    this.counter++;
+    this.counter += 1;
     this.update();
   }
 
   minusOne() {
-    this.counter--;
+    this.counter -= 1;
     this.update();
   }
-  
+
   private update() {
     this.counterElement.innerText = this.counter.toString();
   }
@@ -36,8 +38,8 @@ export class Total {
 function getElement() {
   return createElement({
     tagName: 'p',
-    text: 'Total of cars: '
-  })
+    text: 'Total of cars: ',
+  });
 }
 
 function getCounter() {

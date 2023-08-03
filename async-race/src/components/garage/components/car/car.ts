@@ -20,14 +20,23 @@ const CLASS_NAMES = {
 
 export class Car {
   readonly element: HTMLElement;
+
   private props: CarData;
+
   selectButton: InstanceType<typeof Button>;
+
   removeButton: InstanceType<typeof Button>;
+
   startButton: InstanceType<typeof Button>;
+
   stopButton: InstanceType<typeof Button>;
+
   nameElement: TextElement;
+
   track: Track;
+
   events: Record<CarActionName, PubSub<number>>;
+
   process: {
     driving?: boolean;
     stopping?: boolean;
@@ -62,12 +71,14 @@ export class Car {
 
     this.subscribeToEvent('start', async () => {
       try {
-        await this.startDriving()
+        await this.startDriving();
       } catch {
-        console.log('The car is suddenly stop');
+        console.error('The car is suddenly stop');
       }
     });
-    this.subscribeToEvent('stop', () => {this.stopDriving()});
+    this.subscribeToEvent('stop', () => {
+      this.stopDriving();
+    });
   }
 
   async startDriving() {
@@ -109,7 +120,10 @@ export class Car {
     this.events[carActionName].fire(this.props.id);
   }
 
-  subscribeToEvent(carActionName: CarActionName, fn: (arg: number) => void) {
+  subscribeToEvent(
+    carActionName: CarActionName,
+    fn: (arg: number) => void,
+  ) {
     this.events[carActionName].subscribe(fn);
   }
 
@@ -131,7 +145,8 @@ export class Car {
     updateCar(this.props.id, carParams).then(() => {
       if (carParams.name) this.nameElement.setText(carParams.name);
       this.track.setColor(carParams.color);
-      ({ color: this.props.color, name: this.props.name } = carParams);
+      ({ color: this.props.color, name: this.props.name } =
+        carParams);
     });
   }
 }

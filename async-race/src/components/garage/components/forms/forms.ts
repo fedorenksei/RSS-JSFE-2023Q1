@@ -1,9 +1,14 @@
 import './styles.css';
-import { CarParams, FormActionName, HTMLColorInputElement } from '../../../../types';
+import {
+  CarParams,
+  FormActionName,
+  HTMLColorInputElement,
+} from '../../../../types';
 import { PubSub } from '../../../../utils';
 import { Button } from '../../../common/button/button';
 import { createElement } from '../../../common/createElement';
-import { ColorInput, TextInput } from './input';
+import { TextInput } from './textInput';
+import { ColorInput } from './colorInput';
 
 const CLASS_NAMES = {
   element: 'form',
@@ -18,9 +23,13 @@ const CLASS_NAMES = {
 
 export class Form {
   readonly element: HTMLElement;
+
   textInput: InstanceType<typeof TextInput>;
+
   colorInput: InstanceType<typeof ColorInput>;
+
   submitButton: InstanceType<typeof Button>;
+
   submission: PubSub<CarParams>;
 
   constructor(actionName: FormActionName) {
@@ -42,16 +51,20 @@ export class Form {
 
   enable() {
     this.element.classList.remove('form_inactive');
-    [this.textInput, this.colorInput, this.submitButton].forEach((item) => {
-      item.enable();
-    });
+    [this.textInput, this.colorInput, this.submitButton].forEach(
+      (item) => {
+        item.enable();
+      },
+    );
   }
 
   disable() {
     this.element.classList.add('form_inactive');
-    [this.textInput, this.colorInput, this.submitButton].forEach((item) => {
-      item.disable();
-    });
+    [this.textInput, this.colorInput, this.submitButton].forEach(
+      (item) => {
+        item.disable();
+      },
+    );
   }
 }
 
@@ -59,7 +72,11 @@ function getFormElement(this: Form) {
   const element = createElement({
     tagName: 'form',
     className: CLASS_NAMES.element,
-    children: [this.textInput.element, this.colorInput.element, this.submitButton.element],
+    children: [
+      this.textInput.element,
+      this.colorInput.element,
+      this.submitButton.element,
+    ],
   });
   return element;
 }
@@ -70,7 +87,11 @@ function getSubmitButton(
     actionName,
     textInput,
     colorInput,
-  }: { actionName: FormActionName; textInput: HTMLInputElement; colorInput: HTMLColorInputElement }
+  }: {
+    actionName: FormActionName;
+    textInput: HTMLInputElement;
+    colorInput: HTMLColorInputElement;
+  },
 ) {
   return new Button({
     className: CLASS_NAMES.buttons[actionName],

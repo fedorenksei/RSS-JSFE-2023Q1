@@ -18,10 +18,16 @@ export interface HTMLColorInputElement extends HTMLInputElement {
   value: HexColor;
   defaultValue: '#000000';
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ElementConstructor<T = { element: HTMLElement; unsetWaiting?: () => void }> = new (...args: any[]) => T;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type InputElementConstructor<T = { element: HTMLInputElement }> = new (...args: any[]) => T;
-
 export type EngineData = { velocity: number; distance: number };
+
+/**
+ * Below are mixins
+ * The rule is disabled because mixins require explicit any: https://www.typescriptlang.org/docs/handbook/mixins.html
+ */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export type ElementConstructor<
+  T = { element: HTMLElement; unsetWaiting?: () => void },
+> = new (...args: any[]) => T;
+export type InputElementConstructor<
+  T = { element: HTMLInputElement },
+> = new (...args: any[]) => T;

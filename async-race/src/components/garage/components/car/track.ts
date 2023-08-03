@@ -1,7 +1,11 @@
 import { carSvgText } from './car-icon';
 import { CarData, EngineData, HexColor } from '../../../../types';
 import { createElement } from '../../../common/createElement';
-import { startDriving, startEngine, stopEngine } from '../../../../http-requests';
+import {
+  startDriving,
+  startEngine,
+  stopEngine,
+} from '../../../../http-requests';
 
 const CLASS_NAMES = {
   track: {
@@ -16,9 +20,13 @@ const GREY = '#d7d7d7';
 
 export class Track {
   private carProps: CarData;
+
   readonly element: HTMLElement;
+
   carImage: SVGElement;
+
   private abortAnimation?: boolean;
+
   private pauseAnimation?: boolean;
 
   constructor(props: CarData) {
@@ -27,8 +35,8 @@ export class Track {
     this.setColor();
   }
 
-  setColor(color?: HexColor) {
-    if (!color) color = this.carProps.color;
+  setColor(newColor?: HexColor) {
+    const color = newColor || this.carProps.color;
     this.carImage.style.fill = color;
   }
 
@@ -36,24 +44,26 @@ export class Track {
     this.pauseAnimation = true;
     this.setWaiting();
     this.reset();
-    
+
     const response = await stopEngine(this.carProps.id);
     if (!response.ok) {
       console.log(response);
     }
-    
+
     this.unsetWaiting();
     this.positionStart();
   }
 
-  async startEngine(): Promise<EngineData | undefined> {
+  async startEngine(): Promise<EngineData | null> {
     this.reset();
     this.positionStart();
     this.setWaiting();
-    
-    const engineData = (await startEngine(this.carProps.id)) as EngineData | undefined;
-    if (!engineData) return;
-    
+
+    const engineData = (await startEngine(this.carProps.id)) as
+      | EngineData
+      | undefined;
+    if (!engineData) return null;
+
     return engineData;
   }
 
@@ -63,15 +73,19 @@ export class Track {
     this.unsetWaiting();
 
     this.animate(engineData);
-    const driving: Response | undefined = await startDriving(this.carProps.id);
+    const driving: Response | undefined = await startDriving(
+      this.carProps.id,
+    );
     if (driving.ok) {
-      if (!this.abortAnimation && !this.pauseAnimation) this.setFinished();
+      if (!this.abortAnimation && !this.pauseAnimation)
+        this.setFinished();
       return;
     }
     if (driving.status !== 500) {
       console.error(driving);
     }
-    if (!this.abortAnimation && !this.pauseAnimation) this.setStopped();
+    if (!this.abortAnimation && !this.pauseAnimation)
+      this.setStopped();
     this.pauseAnimation = true;
     throw new Error('The car is suddenly stopped');
   }
@@ -83,7 +97,7 @@ export class Track {
 
     let trackClientWidth = this.element.clientWidth;
     let progress = 0;
-    const drivingAnimation = (time: number) => {      
+    const drivingAnimation = (time: number) => {
       if (this.abortAnimation) return;
 
       if (!this.pauseAnimation) {

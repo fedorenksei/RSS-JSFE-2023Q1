@@ -1,7 +1,7 @@
-.button {  
+.button {
   height: 2em;
   width: min-content;
-  
+
   border-radius: 5px;
   border-color: var(--button-active-color, rgba(0, 0, 0, 0.636));
 
@@ -20,7 +20,6 @@
 .button:disabled {
   border-color: var(--button-disabled-color, rgba(0, 0, 0, 0.121));
 }
-
 
 .select-button {
   --button-active-color: rgb(5, 5, 108);
@@ -61,5 +60,5 @@
 }
 
 .button_waiting {
-  animation: button-waiting .7s infinite alternate;
+  animation: button-waiting 0.7s infinite alternate;
 }

@@ -14,10 +14,15 @@ const CLASS_NAMES = {
 
 export class Race {
   readonly element: HTMLElement;
+
   raceButton: InstanceType<typeof Button>;
+
   resetButton: InstanceType<typeof Button>;
+
   event: PubSub<RaceActionName>;
+
   currentRacingCars?: Car[] | null;
+
   process: {
     driving?: boolean;
     stopping?: boolean;
@@ -30,14 +35,17 @@ export class Race {
       if (action === 'reset') {
         this.reset();
       }
-    })
+    });
     const getButtonByAction = (action: RaceActionName) =>
       getButton(action, () => {
         this.event.fire(action);
       });
     this.raceButton = getButtonByAction('race');
     this.resetButton = getButtonByAction('reset');
-    this.element = getWrapper([this.raceButton.element, this.resetButton.element]);
+    this.element = getWrapper([
+      this.raceButton.element,
+      this.resetButton.element,
+    ]);
   }
 
   async start(cars: Car[]) {
@@ -46,7 +54,7 @@ export class Race {
 
     this.resetButton.enable();
     this.raceButton.disable();
-    
+
     const carsPromises = cars.map((car) => car.startDriving());
 
     const raceCompleted = Promise.allSettled(carsPromises);
@@ -66,10 +74,12 @@ export class Race {
 
     this.raceButton.disable();
     this.resetButton.disable();
-    
-    const carsPromises = this.currentRacingCars.map((car) => car.stopDriving());
+
+    const carsPromises = this.currentRacingCars.map((car) =>
+      car.stopDriving(),
+    );
     await Promise.allSettled(carsPromises);
-    
+
     if (!this.process.driving) {
       this.raceButton.enable();
     }
@@ -87,6 +97,13 @@ function getWrapper(children: HTMLElement[]): HTMLElement {
   });
 }
 
-function getButton(actionName: RaceActionName, onclick: () => void): InstanceType<typeof Button> {
-  return new Button({ text: actionName, className: CLASS_NAMES.buttons[actionName], onclick });
+function getButton(
+  actionName: RaceActionName,
+  onclick: () => void,
+): InstanceType<typeof Button> {
+  return new Button({
+    text: actionName,
+    className: CLASS_NAMES.buttons[actionName],
+    onclick,
+  });
 }

@@ -1,5 +1,6 @@
 export class PubSub<Detail> {
   handlers: Set<(arg: Detail) => void>;
+
   constructor() {
     this.handlers = new Set();
   }

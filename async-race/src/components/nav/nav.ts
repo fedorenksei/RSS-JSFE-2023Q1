@@ -14,17 +14,23 @@ const classNames = {
 const viewNames: ViewName[] = ['garage', 'winners'];
 const defaultView = viewNames[0];
 
-const navSwitchPub = new PubSub<ViewName>();
-
 export class Nav {
   readonly element: HTMLElement;
+
   private items: Record<ViewName, HTMLElement>;
+
   private activeItem: HTMLElement;
 
+  private event: PubSub<ViewName>;
+
   constructor() {
+    this.event = new PubSub<ViewName>();
+
     this.items = {} as Record<ViewName, HTMLElement>;
-       viewNames.forEach((viewName) => {
-      this.items[viewName] = createNavItem(viewName);
+    viewNames.forEach((viewName) => {
+      this.items[viewName] = createNavItem(viewName, () => {
+        this.event.fire(viewName);
+      });
     });
 
     this.activeItem = this.items[defaultView];
@@ -36,15 +42,15 @@ export class Nav {
       this.activeItem = this.items[viewName];
       this.activeItem.classList.add(classNames.item.active);
     };
-    navSwitchPub.subscribe(changeActiveItem);
+    this.event.subscribe(changeActiveItem);
   }
-  
+
   init() {
-    navSwitchPub.fire(defaultView);
+    this.event.fire(defaultView);
   }
 
   subscribe(fn: (arg: ViewName) => void) {
-    navSwitchPub.subscribe(fn);
+    this.event.subscribe(fn);
   }
 }
 
@@ -56,13 +62,14 @@ function createNavMenu(items: HTMLElement[]): HTMLElement {
   });
 }
 
-function createNavItem(name: ViewName): HTMLElement {
+function createNavItem(
+  name: ViewName,
+  onclick: () => void,
+): HTMLElement {
   return createElement({
     tagName: 'div',
     className: classNames.item.basic,
     text: name[0].toUpperCase() + name.slice(1).toLowerCase(),
-    onclick: () => {
-      navSwitchPub.fire(name);
-    },
+    onclick,
   });
 }

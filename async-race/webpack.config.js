@@ -17,6 +17,10 @@ const baseConfig = {
         test: /\.ts$/i,
         use: 'ts-loader',
       },
+      // {
+      //   test: /\.svg$/i,
+      //   use: 'file-loader',
+      // },
     ],
   },
   resolve: {
@@ -28,7 +32,7 @@ const baseConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'RSS Selectors'
+      title: 'Async Race',
     }),
     new CleanWebpackPlugin(),
     new EslintPlugin({ extensions: 'ts' }),
@@ -37,7 +41,9 @@ const baseConfig = {
 
 module.exports = ({ mode }) => {
   const isProductionMode = mode === 'prod';
-  const envConfig = isProductionMode ? require('./webpack.prod.config') : require('./webpack.dev.config');
+  const envConfig = isProductionMode
+    ? require('./webpack.prod.config')
+    : require('./webpack.dev.config');
 
   return merge(baseConfig, envConfig);
 };

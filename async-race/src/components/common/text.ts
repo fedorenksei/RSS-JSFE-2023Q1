@@ -1,9 +1,13 @@
-import { createElement } from "./createElement";
+import { createElement } from './createElement';
 
 export class TextElement {
   readonly element: HTMLElement;
 
-  constructor(data: { tagName: keyof HTMLElementTagNameMap; text: string; className: string }) {
+  constructor(data: {
+    tagName: keyof HTMLElementTagNameMap;
+    text: string;
+    className: string;
+  }) {
     this.element = createElement(data);
   }
 

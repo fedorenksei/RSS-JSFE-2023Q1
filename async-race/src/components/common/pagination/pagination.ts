@@ -21,18 +21,28 @@ const CLASS_NAMES = {
 
 export class Pagination {
   readonly element: HTMLElement;
+
   private itemElementsByPage: Map<number, HTMLElement[]>;
+
   private pageByItemElement: Map<HTMLElement, number>;
+
   private pageElements: Map<number, HTMLElement>;
+
   private pageWrapper: HTMLElement;
+
   private currentPageElement: HTMLElement;
+
   private pageCounterElement: HTMLElement;
+
   private buttons: {
     next: InstanceType<typeof Button>;
     previous: InstanceType<typeof Button>;
   };
+
   private navEvent: PubSub<PaginationActionName>;
+
   private currentPage: number;
+
   private itemsOnPage: number;
 
   constructor(itemsOnPage: number) {
@@ -55,12 +65,17 @@ export class Pagination {
 
     this.pageWrapper = getWrapper();
     this.currentPageElement = getSpanElement();
-    this.pageCounterElement = getSpanElement();    
+    this.pageCounterElement = getSpanElement();
     const pageInfo = getPageInfoElement({
-      current: this.currentPageElement, 
-      total: this.pageCounterElement
+      current: this.currentPageElement,
+      total: this.pageCounterElement,
     });
-    this.element = getPaginationElement([this.pageWrapper, this.buttons.previous.element, this.buttons.next.element, pageInfo]);
+    this.element = getPaginationElement([
+      this.pageWrapper,
+      this.buttons.previous.element,
+      this.buttons.next.element,
+      pageInfo,
+    ]);
     this.pageElements = new Map();
     this.itemElementsByPage = new Map();
     this.pageByItemElement = new Map();
@@ -88,8 +103,11 @@ export class Pagination {
   }
 
   addItem(itemElement: HTMLElement): void {
-    const lastPageElements = this.itemElementsByPage.get(this.pageCount);
-    const isLastPageFull = lastPageElements && lastPageElements.length >= this.itemsOnPage;
+    const lastPageElements = this.itemElementsByPage.get(
+      this.pageCount,
+    );
+    const isLastPageFull =
+      lastPageElements && lastPageElements.length >= this.itemsOnPage;
     if (this.pageCount === 0 || isLastPageFull) {
       this.addPage([itemElement]);
     } else {
@@ -107,7 +125,8 @@ export class Pagination {
 
     (() => {
       const nextPage = pageNumber + 1;
-      const elementsOfNextPage = this.itemElementsByPage.get(nextPage);
+      const elementsOfNextPage =
+        this.itemElementsByPage.get(nextPage);
       if (!elementsOfNextPage) return;
       const firstElementOnNextPage = elementsOfNextPage.shift();
       if (!firstElementOnNextPage) return;
@@ -118,21 +137,25 @@ export class Pagination {
       if (!isPageDeleted) return;
       this.updateButtons();
     })();
-    
+
     itemElement.remove();
     elementsOfPage.splice(elementsOfPage.indexOf(itemElement), 1);
     this.pageByItemElement.delete(itemElement);
-    
+
     const isPageDeleted = this.deletePage(pageNumber);
     if (!isPageDeleted) return;
     if (this.currentPage !== 1) this.setPage(pageNumber - 1);
     this.updateButtons();
   }
 
-  private addElementOnPage(itemElement: HTMLElement, pageNumber: number) {
+  private addElementOnPage(
+    itemElement: HTMLElement,
+    pageNumber: number,
+  ) {
     const pageElement = this.pageElements.get(pageNumber);
     if (!pageElement) return;
-    const itemElementsOfPage = this.itemElementsByPage.get(pageNumber);
+    const itemElementsOfPage =
+      this.itemElementsByPage.get(pageNumber);
     if (!itemElementsOfPage) return;
 
     itemElementsOfPage.push(itemElement);
@@ -157,14 +180,19 @@ export class Pagination {
 
   private navigate(actionName: PaginationActionName): void {
     if (!this.currentPage) return;
-    const targetPage = this.currentPage + (actionName === 'next' ? 1 : -1);
+    const targetPage =
+      this.currentPage + (actionName === 'next' ? 1 : -1);
     if (targetPage <= 0 || targetPage > this.pageCount) return;
     this.setPage(targetPage);
   }
 
   private updateButtons(): void {
-    this.currentPageElement.innerText = (this.currentPage || 1).toString();
-    this.pageCounterElement.innerText = (this.pageCount || 1).toString();
+    this.currentPageElement.innerText = (
+      this.currentPage || 1
+    ).toString();
+    this.pageCounterElement.innerText = (
+      this.pageCount || 1
+    ).toString();
 
     if (typeof this.currentPage !== 'number') {
       this.buttons.previous.disable();
@@ -219,7 +247,10 @@ function getPageElement(children: HTMLElement[]): HTMLElement {
   });
 }
 
-function getButton(actionName: PaginationActionName, onclick: () => void): InstanceType<typeof Button> {
+function getButton(
+  actionName: PaginationActionName,
+  onclick: () => void,
+): InstanceType<typeof Button> {
   return new Button({
     text: actionName,
     className: CLASS_NAMES.buttons[actionName],
@@ -228,17 +259,26 @@ function getButton(actionName: PaginationActionName, onclick: () => void): Insta
 }
 
 function getWrapper(): HTMLElement {
-  return createElement({ tagName: 'div', className: CLASS_NAMES.wrapper });
+  return createElement({
+    tagName: 'div',
+    className: CLASS_NAMES.wrapper,
+  });
 }
 
-function getPageInfoElement({current, total}: {current: HTMLElement, total: HTMLElement}): HTMLElement {
+function getPageInfoElement({
+  current,
+  total,
+}: {
+  current: HTMLElement;
+  total: HTMLElement;
+}): HTMLElement {
   const element = createElement({
     tagName: 'p',
     className: CLASS_NAMES.pageInfo,
     text: 'Page ',
-  })
+  });
   element.append(current);
-  const separator = document.createTextNode(' / ')
+  const separator = document.createTextNode(' / ');
   element.append(separator);
   element.append(total);
   return element;

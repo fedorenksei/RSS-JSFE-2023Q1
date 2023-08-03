@@ -12,13 +12,21 @@ const ITEMS_ON_PAGE = 7;
 
 export class Garage {
   readonly element: HTMLElement;
+
   private createForm: Form;
+
   private updateForm: Form;
+
   private selectedCar?: number | null;
+
   private cars: Map<number, Car>;
+
   private carByElement: Map<HTMLElement, Car>;
+
   private pagination: Pagination;
+
   private total: Total;
+
   private race: Race;
 
   constructor() {
@@ -31,7 +39,7 @@ export class Garage {
     this.race = new Race();
     this.race.event.subscribe((actionName: RaceActionName) => {
       if (actionName === 'race') this.startRace();
-    })
+    });
     this.race.resetButton.disable();
 
     this.createForm = new Form('create');
@@ -70,7 +78,9 @@ export class Garage {
     if (!carsData) return;
     for (let i = 0; i < carsData.length; i += ITEMS_ON_PAGE) {
       const carsDataOnPage = carsData.slice(i, i + ITEMS_ON_PAGE);
-      const cars = carsDataOnPage.map((carData: CarData) => this.addCar(carData));
+      const cars = carsDataOnPage.map((carData: CarData) =>
+        this.addCar(carData),
+      );
       this.pagination.addPage(cars.map((car) => car.element));
     }
     this.total.set(carsData.length);
@@ -126,11 +136,11 @@ export class Garage {
 
   private getCarsOnCurrentPage() {
     const cars = this.pagination.getCurrentPageItems();
-    if (!cars) return;
+    if (!cars) return null;
 
     const result = cars
-    .map((element) => this.carByElement.get(element))
-    .filter((car): car is Car => !!car);
+      .map((element) => this.carByElement.get(element))
+      .filter((car): car is Car => !!car);
     return result;
   }
 }
@@ -147,6 +157,6 @@ function getFormsWrapper(children: HTMLElement[]): HTMLElement {
   return createElement({
     tagName: 'div',
     className: 'forms-wrapper',
-    children
-  })
+    children,
+  });
 }

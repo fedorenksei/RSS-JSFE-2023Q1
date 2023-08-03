@@ -79,9 +79,10 @@ export function startEngine(id: number) {
 }
 
 export async function startDriving(id: number): Promise<Response> {
-  return await fetch(getEngineUrl(id, 'drive'), {
+  const res = await fetch(getEngineUrl(id, 'drive'), {
     method: 'PATCH',
   });
+  return res;
 }
 
 export async function stopEngine(id: number): Promise<Response> {

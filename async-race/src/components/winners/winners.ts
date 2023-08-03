@@ -1,4 +1,4 @@
-import { createElement } from "../common/createElement";
+import { createElement } from '../common/createElement';
 
 export class Winners {
   readonly element: HTMLElement;
@@ -13,5 +13,5 @@ function getWinnersElement() {
     tagName: 'section',
     className: 'winners',
     text: 'Winners',
-  })
+  });
 }
