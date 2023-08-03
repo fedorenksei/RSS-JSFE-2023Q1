@@ -60,40 +60,49 @@ export class Car {
       this.setSelected();
     });
 
-    const driving = async () => {
-      this.startButton.disable();
-      this.process.driving = true;
-
-      const engineData = await this.track.startEngine();
-
-      if (engineData) {
-        this.stopButton.enable();
-
-        await this.track.drive(engineData);
+    this.subscribeToEvent('start', async () => {
+      try {
+        await this.startDriving()
+      } catch {
+        console.log('The car is suddenly stop');
       }
+    });
+    this.subscribeToEvent('stop', () => {this.stopDriving()});
+  }
 
-      if (!this.process.stopping) {
-        this.startButton.enable();
-      }
-      this.process.driving = false;
-    };
-    this.subscribeToEvent('start', driving);
+  async startDriving() {
+    this.startButton.disable();
+    this.process.driving = true;
 
-    const stopping = async () => {
-      this.startButton.disable();
-      this.stopButton.disable();
-      this.process.stopping = true;
+    const engineData = await this.track.startEngine();
 
-      await this.track.stop();
+    if (engineData) {
+      this.stopButton.enable();
 
-      if (this.process.driving) {
-        this.startButton.setWaiting();
-      } else {
-        this.startButton.enable();
-      }
-      this.process.stopping = false;
-    };
-    this.subscribeToEvent('stop', stopping);
+      await this.track.drive(engineData);
+    }
+
+    if (!this.process.stopping) {
+      this.startButton.enable();
+    }
+    this.process.driving = false;
+
+    return this;
+  }
+
+  async stopDriving() {
+    this.startButton.disable();
+    this.stopButton.disable();
+    this.process.stopping = true;
+
+    await this.track.stop();
+
+    if (this.process.driving) {
+      this.startButton.setWaiting();
+    } else {
+      this.startButton.enable();
+    }
+    this.process.stopping = false;
   }
 
   fireEvent(carActionName: CarActionName) {

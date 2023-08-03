@@ -1,9 +1,11 @@
+import './styles.css';
 import { createCar, getCars } from '../../http-requests';
-import { CarData, CarParams } from '../../types';
+import { CarData, CarParams, RaceActionName } from '../../types';
 import { createElement } from '../common/createElement';
 import { Pagination } from '../common/pagination/pagination';
 import { Car } from './components/car/car';
 import { Form } from './components/forms/forms';
+import { Race } from './components/race/race';
 import { Total } from './components/total/total';
 
 const ITEMS_ON_PAGE = 7;
@@ -14,13 +16,23 @@ export class Garage {
   private updateForm: Form;
   private selectedCar?: number | null;
   private cars: Map<number, Car>;
+  private carByElement: Map<HTMLElement, Car>;
   private pagination: Pagination;
   private total: Total;
+  private race: Race;
 
   constructor() {
     this.cars = new Map();
+    this.carByElement = new Map();
+
     this.pagination = new Pagination(ITEMS_ON_PAGE);
     this.total = new Total();
+
+    this.race = new Race();
+    this.race.event.subscribe((actionName: RaceActionName) => {
+      if (actionName === 'race') this.startRace();
+    })
+    this.race.resetButton.disable();
 
     this.createForm = new Form('create');
     this.updateForm = new Form('update');
@@ -37,7 +49,15 @@ export class Garage {
       car.unsetSelected();
     });
 
-    this.element = getGarageElement([this.createForm.element, this.updateForm.element, this.total.element, this.pagination.element]);
+    this.element = getGarageElement([
+      getFormsWrapper([
+        this.createForm.element,
+        this.updateForm.element,
+      ]),
+      this.race.element,
+      this.total.element,
+      this.pagination.element,
+    ]);
 
     this.init();
   }
@@ -59,6 +79,7 @@ export class Garage {
   addCar(carData: CarData): Car {
     const car = new Car(carData);
     this.cars.set(carData.id, car);
+    this.carByElement.set(car.element, car);
 
     car.events.select.subscribe((id: number) => {
       if (this.selectedCar) {
@@ -85,13 +106,32 @@ export class Garage {
 
   createCar(carParams: CarParams) {
     createCar(carParams).then((jsonResp) => {
-      this.pagination.addItem(this.addCar(jsonResp).element);
+      const newCar = this.addCar(jsonResp);
+      this.pagination.addItem(newCar.element);
     });
     this.total.plusOne();
   }
 
+  async startRace() {
+    const carsOnCurrentPage = this.getCarsOnCurrentPage();
+    if (!carsOnCurrentPage) return;
+
+    const raceWinner = await this.race.start(carsOnCurrentPage);
+    console.log('winner', raceWinner); // add winner displaying
+  }
+
   private getCar(id: number): Car | undefined {
     return this.cars.get(id);
+  }
+
+  private getCarsOnCurrentPage() {
+    const cars = this.pagination.getCurrentPageItems();
+    if (!cars) return;
+
+    const result = cars
+    .map((element) => this.carByElement.get(element))
+    .filter((car): car is Car => !!car);
+    return result;
   }
 }
 
@@ -101,4 +141,12 @@ function getGarageElement(children: HTMLElement[]): HTMLElement {
     className: 'garage',
     children,
   });
+}
+
+function getFormsWrapper(children: HTMLElement[]): HTMLElement {
+  return createElement({
+    tagName: 'div',
+    className: 'forms-wrapper',
+    children
+  })
 }

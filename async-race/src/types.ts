@@ -2,6 +2,7 @@ export type ViewName = 'garage' | 'winners';
 export type FormActionName = 'create' | 'update';
 export type CarActionName = 'select' | 'remove' | 'start' | 'stop';
 export type PaginationActionName = 'next' | 'previous';
+export type RaceActionName = 'race' | 'reset';
 
 export type CarData = {
   id: number;

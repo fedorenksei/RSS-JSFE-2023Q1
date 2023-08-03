@@ -32,11 +32,12 @@ export class Pagination {
     previous: InstanceType<typeof Button>;
   };
   private navEvent: PubSub<PaginationActionName>;
-  private currentPage?: number;
+  private currentPage: number;
   private itemsOnPage: number;
 
   constructor(itemsOnPage: number) {
     this.itemsOnPage = itemsOnPage;
+    this.currentPage = 1;
     this.navEvent = new PubSub<PaginationActionName>();
     this.navEvent.subscribe((actionName: PaginationActionName) => {
       this.navigate(actionName);
@@ -63,6 +64,10 @@ export class Pagination {
     this.pageElements = new Map();
     this.itemElementsByPage = new Map();
     this.pageByItemElement = new Map();
+  }
+
+  getCurrentPageItems() {
+    return this.itemElementsByPage.get(this.currentPage);
   }
 
   addPage(itemElements: HTMLElement[]) {

@@ -39,7 +39,7 @@ export class Track {
     
     const response = await stopEngine(this.carProps.id);
     if (!response.ok) {
-      console.log('test', response);
+      console.log(response);
     }
     
     this.unsetWaiting();
@@ -73,7 +73,7 @@ export class Track {
     }
     if (!this.abortAnimation && !this.pauseAnimation) this.setStopped();
     this.pauseAnimation = true;
-    return;
+    throw new Error('The car is suddenly stopped');
   }
 
   private animate({ distance, velocity }: EngineData) {

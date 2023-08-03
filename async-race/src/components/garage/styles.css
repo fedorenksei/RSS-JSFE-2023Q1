@@ -1,0 +1,21 @@
+.garage {
+  padding-top: 1em;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.garage > * {
+  grid-column: 1 / span 2;
+}
+
+.race-buttons-wrapper,
+.forms-wrapper {
+  grid-column: span 1;
+  display: grid;
+  gap: 20px;
+  padding: 20px;
+}
+
+.race-buttons-wrapper {
+  justify-items: right;
+}
