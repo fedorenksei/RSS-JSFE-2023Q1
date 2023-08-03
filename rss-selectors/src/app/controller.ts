@@ -6,7 +6,7 @@ export function start() {
   view.setLevels(model.getLevels());
   view.setTaskGetter(model.getTask);
   view.init();
-  view.setSolutionHandler(model.handleSolution)
+  view.setSolutionHandler(model.handleSolution);
 }
 
 export function getElement() {

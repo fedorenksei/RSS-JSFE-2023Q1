@@ -4,9 +4,9 @@ body {
 
 .app {
   display: grid;
-  grid-template-areas: 
-    "figure figure levels"
-    "input html levels";
+  grid-template-areas:
+    'figure figure levels'
+    'input html levels';
 }
 
 .figure {

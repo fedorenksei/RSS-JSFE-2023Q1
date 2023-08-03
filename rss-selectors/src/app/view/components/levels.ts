@@ -1,4 +1,4 @@
-import { Level, SolutionInfo } from "../../types";
+import { Level, SolutionInfo } from '../../types';
 
 class LevelObject {
   number: number;
@@ -27,7 +27,7 @@ class Levels {
   levels?: LevelObject[];
   constructor() {
     this.element = document.createElement('div');
-    this.element.classList.add('levels')
+    this.element.classList.add('levels');
   }
 
   getElement() {
@@ -36,10 +36,10 @@ class Levels {
 
   setLevels(data: Level[]) {
     this.levels = data.map((levelData) => new LevelObject(levelData));
-    this.element.replaceChildren(...this.levels.map(level => level.getElement()));
+    this.element.replaceChildren(...this.levels.map((level) => level.getElement()));
   }
 
-  markLevel({taskNumber, isHintUsed}: SolutionInfo) {
+  markLevel({ taskNumber, isHintUsed }: SolutionInfo) {
     if (!this.levels) return;
     const level = this.levels[taskNumber - 1];
     if (isHintUsed) level.markDoneWithHint();
@@ -50,5 +50,3 @@ class Levels {
 export default function create() {
   return new Levels();
 }
-
-

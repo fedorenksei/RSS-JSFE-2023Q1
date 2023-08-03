@@ -28,7 +28,7 @@ const baseConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'RSS Selectors'
+      title: 'RSS Selectors',
     }),
     new CleanWebpackPlugin(),
     new EslintPlugin({ extensions: 'ts' }),

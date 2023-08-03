@@ -1,4 +1,4 @@
-import { Task } from "../../types";
+import { Task } from '../../types';
 
 class Figure {
   element: HTMLDivElement;
@@ -8,7 +8,7 @@ class Figure {
     this.element.classList.add('figure');
     this.element.addEventListener('mouseover', () => {
       if (this.hoverHandler) this.hoverHandler('hello form table');
-    })
+    });
   }
 
   getElement() {

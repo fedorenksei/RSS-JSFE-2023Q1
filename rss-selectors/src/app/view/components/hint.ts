@@ -8,7 +8,7 @@ class Hint {
     this.button.addEventListener('click', () => {
       this.isUsed = true;
       if (this.handler) this.handler();
-    })
+    });
   }
 
   getElement() {
@@ -26,7 +26,7 @@ export default function create() {
 
 function createButton() {
   const element = document.createElement('button');
-  element.classList.add('help')
+  element.classList.add('help');
   element.innerText = 'Help';
   return element;
 }

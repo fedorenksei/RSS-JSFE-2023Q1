@@ -1,14 +1,14 @@
-import { Task } from "../../types";
+import { Task } from '../../types';
 
 class Html {
   element: HTMLDivElement;
   hoverHandler?: (data: string) => void;
   constructor() {
     this.element = document.createElement('div');
-    this.element.classList.add('html')
+    this.element.classList.add('html');
     this.element.addEventListener('mouseover', () => {
       if (this.hoverHandler) this.hoverHandler('hello form html');
-    })
+    });
   }
 
   getElement() {

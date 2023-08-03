@@ -1,5 +1,5 @@
-import { Level } from "../types";
+import { Level } from '../types';
 
-export function getProgress(): null | {currentLevel: number, levels: Level[]} {
+export function getProgress(): null | { currentLevel: number; levels: Level[] } {
   return null;
 }

@@ -1,13 +1,6 @@
 module.exports = {
-  plugins: [
-    // 'prettier', 
-    'import', '@typescript-eslint'],
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    // 'plugin:prettier/recommended',
-    // "prettier",
-  ],
+  plugins: ['prettier', 'import', '@typescript-eslint'],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2020,
@@ -23,12 +16,12 @@ module.exports = {
     'no-console': 0,
     'class-methods-use-this': 'off',
     '@typescript-eslint/no-explicit-any': 2,
-    // 'prettier/prettier': [
-    //   'error',
-    //   {
-    //     endOfLine: 'auto',
-    //   },
-    // ],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   ignorePatterns: ['*config.js'],
   overrides: [

@@ -31,8 +31,8 @@ input.setSubmissionCallback((selector) => {
     input.showFailure();
     return;
   }
-  levels.markLevel({taskNumber: currentTaskNumber, isHintUsed: hint.isUsed});
-  handleSolution({taskNumber: currentTaskNumber, isHintUsed: hint.isUsed});
+  levels.markLevel({ taskNumber: currentTaskNumber, isHintUsed: hint.isUsed });
+  handleSolution({ taskNumber: currentTaskNumber, isHintUsed: hint.isUsed });
   input.clear();
   displayTask();
   hint.isUsed = false;
@@ -40,7 +40,7 @@ input.setSubmissionCallback((selector) => {
 
 hint.setHandler(() => {
   input.displayHint(currentTask.hint);
-})
+});
 
 export function getElement() {
   return element;
@@ -63,7 +63,7 @@ export function init() {
 }
 
 function displayTask() {
-  ({task: currentTask, number: currentTaskNumber} = getTask());
+  ({ task: currentTask, number: currentTaskNumber } = getTask());
   figure.setContentByTask(currentTask);
   html.setContentByTask(currentTask);
 }

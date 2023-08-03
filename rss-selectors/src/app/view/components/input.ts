@@ -19,14 +19,16 @@ class Input {
   }
 
   setSubmissionCallback(handler: (input: string) => void) {
-    const callback = () => { handler(this.getText()) };
+    const callback = () => {
+      handler(this.getText());
+    };
 
     this.button.addEventListener('click', callback);
 
     document.addEventListener('keypress', (event) => {
       if (event.code !== 'Enter') return;
       callback();
-    })
+    });
   }
 
   showFailure() {
@@ -39,7 +41,7 @@ class Input {
 
   addHintButton(element: HTMLElement) {
     this.element.append(element);
-    console.log(element)
+    console.log(element);
   }
 
   clear() {
