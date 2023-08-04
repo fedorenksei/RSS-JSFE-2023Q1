@@ -1,8 +1,11 @@
 import './styles.css';
 import { PaginationActionName } from '../../../types';
-import { PubSub } from '../../../utils';
+import { PubSub } from '../../../patterns';
 import { Button } from '../button/button';
-import { createElement, getSpanElement } from '../createElement';
+import {
+  createElement,
+  getSpanElement,
+} from '../../utils/create-element';
 
 const CLASS_NAMES = {
   pagination: {

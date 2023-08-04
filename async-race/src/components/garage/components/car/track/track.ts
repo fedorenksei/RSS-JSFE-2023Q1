@@ -1,11 +1,11 @@
 import { carSvgText } from './car-icon';
-import { CarData, EngineData, HexColor } from '../../../../types';
-import { createElement } from '../../../common/createElement';
+import { CarData, EngineData, HexColor } from '../../../../../types';
+import { createElement } from '../../../../utils/create-element';
 import {
   startDriving,
   startEngine,
   stopEngine,
-} from '../../../../http-requests';
+} from '../../../../../http-requests';
 
 const CLASS_NAMES = {
   track: {

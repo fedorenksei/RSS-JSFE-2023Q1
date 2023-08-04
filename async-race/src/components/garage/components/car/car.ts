@@ -1,11 +1,11 @@
 import './styles.css';
 import { CarActionName, CarData, CarParams } from '../../../../types';
-import { PubSub } from '../../../../utils';
+import { PubSub } from '../../../../patterns';
 import { deleteCar, updateCar } from '../../../../http-requests';
-import { Button } from '../../../common/button/button';
-import { TextElement } from '../../../common/text';
-import { createElement } from '../../../common/createElement';
-import { Track } from './track';
+import { Button } from '../../../share/button/button';
+import { TextElement } from '../../../share/text-element/text-element';
+import { createElement } from '../../../utils/create-element';
+import { Track } from './track/track';
 
 const CLASS_NAMES = {
   element: 'car',

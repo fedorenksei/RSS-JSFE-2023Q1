@@ -1,7 +1,7 @@
 import { RaceActionName } from '../../../../types';
-import { PubSub } from '../../../../utils';
-import { Button } from '../../../common/button/button';
-import { createElement } from '../../../common/createElement';
+import { PubSub } from '../../../../patterns';
+import { Button } from '../../../share/button/button';
+import { createElement } from '../../../utils/create-element';
 import { Car } from '../car/car';
 
 const CLASS_NAMES = {

@@ -1,8 +1,8 @@
-import { createElement } from '../../../common/createElement';
+import { createElement } from '../../../../../utils/create-element';
 import {
   addDisabling,
   addValueInterface,
-} from '../../../common/mixins';
+} from '../../../../../utils/mixins';
 
 class TextInputBase {
   readonly element: HTMLInputElement;

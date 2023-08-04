@@ -1,4 +1,4 @@
-import { createElement } from './createElement';
+import { createElement } from '../../utils/create-element';
 
 export class TextElement {
   readonly element: HTMLElement;

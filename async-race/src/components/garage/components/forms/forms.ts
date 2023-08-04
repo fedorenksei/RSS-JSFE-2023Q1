@@ -4,11 +4,11 @@ import {
   FormActionName,
   HTMLColorInputElement,
 } from '../../../../types';
-import { PubSub } from '../../../../utils';
-import { Button } from '../../../common/button/button';
-import { createElement } from '../../../common/createElement';
-import { TextInput } from './textInput';
-import { ColorInput } from './colorInput';
+import { PubSub } from '../../../../patterns';
+import { Button } from '../../../share/button/button';
+import { createElement } from '../../../utils/create-element';
+import { TextInput } from './components/text-input/text-input';
+import { ColorInput } from './components/color-input/color-input';
 
 const CLASS_NAMES = {
   element: 'form',

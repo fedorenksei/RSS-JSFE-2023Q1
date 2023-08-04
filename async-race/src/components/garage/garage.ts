@@ -1,8 +1,8 @@
 import './styles.css';
 import { createCar, getCars } from '../../http-requests';
 import { CarData, CarParams, RaceActionName } from '../../types';
-import { createElement } from '../common/createElement';
-import { Pagination } from '../common/pagination/pagination';
+import { createElement } from '../utils/create-element';
+import { Pagination } from '../share/pagination/pagination';
 import { Car } from './components/car/car';
 import { Form } from './components/forms/forms';
 import { Race } from './components/race/race';
@@ -79,14 +79,14 @@ export class Garage {
     for (let i = 0; i < carsData.length; i += ITEMS_ON_PAGE) {
       const carsDataOnPage = carsData.slice(i, i + ITEMS_ON_PAGE);
       const cars = carsDataOnPage.map((carData: CarData) =>
-        this.addCar(carData),
+        this.addNewCar(carData),
       );
       this.pagination.addPage(cars.map((car) => car.element));
     }
     this.total.set(carsData.length);
   }
 
-  addCar(carData: CarData): Car {
+  addNewCar(carData: CarData): Car {
     const car = new Car(carData);
     this.cars.set(carData.id, car);
     this.carByElement.set(car.element, car);
@@ -116,7 +116,7 @@ export class Garage {
 
   createCar(carParams: CarParams) {
     createCar(carParams).then((jsonResp) => {
-      const newCar = this.addCar(jsonResp);
+      const newCar = this.addNewCar(jsonResp);
       this.pagination.addItem(newCar.element);
     });
     this.total.plusOne();

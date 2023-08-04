@@ -1,4 +1,4 @@
-import { createElement } from '../../../common/createElement';
+import { createElement } from '../../../utils/create-element';
 
 export class Total {
   readonly element: HTMLElement;

@@ -1,6 +1,6 @@
 import './styles.css';
-import { createElement } from '../createElement';
-import { addDisabling } from '../mixins';
+import { createElement } from '../../utils/create-element';
+import { addDisabling } from '../../utils/mixins';
 
 class ButtonBase {
   readonly element: HTMLButtonElement;

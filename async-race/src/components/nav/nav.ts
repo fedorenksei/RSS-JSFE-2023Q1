@@ -1,7 +1,7 @@
 import './styles.css';
 import { ViewName } from '../../types';
-import { PubSub } from '../../utils';
-import { createElement } from '../common/createElement';
+import { PubSub } from '../../patterns';
+import { createElement } from '../utils/create-element';
 
 const classNames = {
   menu: 'nav',
